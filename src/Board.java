@@ -1,54 +1,46 @@
 import java.util.ArrayList;
 
-
-
-
 public class Board {
 	private int matrix[][];
-    private int rows,
-                cols;
 	private ArrayList<Dot> dots =new ArrayList<Dot>();
 	
 	public int[][] getIntBoard(){
 		return matrix;
 	}
-	
-	
-	
+
 	public boolean isOrigin(int row,int col,int color){
 		for(Dot d:dots){
-			if(d.getColor()==color){
-				return d.getStart().col==col && d.getStart().row==row;
+			if(d.getColor() == color){
+				return d.getStart().col == col && d.getStart().row == row;
 			}
 		}
 		return false;
 	}
 	
 	public boolean isEnd(int row,int col,int color){
-		for(Dot d:dots){
-			if(d.getColor()==color){
-				return d.getEnd().col==col && d.getEnd().row==row;
+		for(Dot d : dots){
+			if(d.getColor() == color){
+				return d.getEnd().col == col && d.getEnd().row == row;
 			}
 		}
 		return false;
 	}
+
 	public int colsSize(){
-		return cols;
+		return matrix[0].length;
 	}
 	
 	public int rowsSize(){
-		return rows;
+		return matrix.length;
 	}
+
 	public Board(){
 			matrix=new int[10][10];
-			
-			rows=10;
-			cols=10;
-			
-			for(int i =0; i<rows;i++)
+
+			for(int row = 0; row < matrix.length; row++)
 			{
-				for(int j=0;j<cols;j++){
-					matrix[i][j]=Color.BLANCO.getNum();
+				for(int col = 0; col < matrix[0].length; col++){
+					matrix[row][col] = Color.WHITE.getNum();
 					
 				}
 			
@@ -59,13 +51,15 @@ public class Board {
 			matrix[9][9]=2;
 	}
 
-    public void solve(){
+    public Board solve(){
         Dot initialDot = dots.get(0);
         Board solution = new Board();
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution);
+        return solution;
     }
 
     private void solve(int color, Position prevPos, Position currentPos, int index, Board solution){
+        if(matrix.length <= currentPos.row || matrix[0].length <= currentPos.col) return;
         if(color == this.matrix[currentPos.row][currentPos.col]){
             if(currentPos == dots.get(index).getEnd()){
                 if(dots.size() == index+1){             /* Si no quedan mas puntos por unir... */
@@ -108,8 +102,8 @@ public class Board {
 
     private int paintedCells(){
         int paintedCells = 0;
-        for(int row = 0; row < rows; row++){
-            for(int col = 0; col < cols; col++){
+        for(int row = 0; row < matrix.length; row++){
+            for(int col = 0; col < matrix[0].length; col++){
                 if(matrix[row][col] != -1)           /* -1 era la marca para espacio no? */
                     paintedCells++;
             }

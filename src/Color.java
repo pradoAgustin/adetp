@@ -1,12 +1,14 @@
 
 public enum Color {
-   ROJO(1), VIOLETA(2), AZUL(3), AMARRILO(4) , NEGRO(5), VERDE(6) ,ROSA(7),GRIS(8),BLANCO(-1);
-   int color;
+    RED(1), MAGENTA(2), BLUE(3), YELLOW(4) ,
+    BLACK(5), GREEN(6) , PINK(7), GRAY(8), WHITE(-1);
+
+    int color;
    
-   Color(int color){
-	   this.color = color;
-   }
-   public int getNum(){
-	   return color;
-   }
+    Color(int color){
+	    this.color = color;
+    }
+    public int getNum(){
+	    return color;
+    }
 }
