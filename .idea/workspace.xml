@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Position.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Position.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Board.java" afterPath="$PROJECT_DIR$/src/Board.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Color.java" afterPath="$PROJECT_DIR$/src/Color.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Dot.java" afterPath="$PROJECT_DIR$/src/Dot.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Board.java" afterPath="$PROJECT_DIR$/src/Board.java" />
     </list>
     <ignored path="adetp.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381448756871" ignored="false" />
-    <file path="/Board.java" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381451732317" ignored="false" />
+    <file path="/Board.java" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381455725746" ignored="false" />
     <file path="/Dot.java" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381433260204" ignored="false" />
     <file path="/a.dummy" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381433012782" ignored="false" />
     <file path="/Position.java" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381436148734" ignored="false" />
@@ -75,16 +71,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Board.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Board.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="28" selection-end="28" vertical-scroll-proportion="0.019650655">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Position.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Position.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Position.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -140,8 +127,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/Dot.java" />
         <option value="$PROJECT_DIR$/src/Positions.java" />
-        <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/Position.java" />
+        <option value="$PROJECT_DIR$/src/Board.java" />
       </list>
     </option>
   </component>
@@ -460,13 +447,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Position.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Color.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="12" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0">
@@ -483,7 +463,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="28" selection-end="28" vertical-scroll-proportion="0.019650655">
+        <state line="0" column="26" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Position.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
