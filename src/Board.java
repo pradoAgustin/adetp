@@ -1,24 +1,62 @@
 import java.util.ArrayList;
 
+
+
+
 public class Board {
-	private int board[][];
+	private int matrix[][];
     private int rows,
                 cols;
 	private ArrayList<Dot> dots =new ArrayList<Dot>();
+	
+	public int[][] getIntBoard(){
+		return matrix;
+	}
+	
+	
+	
+	public boolean isOrigin(int row,int col,int color){
+		for(Dot d:dots){
+			if(d.getColor()==color){
+				return d.getStart().col==col && d.getStart().row==row;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isEnd(int row,int col,int color){
+		for(Dot d:dots){
+			if(d.getColor()==color){
+				return d.getEnd().col==col && d.getEnd().row==row;
+			}
+		}
+		return false;
+	}
+	public int colsSize(){
+		return cols;
+	}
+	
+	public int rowsSize(){
+		return rows;
+	}
 	public Board(){
-			int matrix[][]=new int[10][10];
-			matrix[0][0]=1;
-			matrix[8][9]=1;
-			matrix[5][6]=2;
-			matrix[9][9]=2;
-			for(int i =0; i<10;i++)
+			matrix=new int[10][10];
+			
+			rows=10;
+			cols=10;
+			
+			for(int i =0; i<rows;i++)
 			{
-				for(int j=0;j<10;j++){
-					System.out.print(matrix[i][j]);
+				for(int j=0;j<cols;j++){
+					matrix[i][j]=Color.BLANCO.getNum();
 					
 				}
-			System.out.println(" ");
+			
 			}
+			matrix[0][0]=1;dots.add(new Dot(new Position(0, 0), new Position(8, 9), 1));
+			matrix[8][9]=1;
+			matrix[5][6]=2;dots.add(new Dot(new Position(5, 6), new Position(9, 9), 2));
+			matrix[9][9]=2;
 	}
 
     public void solve(){
@@ -28,7 +66,7 @@ public class Board {
     }
 
     private void solve(int color, Position prevPos, Position currentPos, int index, Board solution){
-        if(color == this.board[currentPos.row][currentPos.col]){
+        if(color == this.matrix[currentPos.row][currentPos.col]){
             if(currentPos == dots.get(index).getEnd()){
                 if(dots.size() == index+1){             /* Si no quedan mas puntos por unir... */
                     saveSolution(solution);
@@ -39,8 +77,8 @@ public class Board {
             }
             return;
         }
-        int originalColor = this.board[currentPos.row][currentPos.col];
-        this.board[currentPos.row][currentPos.col] = color;
+        int originalColor = this.matrix[currentPos.row][currentPos.col];
+        this.matrix[currentPos.row][currentPos.col] = color;
         Position nextPos;
 
         if((nextPos = currentPos.down()) != prevPos){
@@ -55,16 +93,16 @@ public class Board {
         if((nextPos = currentPos.right()) != prevPos){
             solve(color, currentPos, currentPos.right(), index, solution);
         }
-        this.board[currentPos.row][currentPos.col] = originalColor;
+        this.matrix[currentPos.row][currentPos.col] = originalColor;
     }
 
     private void saveSolution(Board solution){      // TODO ver si no hay problema con los clones
-        if(solution.board == null){
-            solution.board = this.board.clone();
+        if(solution.matrix == null){
+            solution.matrix = this.matrix.clone();
             return;
         }
         if(solution.paintedCells() > this.paintedCells()){
-            solution.board = this.board.clone();
+            solution.matrix = this.matrix.clone();
         }
     }
 
@@ -72,7 +110,7 @@ public class Board {
         int paintedCells = 0;
         for(int row = 0; row < rows; row++){
             for(int col = 0; col < cols; col++){
-                if(board[row][col] != -1)           /* -1 era la marca para espacio no? */
+                if(matrix[row][col] != -1)           /* -1 era la marca para espacio no? */
                     paintedCells++;
             }
         }
