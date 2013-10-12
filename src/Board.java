@@ -75,18 +75,14 @@ public class Board {
         this.matrix[currentPos.row][currentPos.col] = color;
         Position nextPos;
 
-        if((nextPos = currentPos.down()) != prevPos){
+        if((nextPos = currentPos.down()) != prevPos)
             solve(color, currentPos, currentPos.down(), index, solution);
-        }
-        if((nextPos = currentPos.up()) != prevPos){
+        if((nextPos = currentPos.up()) != prevPos)
             solve(color, currentPos, currentPos.up(), index, solution);
-        }
-        if((nextPos = currentPos.left()) != prevPos){
+        if((nextPos = currentPos.left()) != prevPos)
             solve(color, currentPos, currentPos.left(), index, solution);
-        }
-        if((nextPos = currentPos.right()) != prevPos){
+        if((nextPos = currentPos.right()) != prevPos)
             solve(color, currentPos, currentPos.right(), index, solution);
-        }
         this.matrix[currentPos.row][currentPos.col] = originalColor;
     }
 
