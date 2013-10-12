@@ -8,7 +8,11 @@ public class Board {
 	public int[][] getIntBoard(){
 		return matrix;
 	}
-
+	public  void addDot(Dot d){
+		dots.add(d);
+	}
+	
+	
 	public boolean isOrigin(int row,int col,int color){
 		for(Dot d:dots){
 			if(d.getColor() == color){
@@ -50,6 +54,9 @@ public class Board {
 			matrix[8][9]=1;
 			matrix[5][6]=2;dots.add(new Dot(new Position(5, 6), new Position(9, 9), 2));
 			matrix[9][9]=2;
+	}
+	public Board(int matrix[][]){
+		this.matrix=matrix;
 	}
 
     public Board solve(){
@@ -102,5 +109,8 @@ public class Board {
             }
         }
         return paintedCells;
+    }
+    public int unPaintedCells(){
+    	return colsSize()*rowsSize()-paintedCells();
     }
 }

@@ -2,7 +2,8 @@ package backend;
 
 public enum Color {
     RED(1), MAGENTA(2), BLUE(3), YELLOW(4) ,
-    BLACK(5), GREEN(6) , PINK(7), GRAY(8), WHITE(-1);
+    BLACK(5), GREEN(6) , PINK(7), GRAY(8), WHITE(-1),
+    ORANGE(9);
 
     int color;
    

@@ -59,6 +59,9 @@ public class FlowJframe {
                     case 8:
                         backgroundColor=java.awt.Color.GRAY;
                         break;
+                    case 9:
+                        backgroundColor=java.awt.Color.ORANGE;
+                        break;
                     default:
                         backgroundColor=java.awt.Color.white;
                 }
