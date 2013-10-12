@@ -1,5 +1,9 @@
 
 
+import backend.Board;
+import backend.Dot;
+import backend.Position;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,7 +14,7 @@ import java.util.List;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 
 public class parser {
-
+/*
 	public ArrayList<String> levantarNivel(File  archivo) throws IOException{
 		ArrayList<String> numbers= new ArrayList<String>();
 		String line;
@@ -30,7 +34,6 @@ public class parser {
 			}
 		}
 		}
-	/*trata de armar la matrix con los colores y blancos , sino puede retorna null*/
 	public Board setearJuego(ArrayList<String> nivel) {
 		int matrix[][]=makeBoard(nivel.get(0));
 		boolean flag=false;
@@ -45,7 +48,7 @@ public class parser {
 						char character=aux.charAt(c);
 						if(character==' ')
 						{	System.out.println("leo espacios");
-								matrix[i][c]=Color.WHITE.color;
+								matrix[i][c]=Color.WHITE.getNum();
 						}
 						else{
 								int num=character-'0';
@@ -54,8 +57,8 @@ public class parser {
 									return null;
 								for(int j=0;j<colors.length;j++)
 								{	
-									if(colors[j].color==num){
-										matrix[i][c]=colors[j].color;
+									if(colors[j].getNum()==num){
+										matrix[i][c]=colors[j].getNum();
 										if(!checkColorQty(listcolor,colors[j],i,c)){
 											return null;
 										}
@@ -67,11 +70,10 @@ public class parser {
 		}
 		return new Board(matrix, listcolor);
 	}
-/*chequea y guarda la posicion de los colores actuales si hay mas de 2 colores del mismo tipo retorna false*/
 	private boolean checkColorQty(List<Dot> listcolor, Color color,
 			int i, int c) {
 		for(Dot point:listcolor){
-			if(point.getColor()==color.color&& (color.color!=-1)){
+			if(point.getColor()==color.getNum()&& (color.getNum()!=-1)){
 				if(point.getStart()==null){
 					Position aux=point.getStart();
 					aux=new Position(i,c);
@@ -86,10 +88,9 @@ public class parser {
 				return false;
 			}
 			}
-		listcolor.add(new Dot(new Position(i,c),null,color.color));
+		listcolor.add(new Dot(new Position(i,c),null,color.getNum()));
 		return true;
 	}
-/*levanta las 2 primeras , arma la matrix*/
 	private int[][] makeBoard(String string) {
 		int i=0;
 		char a=string.charAt(i);
@@ -118,5 +119,6 @@ public class parser {
 		b=p.setearJuego(nivel);
 		System.out.println(b.colsSize());
 	}
+    */
 }
 			

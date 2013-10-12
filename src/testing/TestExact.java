@@ -18,21 +18,21 @@ import backend.Dot;
 import backend.Position;
 
 public class TestExact {
-	
-	
+
+
 
 	/*mapa a resolver se encuentra en /resources/level30png
 	 * casilleros vacios que deberian quedar :0
 	 */
-	
-	
-	
-	
+
+
+
+
 	@Test
 	public void testSolve1(){
 		int matrix[][]=new int[9][9];
 		Board board=new Board(matrix);
-		
+
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
 				matrix[i][j]=-1;

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Board {
 	private int matrix[][];
-	private ArrayList<Dot> dots =new ArrayList<Dot>();
+	private ArrayList<Dot> dots = new ArrayList<Dot>();
 	
 	public int[][] getIntBoard(){
 		return matrix;
