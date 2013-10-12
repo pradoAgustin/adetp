@@ -67,7 +67,7 @@ public class FlowJframe {
                 if(current!=-1){
                     JLabel image;
 
-                    if(board.isOrigin(i, j,current) || board.isEnd(i, j,current) ){
+                    if(board.isOrigin(i, j,current) ){
                         image=new JLabel(new ImageIcon("resources"+File.separator+"start.png"));
                     }
                     else if(board.isEnd(i, j,current))
