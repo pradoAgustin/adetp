@@ -7,16 +7,10 @@ public class Position {
         this.col = col;
     }
 
-    public Position down(){
-        return new Position(row+1,col);
-    }
-    public Position up(){
-        return new Position(row-1,col);
-    }
-    public Position left(){
-        return new Position(row,col-1);
-    }
-    public Position right(){
-        return new Position(row,col+1);
+    /**
+     * Returns the point in the specified direction
+     */
+    public Position getPosition(Direction d){
+        return new Position(this.row + d.row, this.col + d.col);
     }
 }
