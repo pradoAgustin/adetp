@@ -12,7 +12,7 @@ import org.junit.Test;
 import backend.Parser;
 
 public class TestArchivos {
-	static Parser parser;
+	
 	
 	
 	/*
@@ -31,7 +31,8 @@ public class TestArchivos {
 	 */
 	@Test(expected = IOException.class)
 	public void lecturaArchivoNoValido1() throws Exception{
-		System.out.println();
+	
+		Parser parser=new Parser();
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido1.txt");
 	}
 	
@@ -43,7 +44,7 @@ public class TestArchivos {
 	@Test(expected = IOException.class)
 	public void lecturaArchivoNoValido2() throws Exception{
 		
-		
+		Parser parser=new Parser();
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido2.txt");
 	}
 	
@@ -53,7 +54,7 @@ public class TestArchivos {
 	 */
 	@Test(expected = IOException.class)
 	public void lecturaArchivoNoValido3() throws Exception{
-		
+		Parser parser=new Parser();
 		
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido3.txt");
 	}
@@ -64,7 +65,7 @@ public class TestArchivos {
 	 */
 	@Test(expected = IOException.class)
 	public void lecturaArchivoNoValido4() throws Exception{
-		
+		Parser parser=new Parser();
 		
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido4.txt");
 	}
@@ -77,7 +78,7 @@ public class TestArchivos {
 	@Test(expected = IOException.class)
 	public void lecturaArchivoNoValido5() throws Exception{
 		
-		
+		Parser parser=new Parser();
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido5.txt");
 	}
 	
@@ -87,7 +88,7 @@ public class TestArchivos {
 	 */
 	@Test(expected = FileNotFoundException.class)
 	public void lecturaArchivoNoValido6() throws Exception{
-		
+		Parser parser=new Parser();
 		
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"inexistente.txt");
 	}
