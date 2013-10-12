@@ -1,3 +1,4 @@
+package frontEnd;
 
 import java.awt.GridLayout;
 import java.io.File;
@@ -6,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import backend.Board;
 
 public class FlowJframe {
 	private Board board;

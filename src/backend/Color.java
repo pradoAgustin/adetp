@@ -1,3 +1,4 @@
+package backend;
 
 public enum Color {
     RED(1), MAGENTA(2), BLUE(3), YELLOW(4) ,

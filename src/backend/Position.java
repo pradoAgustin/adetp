@@ -1,3 +1,4 @@
+package backend;
 
 public class Position {
     int row, col;
