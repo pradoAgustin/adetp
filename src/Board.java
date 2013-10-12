@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
 	private int matrix[][];
@@ -51,7 +52,12 @@ public class Board {
 			matrix[9][9]=2;
 	}
 
-    public Board solve(){
+    public Board(int[][] matrix2, ArrayList<Dot> listcolor) {
+		matrix=matrix2;
+		dots=listcolor;
+	}
+
+	public Board solve(){
         Dot initialDot = dots.get(0);
         Board solution = new Board();
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution);

@@ -21,4 +21,7 @@ public class Dot {
     public int getColor(){
         return this.color;
     }
+    
+    
+   
 }
