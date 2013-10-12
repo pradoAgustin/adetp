@@ -1,3 +1,4 @@
+package backend;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,11 @@ public class Board {
 	public int[][] getIntBoard(){
 		return matrix;
 	}
-
+	public  void addDot(Dot d){
+		dots.add(d);
+	}
+	
+	
 	public boolean isOrigin(int row,int col,int color){
 		for(Dot d:dots){
 			if(d.getColor() == color){
@@ -51,6 +56,9 @@ public class Board {
 			matrix[5][6]=2;dots.add(new Dot(new Position(5, 6), new Position(9, 9), 2));
 			matrix[9][9]=2;
 	}
+	public Board(int matrix[][]){
+		this.matrix=matrix;
+	}
 
     public Board(int[][] matrix2, ArrayList<Dot> listcolor) {
 		matrix=matrix2;
@@ -81,14 +89,10 @@ public class Board {
         this.matrix[currentPos.row][currentPos.col] = color;
         Position nextPos;
 
-        if((nextPos = currentPos.down()) != prevPos)
-            solve(color, currentPos, currentPos.down(), index, solution);
-        if((nextPos = currentPos.up()) != prevPos)
-            solve(color, currentPos, currentPos.up(), index, solution);
-        if((nextPos = currentPos.left()) != prevPos)
-            solve(color, currentPos, currentPos.left(), index, solution);
-        if((nextPos = currentPos.right()) != prevPos)
-            solve(color, currentPos, currentPos.right(), index, solution);
+        for(Direction d : Direction.values()){
+            if((nextPos = currentPos.getPosition(d)) != prevPos)
+                solve(color, currentPos, nextPos, index, solution);
+        }
         this.matrix[currentPos.row][currentPos.col] = originalColor;
     }
 
@@ -111,5 +115,8 @@ public class Board {
             }
         }
         return paintedCells;
+    }
+    public int unPaintedCells(){
+    	return colsSize()*rowsSize()-paintedCells();
     }
 }

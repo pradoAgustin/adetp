@@ -1,3 +1,4 @@
+package backend;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,8 +10,9 @@ import javax.swing.plaf.basic.BasicLookAndFeel;
 
 public class Parser {
 
-    public ArrayList<String> levantarNivel(File  archivo) throws IOException{
-        ArrayList<String> numbers = new ArrayList<String>();
+    public ArrayList<String> levantarNivel(String  pathname) throws IOException{
+        File archivo=new File(pathname);
+    	ArrayList<String> numbers = new ArrayList<String>();
         String line;
         BufferedReader buffer = null;
         try {

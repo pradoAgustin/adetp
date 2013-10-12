@@ -1,3 +1,4 @@
+package frontEnd;
 
 import java.awt.GridLayout;
 import java.io.File;
@@ -6,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import backend.Board;
 
 public class FlowJframe {
 	private Board board;
@@ -56,6 +59,9 @@ public class FlowJframe {
                     case 8:
                         backgroundColor=java.awt.Color.GRAY;
                         break;
+                    case 9:
+                        backgroundColor=java.awt.Color.ORANGE;
+                        break;
                     default:
                         backgroundColor=java.awt.Color.white;
                 }
@@ -64,9 +70,11 @@ public class FlowJframe {
                 if(current!=-1){
                     JLabel image;
 
-                    if(board.isOrigin(i, j,current) || board.isEnd(i, j,current) ){
-                        image=new JLabel(new ImageIcon("resources"+File.separator+"target.png"));
+                    if(board.isOrigin(i, j,current) ){
+                        image=new JLabel(new ImageIcon("resources"+File.separator+"start.png"));
                     }
+                    else if(board.isEnd(i, j,current))
+                    	 image=new JLabel(new ImageIcon("resources"+File.separator+"end.png"));
                     else{
                         image=new JLabel(new ImageIcon("resources"+File.separator+"punto.png"));
 
