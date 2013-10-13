@@ -40,6 +40,15 @@ public class TestExact {
 		//frame.showBoard();
 		
 		Board boardSolution=board.solve();
+		int [][] matrix=boardSolution.getIntBoard();
+		for(int i=0;i<matrix[0].length;i++)
+		{
+			for(int j=0;j<matrix[0].length;j++)
+			{
+				System.out.print(matrix[i][j]);
+			}
+			System.out.println();
+		}
 		
 		int cant=boardSolution.unPaintedCells();
 		

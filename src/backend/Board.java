@@ -62,8 +62,8 @@ public class Board {
 
         int currentPosColor = this.matrix[currentPos.row][currentPos.col];
         if(color == currentPosColor){
-        	trySolution( prevPos,  currentPos,  index, solution);
-           /* if(!currentPos.equals(dots.get(index).getStart())){
+        	
+            if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
                     if(dots.size() == index+1){
                         saveSolution(solution);		
@@ -76,7 +76,7 @@ public class Board {
             }
             if(prevPos != null){
                return;
-            }*/
+            }
         }else if(currentPosColor!= -1) return;
 
         this.matrix[currentPos.row][currentPos.col] = color;
@@ -88,27 +88,10 @@ public class Board {
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
-    
-    private void trySolution(Position prevPos, Position currentPos, int index, Board solution){
-        if(!currentPos.equals(dots.get(index).getStart())){
-            if(currentPos.equals(dots.get(index).getEnd())){
-                if(dots.size() == index+1){
-                    saveSolution(solution);		/*si estan todos los puntos guarda la solucion , sino sigue buscando*/
-                }else{
-                    Dot nextDot = dots.get(index+1);
-                    solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
-                }
-            }
-            return;
-        }
-        if(prevPos != null){
-           return;
-        }
-    }
 
     private void saveSolution(Board solution){      // TODO ver si no hay problema con los clones
         int row, col;
-        if(solution.matrix == null|| solution.paintedCells() < this.paintedCells()){
+        if((solution.matrix == null)|| (solution.paintedCells() < this.paintedCells())){
             solution.matrix = new int[matrix.length][matrix[0].length];
             for(row = 0; row < matrix.length; row++){
                 for(col = 0; col < matrix[0].length; col++){
