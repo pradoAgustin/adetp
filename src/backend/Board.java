@@ -52,10 +52,13 @@ public class Board {
 	public Board solve(){
         Dot initialDot = dots.get(0);
         Board solution = new Board();
+        solution.addDots(dots);
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution);
         return solution;
     }
-
+	private void addDots(ArrayList<Dot> l){
+		dots=l;
+	}
     private void solve(int color, Position prevPos, Position currentPos, int index, Board solution){
         if(matrix.length <= currentPos.row || currentPos.row < 0
            || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
