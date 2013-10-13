@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Parser2 {
     public static final int COLORS_AMOUNT = 10;
-    public Board levantarNivel(String  pathname) throws Exception{
+    public  Board levantarNivel(String  pathname) throws Exception{
         File mapFile = new File(pathname);
         BufferedReader buffer = null;
         ArrayList<Position> colorPosList = new ArrayList<Position>();

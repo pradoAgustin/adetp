@@ -54,16 +54,28 @@ public class TestExact {
 		
 		//frame=new FlowJframe(boardSolution);frame.showBoard();/*se muestra el tablero al finalizar*/
 		
-		// assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
+		 assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
 		System.out.println("cantidad que quedo libre:"+cant);
 		
 		System.out.println("fin");
-        try{
-            Thread.sleep(100000);
-        }catch(InterruptedException e){
-            Thread.currentThread().interrupt();
-        }
+   //     try{
+     //       Thread.sleep(100000);
+      //  }catch(InterruptedException e){
+       //     Thread.currentThread().interrupt();
+       // }
 	}
 	
+	
+	@Test
+	public void testSolve2() throws Exception{
+		Parser2 parser=new Parser2();
+		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
+		Board boardSolution2=board.solve();
+		
+		FlowJframe frame=new FlowJframe(boardSolution2);
+				frame.showBoard();
+		
+		
+	}
 	
 }
