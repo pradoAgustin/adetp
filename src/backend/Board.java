@@ -41,24 +41,8 @@ public class Board {
 	}
 
 	public Board(){
-			matrix=new int[10][10];
 
-			for(int row = 0; row < matrix.length; row++)
-			{
-				for(int col = 0; col < matrix[0].length; col++){
-					matrix[row][col] = Color.WHITE.getNum();
-					
-				}
-			
-			}
-			matrix[0][0]=1;dots.add(new Dot(new Position(0, 0), new Position(8, 9), 1));
-			matrix[8][9]=1;
-			matrix[5][6]=2;dots.add(new Dot(new Position(5, 6), new Position(9, 9), 2));
-			matrix[9][9]=2;
-	}
-	public Board(int matrix[][]){
-		this.matrix=matrix;
-	}
+    }
 
     public Board(int[][] matrix2, ArrayList<Dot> listcolor) {
 		matrix=matrix2;
@@ -73,8 +57,10 @@ public class Board {
     }
 
     private void solve(int color, Position prevPos, Position currentPos, int index, Board solution){
-        if(matrix.length <= currentPos.row || matrix[0].length <= currentPos.col) return;
-        if(color == this.matrix[currentPos.row][currentPos.col]){
+        if(matrix.length <= currentPos.row || currentPos.row < 0
+           || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
+        int currentPosColor = this.matrix[currentPos.row][currentPos.col];
+        if(color == currentPosColor && currentPos != dots.get(index).getStart()){
             if(currentPos == dots.get(index).getEnd()){
                 if(dots.size() == index+1){             /* Si no quedan mas puntos por unir... */
                     saveSolution(solution);
@@ -85,15 +71,14 @@ public class Board {
             }
             return;
         }
-        int originalColor = this.matrix[currentPos.row][currentPos.col];
         this.matrix[currentPos.row][currentPos.col] = color;
         Position nextPos;
 
         for(Direction d : Direction.values()){
-            if((nextPos = currentPos.getPosition(d)) != prevPos)
+            if(!(nextPos = currentPos.getPosition(d)).equals(prevPos));
                 solve(color, currentPos, nextPos, index, solution);
         }
-        this.matrix[currentPos.row][currentPos.col] = originalColor;
+        this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
 
     private void saveSolution(Board solution){      // TODO ver si no hay problema con los clones

@@ -36,8 +36,10 @@ public class Parser2 {
                         if(currentChar < '0' && currentChar >'9')
                             throw new InvalidFileException("Invalid map file: unsupported character present");
                         colorPosList.add(new Position(row, col));
+                        board[row][col] = currentChar -'0';
+                    }else{
+                        board[row][col] = -1;
                     }
-                    board[row][col] = currentChar -'0';
                 }
             }
             if(row != rowsSize) throw new InvalidFileException("Invalid map file: not all the rows are specified");
