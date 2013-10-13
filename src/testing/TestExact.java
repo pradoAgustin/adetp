@@ -28,7 +28,7 @@ public class TestExact {
 	public void testSolve1(){
         Board board;
         try{
-		    board=(new Parser2()).levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
+		    board=(new Parser2()).levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
         }catch (Exception e){
             e.getMessage();
             return;

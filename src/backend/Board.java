@@ -59,35 +59,52 @@ public class Board {
     private void solve(int color, Position prevPos, Position currentPos, int index, Board solution){
         if(matrix.length <= currentPos.row || currentPos.row < 0
            || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
+
         int currentPosColor = this.matrix[currentPos.row][currentPos.col];
-        if(color == currentPosColor && currentPos != dots.get(index).getStart()){
-            if(currentPos == dots.get(index).getEnd()){
-                if(dots.size() == index+1){             /* Si no quedan mas puntos por unir... */
-                    saveSolution(solution);
-                }else{                                  /* De lo contrario seguir con el siguiente punto */
-                    Dot nextDot = dots.get(index+1);
-                    solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
+        if(color == currentPosColor){
+            if(!currentPos.equals(dots.get(index).getStart())){
+                if(currentPos.equals(dots.get(index).getEnd())){
+                    if(dots.size() == index+1){
+                        saveSolution(solution);
+                    }else{
+                        Dot nextDot = dots.get(index+1);
+                        solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
+                    }
                 }
+                return;
             }
-            return;
-        }
+            if(prevPos != null){
+               return;
+            }
+        }else if(currentPosColor!= -1) return;
+
         this.matrix[currentPos.row][currentPos.col] = color;
         Position nextPos;
 
         for(Direction d : Direction.values()){
-            if(!(nextPos = currentPos.getPosition(d)).equals(prevPos));
+            if( !(nextPos = currentPos.getPosition(d)).equals(prevPos))
                 solve(color, currentPos, nextPos, index, solution);
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
 
     private void saveSolution(Board solution){      // TODO ver si no hay problema con los clones
+        int row, col;
         if(solution.matrix == null){
-            solution.matrix = this.matrix.clone();
+            solution.matrix = new int[matrix.length][matrix[0].length];
+            for(row = 0; row < matrix.length; row++){
+                for(col = 0; col < matrix[0].length; col++){
+                    solution.matrix[row][col] = this.matrix[row][col];
+                }
+            }
             return;
-        }
-        if(solution.paintedCells() > this.paintedCells()){
-            solution.matrix = this.matrix.clone();
+        }else if(solution.paintedCells() < this.paintedCells()){
+            for(row = 0; row < matrix.length; row++){
+                for(col = 0; col < matrix[0].length; col++){
+                    solution.matrix[row][col] = this.matrix[row][col];
+                }
+            }
+            return;
         }
     }
 
