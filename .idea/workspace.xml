@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/backend/parser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/parser.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/backend/Parser2.java" afterPath="$PROJECT_DIR$/src/backend/Parser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/Board.java" afterPath="$PROJECT_DIR$/src/backend/Board.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/Chronometer.java" afterPath="$PROJECT_DIR$/src/backend/Chronometer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/Direction.java" afterPath="$PROJECT_DIR$/src/backend/Direction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/Dot.java" afterPath="$PROJECT_DIR$/src/backend/Dot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/Position.java" afterPath="$PROJECT_DIR$/src/backend/Position.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/testing/TestArchivos.java" afterPath="$PROJECT_DIR$/src/testing/TestArchivos.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/testing/TestExact.java" afterPath="$PROJECT_DIR$/src/testing/TestExact.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" name="Default" comment="" />
     <ignored path="adetp.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381768145125" ignored="false" />
@@ -35,6 +23,7 @@
     <file path="/ArchivoEnunciado.txt" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381620355138" ignored="false" />
     <file path="/TestExact.java" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381623540254" ignored="false" />
     <file path="/Chronometer.java" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381768921290" ignored="false" />
+    <file path="/fragment.java" changelist="5a5a8edd-d7d1-447a-9c2c-8f25b2f8fbd2" time="1381769777156" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +97,7 @@
       <file leaf-file-name="Position.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/backend/Position.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="38" selection-start="503" selection-end="503" vertical-scroll-proportion="0.59504133">
+            <state line="12" column="6" selection-start="221" selection-end="221" vertical-scroll-proportion="0.3570248">
               <folding />
             </state>
           </provider>
@@ -855,7 +844,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/Position.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="38" selection-start="503" selection-end="503" vertical-scroll-proportion="0.59504133">
+        <state line="12" column="6" selection-start="221" selection-end="221" vertical-scroll-proportion="0.3570248">
           <folding />
         </state>
       </provider>
