@@ -11,6 +11,10 @@ public class Board {
 		return matrix;
 	}
 
+    public long getCalls(){
+        return calls;
+    }
+
 	public  void addDot(Dot d){
 		dots.add(d);
 	}
@@ -46,11 +50,15 @@ public class Board {
 		this.dots = dots;
 	}
 
+    /**
+     * @return a Board with the matrix containing the solution if there is one,
+     *         null otherwise
+     */
 	public Board solve(){
         Dot initialDot = dots.get(0);
         Board solution = new Board(null, dots);
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution);
-        System.out.println(calls);
+        if(solution.matrix == null) return null;
         return solution;
     }
 	private void addDots(ArrayList<Dot> l){

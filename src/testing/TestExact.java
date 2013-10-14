@@ -12,19 +12,12 @@ import org.junit.Test;
 import frontEnd.FlowJframe;
 
 public class TestExact {
-
-
-
 	/*mapa a resolver se encuentra en /resources/level30png
 	 * casilleros vacios que deberian quedar :0
 	 */
 
-
-
-
 	@Test
 	public void testSolve1(){
-      
         int matrix[][]=new int[9][9];
           Board board=new Board(matrix,new ArrayList<Dot>());
            
@@ -47,8 +40,7 @@ public class TestExact {
             
             matrix[8][5]=Color.MAGENTA.getNum();   matrix[7][8]=Color.MAGENTA.getNum();board.addDot(new Dot(new Position(8,5 ), new Position(7, 8), backend.Color.MAGENTA.getNum())); 
         
-        
-        
+
             frame=new FlowJframe(board);
 		frame.showBoard();
 		//frame=new FlowJframe(board);
@@ -92,9 +84,20 @@ public class TestExact {
 		Board boardSolution2=board.solve();
 		
 		FlowJframe frame=new FlowJframe(boardSolution2);
-				frame.showBoard();
-				int cant=boardSolution2.unPaintedCells();
-				assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
+		frame.showBoard();
+		int cant=boardSolution2.unPaintedCells();
+		assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
 	}
-	
+    @Test
+    public void unsolvableLevelTest() throws Exception{
+        Parser parser = new Parser();
+        Board solution = parser.levantarNivel("levels"+File.separator+"withoutSolution.txt").solve();
+        System.out.println("hubo " + solution.getClass() + " llamadas en total");
+        if(solution != null){
+            FlowJframe frame = new FlowJframe(solution);
+            frame.showBoard();
+        }else{
+            System.out.println("No tiene solucion");
+        }
+    }
 }
