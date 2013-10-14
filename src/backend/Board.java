@@ -5,6 +5,7 @@ import java.util.List;
 public class Board {
 	private int matrix[][];
 	private ArrayList<Dot> dots = new ArrayList<Dot>();
+    private long calls = 0;
 	
 	public int[][] getIntBoard(){
 		return matrix;
@@ -53,10 +54,12 @@ public class Board {
         Dot initialDot = dots.get(0);
         Board solution = new Board();
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution);
+        System.out.println(calls);
         return solution;
     }
 
     private void solve(int color, Position prevPos, Position currentPos, int index, Board solution){
+        calls++;
         if(matrix.length <= currentPos.row || currentPos.row < 0
            || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
 
