@@ -14,6 +14,7 @@ public class Position {
     public Position getPosition(Direction d){
         return new Position(this.row + d.row, this.col + d.col);
     }
+
     public boolean equals(Object o){
         if(o == null) return false;
         if(!(o instanceof Position)) return false;

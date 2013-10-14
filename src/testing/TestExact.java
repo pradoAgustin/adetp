@@ -3,14 +3,10 @@ package testing;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 
 import backend.*;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import frontEnd.FlowJframe;
@@ -91,7 +87,7 @@ public class TestExact {
 	/*testeo del algoritmo exacto con el mapa test3x3.txt, la solucion debe dar todo el mapa cubierto*/
 	@Test
 	public void testSolve2() throws Exception{
-		Parser2 parser=new Parser2();
+		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
 		Board boardSolution2=board.solve();
 		

@@ -5,9 +5,9 @@ public class Dot {
 	private Position end;
     private int color;
 
-	public Dot(Position a , Position b, int color){
-		this.start = a;
-		this.end = b;
+	public Dot(Position start , Position end, int color){
+		this.start = start;
+		this.end = end;
         this.color = color;
 	}
 
@@ -22,7 +22,4 @@ public class Dot {
     public int getColor(){
         return this.color;
     }
-    
-    
-   
 }

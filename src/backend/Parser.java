@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Parser2 {
+public class Parser {
     public static final int COLORS_AMOUNT = 10;
     public  Board levantarNivel(String  pathname) throws Exception{
         File mapFile = new File(pathname);

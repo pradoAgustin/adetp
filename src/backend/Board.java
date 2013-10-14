@@ -10,10 +10,10 @@ public class Board {
 	public int[][] getIntBoard(){
 		return matrix;
 	}
+
 	public  void addDot(Dot d){
 		dots.add(d);
 	}
-	
 	
 	public boolean isOrigin(int row,int col,int color){
 		for(Dot d:dots){
@@ -41,19 +41,14 @@ public class Board {
 		return matrix.length;
 	}
 
-	public Board(){
-
-    }
-
-    public Board(int[][] matrix2, ArrayList<Dot> listcolor) {
-		matrix=matrix2;
-		dots=listcolor;
+    public Board(int[][] matrix, ArrayList<Dot> dots) {
+		this.matrix = matrix;
+		this.dots = dots;
 	}
 
 	public Board solve(){
         Dot initialDot = dots.get(0);
-        Board solution = new Board();
-        solution.addDots(dots);
+        Board solution = new Board(null, dots);
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution);
         System.out.println(calls);
         return solution;
@@ -105,14 +100,7 @@ public class Board {
                 }
             }
             return;
-        }/*else if(solution.paintedCells() < this.paintedCells()){
-            for(row = 0; row < matrix.length; row++){
-                for(col = 0; col < matrix[0].length; col++){
-                    solution.matrix[row][col] = this.matrix[row][col];
-                }
-            }
-            return;
-        }*/
+        }
     }
 
     private int paintedCells(){
@@ -125,6 +113,7 @@ public class Board {
         }
         return paintedCells;
     }
+
     public int unPaintedCells(){
     	return colsSize()*rowsSize()-paintedCells();
     }
