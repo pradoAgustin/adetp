@@ -9,7 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import backend.Board;
-
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.metal.MetalIconFactory;
 public class FlowJframe {
 	private Board board;
 	JFrame frame;
@@ -21,6 +23,7 @@ public class FlowJframe {
 	}
 	
 	public void showBoard(){
+		//Border border = LineBorder.createGrayLineBorder();
 		 frame = new JFrame("Flow");
 		 frame.setSize(500, 500);
 		 frame.setLayout(new GridLayout(squares.length, squares[0].length));
@@ -79,6 +82,7 @@ public class FlowJframe {
                         image=new JLabel(new ImageIcon("resources"+File.separator+"punto.png"));
 
                     }
+                    //image.setBorder(border);
                     squares[i][j].add(image);
 
                 }
@@ -90,8 +94,5 @@ public class FlowJframe {
 		 frame.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-	    FlowJframe aux = new FlowJframe(new Board());
-	    	aux.showBoard();
-	}
+	
 }

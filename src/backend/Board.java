@@ -53,11 +53,14 @@ public class Board {
 	public Board solve(){
         Dot initialDot = dots.get(0);
         Board solution = new Board();
+        solution.addDots(dots);
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution);
         System.out.println(calls);
         return solution;
     }
-
+	private void addDots(ArrayList<Dot> l){
+		dots=l;
+	}
     private void solve(int color, Position prevPos, Position currentPos, int index, Board solution){
         calls++;
         if(matrix.length <= currentPos.row || currentPos.row < 0
@@ -65,10 +68,11 @@ public class Board {
 
         int currentPosColor = this.matrix[currentPos.row][currentPos.col];
         if(color == currentPosColor){
+        	
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
                     if(dots.size() == index+1){
-                        saveSolution(solution);
+                        saveSolution(solution);		
                     }else{
                         Dot nextDot = dots.get(index+1);
                         solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
@@ -93,7 +97,7 @@ public class Board {
 
     private void saveSolution(Board solution){      // TODO ver si no hay problema con los clones
         int row, col;
-        if(solution.matrix == null){
+        if((solution.matrix == null)|| (solution.paintedCells() < this.paintedCells())){
             solution.matrix = new int[matrix.length][matrix[0].length];
             for(row = 0; row < matrix.length; row++){
                 for(col = 0; col < matrix[0].length; col++){
@@ -101,14 +105,14 @@ public class Board {
                 }
             }
             return;
-        }else if(solution.paintedCells() < this.paintedCells()){
+        }/*else if(solution.paintedCells() < this.paintedCells()){
             for(row = 0; row < matrix.length; row++){
                 for(col = 0; col < matrix[0].length; col++){
                     solution.matrix[row][col] = this.matrix[row][col];
                 }
             }
             return;
-        }
+        }*/
     }
 
     private int paintedCells(){
