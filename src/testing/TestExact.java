@@ -80,7 +80,7 @@ public class TestExact {
 	@Test
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
-		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
+		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
 		Board boardSolution2=board.solve();
 		
 		FlowJframe frame=new FlowJframe(boardSolution2);
