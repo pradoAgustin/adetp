@@ -10,19 +10,15 @@ public class borrador {
 		
 	}
 	
-	public PriorityQueue<PqNode> getPriorityDirections(Dot d){
+	public PriorityQueue<Direction> getPriorityDirections(Dot d){
+		
+		int deltaCol=d.getEnd().col-d.getStart().col;
+		int deltaFil=d.getEnd().row-d.getStart().row;
 		
 		
 		
 		
 	}
 	
-	private class PqNode{
-		Direction dir;
-		double probability;
-		public PqNode(Direction d, int probability){
-			dir=d;
-			this.probability=probability;
-		}
-	}
+	
 }

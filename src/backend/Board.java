@@ -142,7 +142,7 @@ public class Board {
     	        	
     	            if(!currentPos.equals(dots.get(index).getStart())){
     	                if(currentPos.equals(dots.get(index).getEnd())){
-    	                    if(dots.size() == index+1){
+    	                    if(dots.size() == index+1&&solution!=null){
     	                        saveSolution(solution);
     	                        return;
     	                    }else{

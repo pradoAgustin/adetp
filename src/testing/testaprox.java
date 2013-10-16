@@ -22,4 +22,16 @@ public class testaprox{
 		int cant=boardSolution2.unPaintedCells();
 		assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
 	}
+	
+	@Test
+	public void testSolve3() throws Exception{
+		Parser parser=new Parser();
+		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
+		Board boardSolution2=board.solve();
+		
+		FlowJframe frame=new FlowJframe(boardSolution2);
+		frame.showBoard();
+		int cant=boardSolution2.unPaintedCells();
+		assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
+	}
 }
