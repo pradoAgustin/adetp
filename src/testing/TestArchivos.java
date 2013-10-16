@@ -1,7 +1,11 @@
 package testing;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+
+import org.junit.Test;
 
 import backend.Parser;
 
