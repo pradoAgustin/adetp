@@ -1,13 +1,9 @@
 package testing;
 
-import static org.junit.Assert.assertTrue;
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 
 import backend.Parser;
-import org.junit.Test;
 
 public class TestArchivos {
 	/*
