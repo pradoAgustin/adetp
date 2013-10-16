@@ -125,4 +125,49 @@ public class Board {
     public int unPaintedCells(){
     	return colsSize()*rowsSize()-paintedCells();
     }
+    
+    public Board solveAprox(){
+    	Board solution = new Board(null, dots);
+    	solveAprox(dots.get(0).getColor(), null,dots.get(0).getStart(), 0, solution);
+		return solution;
+    	
+    }
+    private void solveAprox(int color, Position prevPos, Position currentPos, int index, Board solution){
+   
+    	if(matrix.length <= currentPos.row || currentPos.row < 0
+    	           || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
+
+    	        int currentPosColor = this.matrix[currentPos.row][currentPos.col];
+    	        if(color == currentPosColor){
+    	        	
+    	            if(!currentPos.equals(dots.get(index).getStart())){
+    	                if(currentPos.equals(dots.get(index).getEnd())){
+    	                    if(dots.size() == index+1){
+    	                        saveSolution(solution);
+    	                        return;
+    	                    }else{
+    	                        Dot nextDot = dots.get(index+1);
+    	                        solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
+    	                    }
+    	                }
+    	                return;
+    	            }
+    	            if(prevPos != null){
+    	               return;
+    	            }
+    	        }else if(currentPosColor!= -1) return;
+
+    	        this.matrix[currentPos.row][currentPos.col] = color;
+    	        Position nextPos;
+
+    	        for(Direction d : Direction.values()){
+    	            if( !(nextPos = currentPos.getPosition(d)).equals(prevPos))
+    	                solve(color, currentPos, nextPos, index, solution);
+    	        }
+    	        this.matrix[currentPos.row][currentPos.col] = currentPosColor;
+    	    }
+    
+    
+    
 }
+
