@@ -194,41 +194,17 @@ public class Board {
         }else if(currentPosColor != -1) return;
 
         this.matrix[currentPos.row][currentPos.col] = color;
-        Position aux;
-        Position[] nextPos = new Position[4];
-        int horizontal = currentPos.col - dots.get(index).getEnd().col;
-        int vertical = currentPos.row - dots.get(index).getEnd().row;
-
-        if(horizontal > 0){
-            nextPos[0] = currentPos.getPosition(Direction.LEFT);
-            nextPos[3] = currentPos.getPosition(Direction.RIGHT);
-        }else if(horizontal == 0){
-            nextPos[2] = currentPos.getPosition(Direction.LEFT);
-            nextPos[3] = currentPos.getPosition(Direction.RIGHT);
-            if(vertical > 0){
-                nextPos[0] = currentPos.getPosition(Direction.UP);
-                nextPos[1] = currentPos.getPosition(Direction.DOWN);
-            }else{
-                nextPos[0] = currentPos.getPosition(Direction.DOWN);
-                nextPos[1] = currentPos.getPosition(Direction.UP);
-            }
-        }else if(horizontal < 0){
-            nextPos[0] = currentPos.getPosition(Direction.RIGHT);
-            nextPos[3] = currentPos.getPosition(Direction.LEFT);
+        
+        
+        for(Position pos:getPositionsWithPriority(currentPos, dots.get(index).getEnd())){
+        	if(!pos.equals(prevPos)){
+        		solve(color,currentPos,pos,index,solution);
+        	}
         }
-        if(vertical >= 0){
-            nextPos[1] = currentPos.getPosition(Direction.UP);
-            nextPos[2] = currentPos.getPosition(Direction.DOWN);
-        }else{
-            nextPos[1] = currentPos.getPosition(Direction.DOWN);
-            nextPos[2] = currentPos.getPosition(Direction.UP);
-        }
-
-        for(int i = 0; i < 4; i++){
-            if( !nextPos[i].equals(prevPos) ){
-                solve(color, currentPos, nextPos[i], index, solution);
-            }
-        }
+        
+        
+        
+       
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
     
