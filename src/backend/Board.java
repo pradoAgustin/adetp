@@ -334,7 +334,6 @@ public class Board {
                 return 7;
             }
         }
-
     }
 
 	public void addDot(Dot dot) {
