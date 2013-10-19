@@ -22,4 +22,8 @@ public class Dot {
     public int getColor(){
         return this.color;
     }
+    
+    public String toString(){
+    	return "["+"1:"+"start"+start.toString()+"end"+end.toString()+"]";
+    }
 }

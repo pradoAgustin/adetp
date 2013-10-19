@@ -1,6 +1,6 @@
 package testing;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 
@@ -10,6 +10,7 @@ import backend.Board;
 import backend.Parser;
 import backend.Position;
 import frontEnd.FlowJframe;
+import frontEnd.PrintListener;
 
 public class testaprox{
 	
@@ -68,7 +69,7 @@ public class testaprox{
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
-		Board boardSolution2=board.solveAprox();
+		Board boardSolution2=board.solveAprox(null);
 		
 		//FlowJframe frame=new FlowJframe(boardSolution2);
 		//frame.showBoard();
@@ -81,9 +82,11 @@ public class testaprox{
 	public void testSolve3() throws Exception{
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
-		Board boardSolution2=board.solveAprox();
+		FlowJframe frame=new FlowJframe(board);
+		frame.showBoard();
+		Board boardSolution2=board.solveAprox(new PrintListener(frame));
 		
-		FlowJframe frame=new FlowJframe(boardSolution2);
+		frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
 		assertTrue(boardSolution2!=null);
 		assertTrue( boardSolution2.rowsSize()>0 && boardSolution2.colsSize()>0);/* se comprueba que se grabo correctamente la matriz solucion del Board*/
