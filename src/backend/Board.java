@@ -139,15 +139,59 @@ public class Board {
     public int unPaintedCells(){
     	return colsSize()*rowsSize()-paintedCells();
     }
-    
+    /*Algoritmo basado en Hill Climbing */
     public Board solveAprox(Listener l){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
     	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
         if(solution.matrix ==  null) return null;
+        Board best=new Board(null, dots);
+        copyMatrix(best);
+        tryBestSolution(best);
+        
     	return solution;
     }
-    /*
+    private void tryBestSolution(Board solution) {
+		for(Dot dot:dots){
+		tryCycle(dot,solution);
+			
+		}
+		
+	}
+
+	private void tryCycle(Dot dot,Board board) {
+		Position pos = dot.getStart();
+		pos.getPosition(Direction.DOWN);
+		int x=dot.getStart().row;
+		int y =dot.getStart().col;
+		int [][] matrix=board.getIntBoard();
+		if ((x+1)<=matrix.length&& matrix[x+1][y]==dot.getColor()){
+			tryCycle(dot.getColor(),x,y,x+1,y,matrix,0,1);
+			
+			
+		}
+		
+	}
+
+	private void tryCycle(int color, int fila, int col, int nfila , int ncol,
+			int[][] matrix,int incrfila,int incrcol) {
+			for(;nfila<=matrix.length&&fila<matrix.length &&col<matrix[0].length&&ncol<matrix[0].length;){{
+					if((matrix[fila][col]==-1||matrix[fila][col]==color)&&(matrix[fila][col]==-1||matrix[fila][col]==color)){
+						matrix[fila][col]=color;
+						matrix[nfila][ncol]=color;
+						col+=incrcol;
+						
+					}
+					return;
+					
+				}
+				
+			}
+			
+		
+	}
+
+	/*
     private void solveAprox(int color, Position prevPos, Position currentPos, int index, Board solution){
     	if(matrix.length <= currentPos.row || currentPos.row < 0
     	    || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
@@ -288,7 +332,6 @@ public class Board {
                 return 7;
             }
         }
-
     }
 
 	public void addDot(Dot dot) {
