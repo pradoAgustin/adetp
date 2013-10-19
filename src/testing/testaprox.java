@@ -100,8 +100,7 @@ public class testaprox{
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		 board=board.solveAprox(new PrintListener(frame));
-		
-		
+
 		int cant=board.unPaintedCells();
 		assertTrue(board!=null && board.colsSize()>0);/*se controla la matriz del tablero solucion no este vacia*/
 		assertTrue(cant<9);
