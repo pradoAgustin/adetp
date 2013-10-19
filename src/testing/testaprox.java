@@ -1,6 +1,6 @@
 package testing;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 
@@ -10,6 +10,7 @@ import backend.Board;
 import backend.Parser;
 import backend.Position;
 import frontEnd.FlowJframe;
+import frontEnd.PrintListener;
 
 public class testaprox{
 	
@@ -25,6 +26,12 @@ public class testaprox{
 		Position finalPos=new Position(5, 5);
 		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
 		assertTrue(ans[0].equals(new Position(5, 1)));
+		assertTrue(ans.length==4);
+		for(int i=0;i<ans.length;i++){
+			for(int j=i;j>0;j--){
+				assertFalse(i==j && ans[i].equals(ans[j]));
+			}
+		}
 	}
 	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma horizontal derecha*/
 	@Test
@@ -36,6 +43,12 @@ public class testaprox{
 		Position finalPos=new Position(5, 0);
 		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
 		assertTrue(ans[0].equals(new Position(5, 4)));
+		assertTrue(ans.length==4);
+		for(int i=0;i<ans.length;i++){
+			for(int j=i;j>0;j--){
+				assertFalse(i==j && ans[i].equals(ans[j]));
+			}
+		}
 	}
 	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma vertical abajo*/
 	@Test
@@ -51,6 +64,12 @@ public class testaprox{
 		System.out.println(ans[2]);
 		System.out.println(ans[3]);
 		assertTrue(ans[0].equals(new Position(1, 0)));
+		assertTrue(ans.length==4);
+		for(int i=0;i<ans.length;i++){
+			for(int j=i;j>0;j--){
+				assertFalse(i==j && ans[i].equals(ans[j]));
+			}
+		}
 	}
 	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma diagonal abajo*/
 	@Test
@@ -62,13 +81,19 @@ public class testaprox{
 		Position finalPos=new Position(3, 2);
 		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
 		assertTrue(ans[0].equals(new Position(1, 0))||ans[0].equals(new Position(0, 1)) );
+		assertTrue(ans.length==4);
+		for(int i=0;i<ans.length;i++){
+			for(int j=i;j>0;j--){
+				assertFalse(i==j && ans[i].equals(ans[j]));
+			}
+		}
 	}
 	
 	@Test
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
-		Board boardSolution2=board.solveAprox();
+		Board boardSolution2=board.solveAprox(null);
 		
 		//FlowJframe frame=new FlowJframe(boardSolution2);
 		//frame.showBoard();
@@ -81,9 +106,11 @@ public class testaprox{
 	public void testSolve3() throws Exception{
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
-		Board boardSolution2=board.solveAprox();
+		FlowJframe frame=new FlowJframe(board);
+		frame.showBoard();
+		Board boardSolution2=board.solveAprox(new PrintListener(frame));
 		
-		FlowJframe frame=new FlowJframe(boardSolution2);
+		frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
 		assertTrue(boardSolution2!=null);
 		assertTrue( boardSolution2.rowsSize()>0 && boardSolution2.colsSize()>0);/* se comprueba que se grabo correctamente la matriz solucion del Board*/

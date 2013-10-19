@@ -5,12 +5,12 @@ import backend.Listener;
 /* clase que le permite al backend avisarle al front end que es necesario graficar el tablero en pantalla.
  * Se emplea solamente para el caso en que se corra el programa con la opción "progress"
  */
-public class printListener implements Listener{
+public class PrintListener implements Listener{
 
 	private static final long sleepTime=100;
 	private FlowJframe frame;
 	
-	public printListener(FlowJframe f){
+	public PrintListener(FlowJframe f){
 		frame=f;
 	}
 	
