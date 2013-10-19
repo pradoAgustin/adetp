@@ -69,7 +69,6 @@ public class testaprox{
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
 		Board boardSolution2=board.solveAprox();
-		
 		//FlowJframe frame=new FlowJframe(boardSolution2);
 		//frame.showBoard();
 		int cant=boardSolution2.unPaintedCells();
@@ -79,13 +78,14 @@ public class testaprox{
 	
 	@Test
 	public void testSolve3() throws Exception{
+		System.out.println("este es el test3");
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
 		Board boardSolution2=board.solveAprox();
-		
 		FlowJframe frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
 		assertTrue(boardSolution2!=null);
+		assertTrue(boardSolution2.getIntBoard()!=null);
 		assertTrue( boardSolution2.rowsSize()>0 && boardSolution2.colsSize()>0);/* se comprueba que se grabo correctamente la matriz solucion del Board*/
 		int cant=boardSolution2.unPaintedCells();
 		assertTrue(cant<6);

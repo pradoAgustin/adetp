@@ -91,7 +91,7 @@ public class Board {
         
         
         
-        /*sección para imprimir con intervalos de a 100ms*/
+        /*secciï¿½n para imprimir con intervalos de a 100ms*/
         if(listener!=null){
         	listener.printToScreen();
                }
@@ -106,7 +106,7 @@ public class Board {
     }
 
     private void saveSolution(Board solution){
-        if( (solution.matrix == null)
+        if( (solution.matrix==null)
                 || (solution.paintedCells() < this.paintedCells()) ){
            this.copyMatrix(solution);
         }
@@ -201,7 +201,7 @@ public class Board {
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
-                    if(dots.size() == index+1 && solution != null){
+                    if(dots.size()==index+1 && solution!=null){
                         saveSolution(solution);
                         return;
                     }else{
@@ -222,6 +222,7 @@ public class Board {
         for(Position pos:getPositionsWithPriority(currentPos, dots.get(index).getEnd())){
         	if(!pos.equals(prevPos)){
         		findInitialSolution(color,currentPos,pos,index,solution);
+        		
         	}
         }
         
@@ -233,34 +234,38 @@ public class Board {
     
     
     public  Position[] getPositionsWithPriority(Position currentPos,Position finalPos){
+    	
+    	
     	Position[] positions = new Position[4];
+    	int c=finalPos.col-finalPos.col;
+    	int f=finalPos.row-currentPos.row;
+    	
+    	
+    	
         int horizontal = currentPos.col - finalPos.col;
         int vertical = currentPos.row - finalPos.row;
 
-        if(horizontal > 0){
+        if(horizontal >= 0){
             positions[0] = currentPos.getPosition(Direction.LEFT);
             positions[3] = currentPos.getPosition(Direction.RIGHT);
-        }else if(horizontal == 0){
-            positions[2] = currentPos.getPosition(Direction.LEFT);
-            positions[3] = currentPos.getPosition(Direction.RIGHT);
-            if(vertical > 0){
-                positions[0] = currentPos.getPosition(Direction.UP);
-                positions[1] = currentPos.getPosition(Direction.DOWN);
-            }else{
-                positions[0] = currentPos.getPosition(Direction.DOWN);
-                positions[1] = currentPos.getPosition(Direction.UP);
             }
-        }else if(horizontal < 0){
-            positions[0] = currentPos.getPosition(Direction.RIGHT);
+            else
+          {   positions[0] = currentPos.getPosition(Direction.RIGHT);
             positions[3] = currentPos.getPosition(Direction.LEFT);
+            }
+            if(vertical >= 0){
+                positions[1] = currentPos.getPosition(Direction.UP);
+                positions[2] = currentPos.getPosition(Direction.DOWN);
+            }else{
+                positions[1] = currentPos.getPosition(Direction.DOWN);
+                positions[2] = currentPos.getPosition(Direction.UP);
+           }
+        
+       for(int i=0;i<positions.length;i++){
+        	System.out.print(positions[i]);
         }
-        if(vertical >= 0){
-            positions[1] = currentPos.getPosition(Direction.UP);
-            positions[2] = currentPos.getPosition(Direction.DOWN);
-        }else{
-            positions[1] = currentPos.getPosition(Direction.DOWN);
-            positions[2] = currentPos.getPosition(Direction.UP);
-        }
+       System.out.println();
+        
     	return positions;
     }
 }
