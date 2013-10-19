@@ -113,7 +113,7 @@ public class testaprox{
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
-		Board boardSolution2=board.solveAprox(new PrintListener(frame));
+		Board boardSolution2=board.solveAprox(null/*new PrintListener(frame)*/);
 		
 		frame=new FlowJframe(boardSolution2);
 		frame.showBoard();

@@ -111,7 +111,7 @@ public class Board {
     }
 
     private void saveSolution(Board solution){
-        if( (solution.matrix == null)
+        if( (solution.matrix==null)
                 || (solution.paintedCells() < this.paintedCells()) ){
            this.copyMatrix(solution);
         }
@@ -224,6 +224,7 @@ public class Board {
         }else if(currentPosColor != -1) return;
 
         this.matrix[currentPos.row][currentPos.col] = color;
+
         Direction[] dir = optimalDir[getOptimalDirIndex(
                 currentPos.col - dots.get(index).getEnd().col,currentPos.row - dots.get(index).getEnd().row)];
         Position nextPos;
@@ -238,8 +239,47 @@ public class Board {
             if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
                 findInitialSolution(color,currentPos,nextPos,index,solution,l);
             }
+
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
+        }
+    
+    
+    
+    public  Position[] getPositionsWithPriority(Position currentPos,Position finalPos){
+    	
+    	
+    	Position[] positions = new Position[4];
+    	int c=finalPos.col-finalPos.col;
+    	int f=finalPos.row-currentPos.row;
+    	
+    	
+    	
+        int horizontal = currentPos.col - finalPos.col;
+        int vertical = currentPos.row - finalPos.row;
+
+        if(horizontal >= 0){
+            positions[0] = currentPos.getPosition(Direction.LEFT);
+            positions[3] = currentPos.getPosition(Direction.RIGHT);
+            }
+            else
+          {   positions[0] = currentPos.getPosition(Direction.RIGHT);
+            positions[3] = currentPos.getPosition(Direction.LEFT);
+            }
+            if(vertical >= 0){
+                positions[1] = currentPos.getPosition(Direction.UP);
+                positions[2] = currentPos.getPosition(Direction.DOWN);
+            }else{
+                positions[1] = currentPos.getPosition(Direction.DOWN);
+                positions[2] = currentPos.getPosition(Direction.UP);
+           }
+        
+       for(int i=0;i<positions.length;i++){
+        	System.out.print(positions[i]);
+        }
+       System.out.println();
+        
+    	return positions;
     }
 
     private int getOptimalDirIndex(int horizontal, int vertical){
@@ -266,6 +306,7 @@ public class Board {
                 return 7;
             }
         }
+
     }
 
 	public void addDot(Dot dot) {
