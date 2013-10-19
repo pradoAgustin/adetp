@@ -21,7 +21,9 @@ public class FlowJframe {
 	    this.board=board;
 		squares = new JPanel[board.rowsSize()][board.colsSize()];
 	}
-	
+	protected void changeBoard(Board b){
+		board=b;
+	}
 	public void showBoard(){
 		//Border border = LineBorder.createGrayLineBorder();
 		 frame = new JFrame("Flow");
