@@ -224,19 +224,7 @@ public class Board {
         }else if(currentPosColor != -1) return;
 
         this.matrix[currentPos.row][currentPos.col] = color;
-<<<<<<< HEAD
-        
-        /*secci�n para imprimir con intervalos de a 100ms*/
-        if(l!=null){
-        	l.printToScreen();
-               }
-        
-        for(Position pos:getPositionsWithPriority(currentPos, dots.get(index).getEnd())){
-        	if(!pos.equals(prevPos)){
 
-        		findInitialSolution(color,currentPos,pos,index,solution,l);
-        	}
-=======
         Direction[] dir = optimalDir[getOptimalDirIndex(
                 currentPos.col - dots.get(index).getEnd().col,currentPos.row - dots.get(index).getEnd().row)];
         Position nextPos;
@@ -245,10 +233,9 @@ public class Board {
             if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
                 findInitialSolution(color,currentPos,nextPos,index,solution);
             }
->>>>>>> 8a87dbe44344c2cf5d410690b268b392fed9e073
+
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
-<<<<<<< HEAD
         }
     
     
@@ -287,7 +274,6 @@ public class Board {
        System.out.println();
         
     	return positions;
-=======
     }
 
     private int getOptimalDirIndex(int horizontal, int vertical){
@@ -314,6 +300,6 @@ public class Board {
                 return 7;
             }
         }
->>>>>>> 8a87dbe44344c2cf5d410690b268b392fed9e073
+
     }
 }
