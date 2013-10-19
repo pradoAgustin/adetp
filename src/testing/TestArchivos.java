@@ -22,7 +22,6 @@ public class TestArchivos {
 		assertTrue(aux.rowsSize()>0);
 	}
 	
-	
 	/*se trata de leer el archivo invalido1, el cual no especifica la cantidad de filas y de columnas
 	 * 
 	 */
@@ -42,7 +41,6 @@ public class TestArchivos {
 		Parser parser=new Parser();
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido2.txt");
 	}
-	
 
 	/*se trata de leer el archivo invalido3, el cual tiene menos filas delas que especifica en la primera l�nea
 	 * 
@@ -64,9 +62,7 @@ public class TestArchivos {
 		
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido4.txt");
 	}
-	
-	
-	
+
 	/*se trata de leer el archivo invalido5, el cual tiene un color sin destino
 	 * 
 	 */
@@ -76,7 +72,6 @@ public class TestArchivos {
 		Parser parser=new Parser();
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido5.txt");
 	}
-	
 
 	/*se trata de leer  un archivo que no existe
 	 * 
@@ -87,6 +82,4 @@ public class TestArchivos {
 		
 		parser.levantarNivel("ArchivosEntrada"+File.separator+"inexistente.txt");
 	}
-	
-	
 }
