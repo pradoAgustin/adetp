@@ -38,11 +38,11 @@ public class Board {
 	}
 
 	public int colsSize(){
-		return matrix[0].length;
+		return (matrix!=null)?(matrix[0].length):0;
 	}
 	
 	public int rowsSize(){
-		return matrix.length;
+		return (matrix!=null)?matrix.length:0;
 	}
 
     public Board(int[][] matrix, ArrayList<Dot> dots) {
@@ -143,15 +143,22 @@ public class Board {
     }
     
     public Board solveAprox(){
+    	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
-    	findInitialSolution(dots.get(0).getColor(), null,dots.get(0).getStart(), 0, solution);
+    	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution);
+    	return solution;
+    	/*
+    	 *   Dot initialDot = dots.get(0);
+        Board solution = new Board(null, dots);
+        solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution,listener);
+        if(solution.matrix == null) return null;
+        return solution;
+    	 */
     	
     	
     	
     	
-    	
-    	
-		return solution;
+		
     }/*
     private void solveAprox(int color, Position prevPos, Position currentPos, int index, Board solution){
     	if(matrix.length <= currentPos.row || currentPos.row < 0

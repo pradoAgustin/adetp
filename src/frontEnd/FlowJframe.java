@@ -14,8 +14,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.plaf.metal.MetalIconFactory;
 public class FlowJframe {
 	private Board board;
-	JFrame frame;
-	JPanel squares[][] ;
+	private JFrame frame;
+	private JPanel squares[][] ;
 
 	public FlowJframe(Board board){
 	    this.board=board;
@@ -25,9 +25,12 @@ public class FlowJframe {
 		board=b;
 	}
 	public void showBoard(){
+		
 		//Border border = LineBorder.createGrayLineBorder();
 		 frame = new JFrame("Flow");
 		 frame.setSize(500, 500);
+		 if(board.rowsSize()<=0 || board.colsSize()<=0)
+			 return;
 		 frame.setLayout(new GridLayout(squares.length, squares[0].length));
 		 int [][] boardMatrix=board.getIntBoard();
 		 for (int i = 0; i < squares.length; i++) {
@@ -95,6 +98,12 @@ public class FlowJframe {
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 frame.setVisible(true);
 	}
-
+	public void refresh(){
+		frame.invalidate();
+		frame.validate();
+		frame.repaint();	}
+	public void hide(){
+		frame.setVisible(false);
+	}
 	
 }

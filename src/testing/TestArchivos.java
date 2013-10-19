@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
+import backend.Board;
 import backend.Parser;
 
 public class TestArchivos {
@@ -16,8 +17,9 @@ public class TestArchivos {
 	@Test
 	public void lecturaArchivoValido() throws Exception{
 		Parser parser=new Parser();
-		Object aux=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
+		Board aux=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
 		assertTrue(aux!=null);
+		assertTrue(aux.rowsSize()>0);
 	}
 	
 	
