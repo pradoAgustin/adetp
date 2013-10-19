@@ -134,7 +134,7 @@ public class Board {
     
     public Board solveAprox(){
     	Board solution = new Board(null, dots);
-    	solveAprox(dots.get(0).getColor(), null,dots.get(0).getStart(), 0, solution);
+    	findInitialSolution(dots.get(0).getColor(), null,dots.get(0).getStart(), 0, solution);
 		return solution;
     }
     private void solveAprox(int color, Position prevPos, Position currentPos, int index, Board solution){

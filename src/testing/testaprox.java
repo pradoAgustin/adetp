@@ -80,7 +80,7 @@ public class testaprox{
 	public void testSolve3() throws Exception{
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
-		Board boardSolution2=board.solve();
+		Board boardSolution2=board.solveAprox();
 		
 		FlowJframe frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
