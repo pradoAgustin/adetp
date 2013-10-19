@@ -140,7 +140,7 @@ public class Board {
     	return colsSize()*rowsSize()-paintedCells();
     }
     /*Algoritmo basado en Hill Climbing */
-    private Board solveAprox(Listener l){
+    public Board solveAprox(Listener l){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
     	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
