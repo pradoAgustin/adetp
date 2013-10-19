@@ -150,7 +150,7 @@ public class Board {
     public Board solveAprox(Listener l){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
-    	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution);
+    	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
     	return solution;
     	/*
     	 *   Dot initialDot = dots.get(0);
@@ -199,7 +199,7 @@ public class Board {
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
 */
-    private void findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution){
+    private void findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l){
         if(matrix.length <= currentPos.row || currentPos.row < 0
                 || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
 
@@ -213,7 +213,7 @@ public class Board {
                         return;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
+                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l);
                     }
                 }
                 return;
@@ -227,10 +227,16 @@ public class Board {
         Direction[] dir = optimalDir[getOptimalDirIndex(
                 currentPos.col - dots.get(index).getEnd().col,currentPos.row - dots.get(index).getEnd().row)];
         Position nextPos;
+        
+        /*secci�n para imprimir con intervalos de a 100ms*/
+        if(l!=null){
+        	l.printToScreen();
+               }
+        
 
         for(int i = 0; i < 4; i++){
             if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
-                findInitialSolution(color,currentPos,nextPos,index,solution);
+                findInitialSolution(color,currentPos,nextPos,index,solution,l);
             }
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
@@ -261,4 +267,9 @@ public class Board {
             }
         }
     }
+
+	public void addDot(Dot dot) {
+		dots.add(dot);
+		
+	}
 }
