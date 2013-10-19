@@ -26,6 +26,12 @@ public class testaprox{
 		Position finalPos=new Position(5, 5);
 		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
 		assertTrue(ans[0].equals(new Position(5, 1)));
+		assertTrue(ans.length==4);
+		for(int i=0;i<ans.length;i++){
+			for(int j=i;j>0;j--){
+				assertFalse(i==j && ans[i].equals(ans[j]));
+			}
+		}
 	}
 	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma horizontal derecha*/
 	@Test
@@ -37,6 +43,12 @@ public class testaprox{
 		Position finalPos=new Position(5, 0);
 		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
 		assertTrue(ans[0].equals(new Position(5, 4)));
+		assertTrue(ans.length==4);
+		for(int i=0;i<ans.length;i++){
+			for(int j=i;j>0;j--){
+				assertFalse(i==j && ans[i].equals(ans[j]));
+			}
+		}
 	}
 	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma vertical abajo*/
 	@Test
@@ -52,6 +64,12 @@ public class testaprox{
 		System.out.println(ans[2]);
 		System.out.println(ans[3]);
 		assertTrue(ans[0].equals(new Position(1, 0)));
+		assertTrue(ans.length==4);
+		for(int i=0;i<ans.length;i++){
+			for(int j=i;j>0;j--){
+				assertFalse(i==j && ans[i].equals(ans[j]));
+			}
+		}
 	}
 	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma diagonal abajo*/
 	@Test
@@ -63,6 +81,12 @@ public class testaprox{
 		Position finalPos=new Position(3, 2);
 		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
 		assertTrue(ans[0].equals(new Position(1, 0))||ans[0].equals(new Position(0, 1)) );
+		assertTrue(ans.length==4);
+		for(int i=0;i<ans.length;i++){
+			for(int j=i;j>0;j--){
+				assertFalse(i==j && ans[i].equals(ans[j]));
+			}
+		}
 	}
 	
 	@Test
