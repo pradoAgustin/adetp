@@ -1,8 +1,17 @@
 package backend;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Board {
+    private final static Direction[][] optimalDir = new Direction[][]{
+            {Direction.UP, Direction.LEFT, Direction.DOWN, Direction.RIGHT},
+            {Direction.UP, Direction.LEFT, Direction.RIGHT, Direction.DOWN},
+            {Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT},
+            {Direction.LEFT, Direction.UP, Direction.DOWN, Direction.RIGHT},
+            {Direction.RIGHT, Direction.UP, Direction.DOWN, Direction.LEFT},
+            {Direction.DOWN, Direction.LEFT, Direction.UP, Direction.RIGHT},
+            {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP},
+            {Direction.DOWN, Direction.RIGHT, Direction.UP, Direction.LEFT}
+    };
 	private int matrix[][];
 	private ArrayList<Dot> dots = new ArrayList<Dot>();
     private long calls = 0;
@@ -15,10 +24,6 @@ public class Board {
         return calls;
     }
 
-	public  void addDot(Dot d){
-		dots.add(d);
-	}
-	
 	public boolean isOrigin(int row,int col,int color){
 		for(Dot d:dots){
 			if(d.getColor() == color){
@@ -145,7 +150,7 @@ public class Board {
     public Board solveAprox(Listener l){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
-    	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
+    	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution);
     	return solution;
     	/*
     	 *   Dot initialDot = dots.get(0);
@@ -154,11 +159,11 @@ public class Board {
         if(solution.matrix == null) return null;
         return solution;
     	 */
-    	
-    	
-    	
-    	
-		
+
+
+
+
+
     }
     /*
     private void solveAprox(int color, Position prevPos, Position currentPos, int index, Board solution){
@@ -194,21 +199,21 @@ public class Board {
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
 */
-    private void findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l){
+    private void findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution){
         if(matrix.length <= currentPos.row || currentPos.row < 0
                 || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
 
         int currentPosColor = this.matrix[currentPos.row][currentPos.col];
-       
+
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
                     if(dots.size() == index+1 && solution != null){
-                        saveSolution(solution);System.out.println("entro en el save solugion"); 
+                        saveSolution(solution);System.out.println("entro en el save solugion");
                         return;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l);
+                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
                     }
                 }
                 return;
@@ -219,6 +224,7 @@ public class Board {
         }else if(currentPosColor != -1) return;
 
         this.matrix[currentPos.row][currentPos.col] = color;
+<<<<<<< HEAD
         
         /*secci�n para imprimir con intervalos de a 100ms*/
         if(l!=null){
@@ -230,12 +236,19 @@ public class Board {
 
         		findInitialSolution(color,currentPos,pos,index,solution,l);
         	}
+=======
+        Direction[] dir = optimalDir[getOptimalDirIndex(
+                currentPos.col - dots.get(index).getEnd().col,currentPos.row - dots.get(index).getEnd().row)];
+        Position nextPos;
+
+        for(int i = 0; i < 4; i++){
+            if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
+                findInitialSolution(color,currentPos,nextPos,index,solution);
+            }
+>>>>>>> 8a87dbe44344c2cf5d410690b268b392fed9e073
         }
-        
-        
-        
-       
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
+<<<<<<< HEAD
         }
     
     
@@ -274,5 +287,33 @@ public class Board {
        System.out.println();
         
     	return positions;
+=======
+    }
+
+    private int getOptimalDirIndex(int horizontal, int vertical){
+        if(horizontal > 0){
+            if(vertical > 0){
+                return 0;
+            }else if(vertical < 0){
+                return 5;
+            }else{
+                return 3;
+            }
+        }else if(horizontal == 0){
+            if(vertical > 0){
+                return 1;
+            }else{
+                return 7;
+            }
+        }else{
+            if(vertical > 0){
+                return 2;
+            }else if(vertical == 0){
+                return 4;
+            }else{
+                return 7;
+            }
+        }
+>>>>>>> 8a87dbe44344c2cf5d410690b268b392fed9e073
     }
 }
