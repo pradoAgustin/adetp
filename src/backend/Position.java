@@ -15,6 +15,9 @@ public class Position {
         return new Position(this.row + d.row, this.col + d.col);
     }
 
+    public String toString(){
+    	return "Position("+row+","+col+");";
+    }
     public boolean equals(Object o){
         if(o == null) return false;
         if(!(o instanceof Position)) return false;

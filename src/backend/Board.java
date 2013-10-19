@@ -231,4 +231,37 @@ public class Board {
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
+    
+    
+    public  Position[] getPositionsWithPriority(Position currentPos,Position finalPos){
+    	Position[] positions = new Position[4];
+        int horizontal = currentPos.col - finalPos.col;
+        int vertical = currentPos.row - finalPos.row;
+
+        if(horizontal > 0){
+            positions[0] = currentPos.getPosition(Direction.LEFT);
+            positions[3] = currentPos.getPosition(Direction.RIGHT);
+        }else if(horizontal == 0){
+            positions[2] = currentPos.getPosition(Direction.LEFT);
+            positions[3] = currentPos.getPosition(Direction.RIGHT);
+            if(vertical > 0){
+                positions[0] = currentPos.getPosition(Direction.UP);
+                positions[1] = currentPos.getPosition(Direction.DOWN);
+            }else{
+                positions[0] = currentPos.getPosition(Direction.DOWN);
+                positions[1] = currentPos.getPosition(Direction.UP);
+            }
+        }else if(horizontal < 0){
+            positions[0] = currentPos.getPosition(Direction.RIGHT);
+            positions[3] = currentPos.getPosition(Direction.LEFT);
+        }
+        if(vertical >= 0){
+            positions[1] = currentPos.getPosition(Direction.UP);
+            positions[2] = currentPos.getPosition(Direction.DOWN);
+        }else{
+            positions[1] = currentPos.getPosition(Direction.DOWN);
+            positions[2] = currentPos.getPosition(Direction.UP);
+        }
+    	return positions;
+    }
 }
