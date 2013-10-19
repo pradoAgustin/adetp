@@ -147,19 +147,19 @@ public class Board {
         if(solution.matrix ==  null) return null;
         Board best=new Board(null, dots);
         copyMatrix(best);
-        tryBestSolution(best);
+        tryBestSolution(best,l);
         
     	return solution;
     }
-    private void tryBestSolution(Board solution) {
+    private void tryBestSolution(Board solution, Listener l) {
 		for(Dot dot:dots){
-		tryCycle(dot,solution);
+		tryCycle(dot,solution,l);
 			
 		}
 		
 	}
 
-	private void tryCycle(Dot dot,Board board) {
+	private void tryCycle(Dot dot,Board board,Listener l) {
 		Position pos = dot.getStart();
 		pos.getPosition(Direction.DOWN);
 		int x=dot.getStart().row;
@@ -167,7 +167,8 @@ public class Board {
 		int [][] matrix=board.getIntBoard();
 		if ((x+1)<=matrix.length&& matrix[x+1][y]==dot.getColor()){
 			tryCycle(dot.getColor(),x,y,x+1,y,matrix,0,1);
-			
+			  /*secci�n para imprimir con intervalos de a 100ms*/
+	        if(l!=null) l.printToScreen();
 			
 		}
 		
@@ -180,6 +181,7 @@ public class Board {
 						matrix[fila][col]=color;
 						matrix[nfila][ncol]=color;
 						col+=incrcol;
+						System.out.println("llegue trycycle");
 						
 					}
 					return;
