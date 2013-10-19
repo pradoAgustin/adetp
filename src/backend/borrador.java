@@ -14,6 +14,7 @@ public class borrador {
 		
 		int deltaCol=d.getEnd().col-d.getStart().col;
 		int deltaFil=d.getEnd().row-d.getStart().row;
+		return null;
 		
 		
 		
