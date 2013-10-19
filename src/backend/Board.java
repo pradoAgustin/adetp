@@ -54,20 +54,20 @@ public class Board {
      * @return a Board with the matrix containing the solution if there is one,
      *         null otherwise
      */
-	public Board solve(){
+	public Board solve(Listener listener){
         Dot initialDot = dots.get(0);
         Board solution = new Board(null, dots);
-        solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution);
+        solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution,listener);
         if(solution.matrix == null) return null;
         return solution;
     }
 
-    private void solve(int color, Position prevPos, Position currentPos, int index, Board solution){
+    private void solve(int color, Position prevPos, Position currentPos, int index, Board solution,Listener listener){
         calls++;
         if(matrix.length <= currentPos.row || currentPos.row < 0
            || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
 
-        int currentPosColor = this.matrix[currentPos.row][currentPos.col];
+        int currentPosColor = this.matrix[currentPos.row][currentPos.col];//color original de la celda
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
@@ -75,7 +75,7 @@ public class Board {
                         saveSolution(solution);		
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
+                        solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,listener);
                     }
                 }
                 return;
@@ -87,10 +87,20 @@ public class Board {
 
         this.matrix[currentPos.row][currentPos.col] = color;
         Position nextPos;
-
+        
+        
+        
+        
+        /*sección para imprimir con intervalos de a 100ms*/
+        if(listener!=null){
+        	listener.printToScreen();
+               }
+        
+        
+        
         for(Direction d : Direction.values()){
             if( !(nextPos = currentPos.getPosition(d)).equals(prevPos))
-                solve(color, currentPos, nextPos, index, solution);
+                solve(color, currentPos, nextPos, index, solution,listener);
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
@@ -135,8 +145,14 @@ public class Board {
     public Board solveAprox(){
     	Board solution = new Board(null, dots);
     	findInitialSolution(dots.get(0).getColor(), null,dots.get(0).getStart(), 0, solution);
+    	
+    	
+    	
+    	
+    	
+    	
 		return solution;
-    }
+    }/*
     private void solveAprox(int color, Position prevPos, Position currentPos, int index, Board solution){
     	if(matrix.length <= currentPos.row || currentPos.row < 0
     	    || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
@@ -169,7 +185,7 @@ public class Board {
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
-
+*/
     private void findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution){
         if(matrix.length <= currentPos.row || currentPos.row < 0
                 || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
@@ -183,7 +199,7 @@ public class Board {
                         return;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
+                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
                     }
                 }
                 return;
@@ -198,7 +214,7 @@ public class Board {
         
         for(Position pos:getPositionsWithPriority(currentPos, dots.get(index).getEnd())){
         	if(!pos.equals(prevPos)){
-        		solve(color,currentPos,pos,index,solution);
+        		findInitialSolution(color,currentPos,pos,index,solution);
         	}
         }
         

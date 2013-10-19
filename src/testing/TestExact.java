@@ -46,7 +46,7 @@ public class TestExact {
 		//frame=new FlowJframe(board);
 		//frame.showBoard();
 		
-		Board boardSolution=board.solve();
+		Board boardSolution=board.solve(null);
 		int [][] matrix2=boardSolution.getIntBoard();
 		
 		
@@ -81,7 +81,7 @@ public class TestExact {
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
-		Board boardSolution2=board.solve();
+		Board boardSolution2=board.solve(null);
 		
 		FlowJframe frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
@@ -91,7 +91,7 @@ public class TestExact {
     @Test
     public void unsolvableLevelTest() throws Exception{
         Parser parser = new Parser();
-        Board solution = parser.levantarNivel("levels"+File.separator+"withoutSolution.txt").solve();
+        Board solution = parser.levantarNivel("levels"+File.separator+"withoutSolution.txt").solve(null);
         System.out.println("hubo " + solution.getClass() + " llamadas en total");
         if(solution != null){
             FlowJframe frame = new FlowJframe(solution);
@@ -104,7 +104,7 @@ public class TestExact {
 	public void testSolve3() throws Exception{
 		Parser parser=new Parser();
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
-		Board boardSolution2=board.solve();
+		Board boardSolution2=board.solve(null);
 		
 		FlowJframe frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
