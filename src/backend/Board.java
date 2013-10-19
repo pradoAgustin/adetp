@@ -1,8 +1,17 @@
 package backend;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Board {
+    private final static Direction[][] optimalDir = new Direction[][]{
+            {Direction.UP, Direction.LEFT, Direction.DOWN, Direction.RIGHT},
+            {Direction.UP, Direction.LEFT, Direction.RIGHT, Direction.DOWN},
+            {Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT},
+            {Direction.LEFT, Direction.UP, Direction.DOWN, Direction.RIGHT},
+            {Direction.RIGHT, Direction.UP, Direction.DOWN, Direction.LEFT},
+            {Direction.DOWN, Direction.LEFT, Direction.UP, Direction.RIGHT},
+            {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP},
+            {Direction.DOWN, Direction.RIGHT, Direction.UP, Direction.LEFT}
+    };
 	private int matrix[][];
 	private ArrayList<Dot> dots = new ArrayList<Dot>();
     private long calls = 0;
@@ -15,10 +24,6 @@ public class Board {
         return calls;
     }
 
-	public  void addDot(Dot d){
-		dots.add(d);
-	}
-	
 	public boolean isOrigin(int row,int col,int color){
 		for(Dot d:dots){
 			if(d.getColor() == color){
@@ -91,7 +96,7 @@ public class Board {
         
         
         
-        /*sección para imprimir con intervalos de a 100ms*/
+        /*secciï¿½n para imprimir con intervalos de a 100ms*/
         if(listener!=null){
         	listener.printToScreen();
                }
@@ -217,50 +222,41 @@ public class Board {
         }else if(currentPosColor != -1) return;
 
         this.matrix[currentPos.row][currentPos.col] = color;
-        
-        
-        for(Position pos:getPositionsWithPriority(currentPos, dots.get(index).getEnd())){
-        	if(!pos.equals(prevPos)){
-        		findInitialSolution(color,currentPos,pos,index,solution);
-        	}
+        Direction[] dir = optimalDir[getOptimalDirIndex(
+                currentPos.col - dots.get(index).getEnd().col,currentPos.row - dots.get(index).getEnd().row)];
+        Position nextPos;
+
+        for(int i = 0; i < 4; i++){
+            if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
+                findInitialSolution(color,currentPos,nextPos,index,solution);
+            }
         }
-        
-        
-        
-       
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
     
-    
-    public  Position[] getPositionsWithPriority(Position currentPos,Position finalPos){
-    	Position[] positions = new Position[4];
-        int horizontal = currentPos.col - finalPos.col;
-        int vertical = currentPos.row - finalPos.row;
-
+    private int getOptimalDirIndex(int horizontal, int vertical){
         if(horizontal > 0){
-            positions[0] = currentPos.getPosition(Direction.LEFT);
-            positions[3] = currentPos.getPosition(Direction.RIGHT);
-        }else if(horizontal == 0){
-            positions[2] = currentPos.getPosition(Direction.LEFT);
-            positions[3] = currentPos.getPosition(Direction.RIGHT);
             if(vertical > 0){
-                positions[0] = currentPos.getPosition(Direction.UP);
-                positions[1] = currentPos.getPosition(Direction.DOWN);
+                return 0;
+            }else if(vertical < 0){
+                return 5;
             }else{
-                positions[0] = currentPos.getPosition(Direction.DOWN);
-                positions[1] = currentPos.getPosition(Direction.UP);
+                return 3;
             }
-        }else if(horizontal < 0){
-            positions[0] = currentPos.getPosition(Direction.RIGHT);
-            positions[3] = currentPos.getPosition(Direction.LEFT);
-        }
-        if(vertical >= 0){
-            positions[1] = currentPos.getPosition(Direction.UP);
-            positions[2] = currentPos.getPosition(Direction.DOWN);
+        }else if(horizontal == 0){
+            if(vertical > 0){
+                return 1;
+            }else{
+                return 7;
+            }
         }else{
-            positions[1] = currentPos.getPosition(Direction.DOWN);
-            positions[2] = currentPos.getPosition(Direction.UP);
+            if(vertical > 0){
+                return 2;
+            }else if(vertical == 0){
+                return 4;
+            }else{
+                return 7;
+            }
         }
-    	return positions;
     }
 }
