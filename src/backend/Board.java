@@ -146,8 +146,8 @@ public class Board {
     public int unPaintedCells(){
     	return colsSize()*rowsSize()-paintedCells();
     }
-    
-    public Board solveAprox(Listener l){
+    /*Algoritmo basado en Hill Climbing */
+    private Board solveAprox(Listener l){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
     	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
