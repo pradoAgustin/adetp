@@ -142,10 +142,10 @@ public class Board {
     	return colsSize()*rowsSize()-paintedCells();
     }
     
-    public Board solveAprox(){
+    public Board solveAprox(Listener l){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
-    	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution);
+    	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
     	return solution;
     	/*
     	 *   Dot initialDot = dots.get(0);
@@ -159,7 +159,8 @@ public class Board {
     	
     	
 		
-    }/*
+    }
+    /*
     private void solveAprox(int color, Position prevPos, Position currentPos, int index, Board solution){
     	if(matrix.length <= currentPos.row || currentPos.row < 0
     	    || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
@@ -173,7 +174,7 @@ public class Board {
                         return;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
+                        solveAprox(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
                     }
                 }
                 return;
@@ -188,25 +189,26 @@ public class Board {
 
         for(Direction d : Direction.values()){
             if( !(nextPos = currentPos.getPosition(d)).equals(prevPos))
-                solve(color, currentPos, nextPos, index, solution);
+                solveAprox(color, currentPos, nextPos, index, solution);
         }
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
     }
 */
-    private void findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution){
+    private void findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l){
         if(matrix.length <= currentPos.row || currentPos.row < 0
                 || matrix[0].length <= currentPos.col || currentPos.col < 0) return;
 
         int currentPosColor = this.matrix[currentPos.row][currentPos.col];
+       
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
-                    if(dots.size()==index+1 && solution!=null){
-                        saveSolution(solution);
+                    if(dots.size() == index+1 && solution != null){
+                        saveSolution(solution);System.out.println("entro en el save solugion"); 
                         return;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution);
+                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l);
                     }
                 }
                 return;
@@ -218,11 +220,15 @@ public class Board {
 
         this.matrix[currentPos.row][currentPos.col] = color;
         
+        /*secci�n para imprimir con intervalos de a 100ms*/
+        if(l!=null){
+        	l.printToScreen();
+               }
         
         for(Position pos:getPositionsWithPriority(currentPos, dots.get(index).getEnd())){
         	if(!pos.equals(prevPos)){
-        		findInitialSolution(color,currentPos,pos,index,solution);
-        		
+
+        		findInitialSolution(color,currentPos,pos,index,solution,l);
         	}
         }
         
@@ -230,7 +236,8 @@ public class Board {
         
        
         this.matrix[currentPos.row][currentPos.col] = currentPosColor;
-    }
+        }
+    
     
     
     public  Position[] getPositionsWithPriority(Position currentPos,Position finalPos){

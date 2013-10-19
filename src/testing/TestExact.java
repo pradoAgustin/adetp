@@ -10,7 +10,7 @@ import backend.*;
 import org.junit.Test;
 
 import frontEnd.FlowJframe;
-import frontEnd.printListener;
+import frontEnd.PrintListener;
 
 public class TestExact {
 	/*mapa a resolver se encuentra en /resources/level30png
