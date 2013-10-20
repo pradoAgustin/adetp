@@ -171,15 +171,16 @@ public class Board {
 		
 		if ((x+1)<matrix.length && matrix[x+1][y]==dot.getColor()||(x-1)>=0&& matrix[x-1][y]==dot.getColor()){
 			tryCycleCols(dot.getColor(),x,y,matrix);
-			System.out.println(matrix[1][2]);
+			tryCycleFils(dot.getColor(),x,y,matrix);
 			}
 			  /*secci�n para imprimir con intervalos de a 100ms*/
 	       /* if(l!=null) l.printToScreen();*/
 		
 		
 		else if(((y-1)>=0&& matrix[x][y-1]==dot.getColor())||((y+1)<matrix[0].length && matrix[x][y+1]==dot.getColor())){
-			tryCyclefils(dot.getColor(),x,y,matrix);
-			System.out.println("djkfadjfak");
+			tryCycleFils(dot.getColor(),x,y,matrix);
+			tryCycleCols(dot.getColor(),x,y,matrix);
+			System.out.println("entro en ciclo filas");
 		}
 		
 			
@@ -188,7 +189,8 @@ public class Board {
 		
 }
 
-	private void tryCyclefils(int color, int fila, int col, int[][] matrix) {
+	private void tryCycleFils(int color, int fila, int col, int[][] matrix) {
+		System.out.println("got here");
 		boolean flag=false;
 		int i=fila+1;
 		int c=((col-1)>=0&& matrix[fila][col-1]==color)?col-1:col+1;
@@ -217,7 +219,17 @@ public class Board {
 				return;
 			}}
 		}
+		for(int h=0;h<matrix.length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
+		{
+			for(int k=0;k<matrix[0].length;k++){
+				System.out.print(matrix[h][k]);
+			}
+			System.out.println();
 		}
+			
+			}
+			
+	
 		
 	
 
@@ -254,6 +266,7 @@ public class Board {
 				return;
 			}
 				}
+			
 		
 		}
 	for(int h=0;h<matrix.length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
