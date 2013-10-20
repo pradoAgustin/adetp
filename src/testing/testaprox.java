@@ -92,7 +92,22 @@ public class testaprox{
 //			}
 //		}
 //	}
+
 	
+	
+	 @Test
+	   	public void testSolve5() throws Exception{
+	   		Parser parser=new Parser();
+	   		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3(2).txt");
+	   		FlowJframe frame=new FlowJframe(board);
+	   		frame.showBoard();
+	   		board=board.solveAprox(new PrintListener(frame));
+	   		
+	   		frame=new FlowJframe(board);
+	   		frame.showBoard();
+	   		int cant=board.unPaintedCells();
+	   		
+	   	}
 	@Test
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
@@ -100,6 +115,7 @@ public class testaprox{
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		 board=board.solveAprox(new PrintListener(frame));
+		 frame.showBoard();
 
 		int cant=board.unPaintedCells();
 		assertTrue(board!=null && board.colsSize()>0);/*se controla la matriz del tablero solucion no este vacia*/
@@ -197,4 +213,5 @@ public class testaprox{
 	
 	
 }
+
 }

@@ -139,62 +139,154 @@ public class Board {
     public int unPaintedCells(){
     	return colsSize()*rowsSize()-paintedCells();
     }
-    
+    /*Algoritmo basado en Hill Climbing */
     public Board solveAprox(Listener l){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
     	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
-        if(solution.matrix ==  null) return null;
+        if(solution.matrix ==null) 
+        	return null;
         Board best=new Board(null, dots);
         copyMatrix(best);
-        tryBestSolution(best);
+        tryBestSolution(best,l);
         
     	return solution;
     }
-    private void tryBestSolution(Board solution) {
+    private void tryBestSolution(Board solution, Listener l)
+    {
 		for(Dot dot:dots){
-		tryCycle(dot,solution);
+		tryCycle(dot,solution,l);
 			
 		}
 		
+		
 	}
 
-	private void tryCycle(Dot dot,Board board) {
+	private void tryCycle(Dot dot,Board board,Listener l) {
 		Position pos = dot.getStart();
-		pos.getPosition(Direction.DOWN);
+		
 		int x=dot.getStart().row;
 		int y =dot.getStart().col;
 		int [][] matrix=board.getIntBoard();
-		if ((x+1)<=matrix.length&& matrix[x-1][y]==dot.getColor()){
-			tryCycle(dot.getColor(),x,y,x-1,y,matrix,0,1);
-			
-			
+		
+		if ((x+1)<matrix.length && matrix[x+1][y]==dot.getColor()||(x-1)>=0&& matrix[x-1][y]==dot.getColor()){
+			tryCycleCols(dot.getColor(),x,y,matrix);
+			System.out.println(matrix[1][2]);
+			}
+			  /*secci�n para imprimir con intervalos de a 100ms*/
+	       /* if(l!=null) l.printToScreen();*/
+		
+		
+		else if(((y-1)>=0&& matrix[x][y-1]==dot.getColor())||((y+1)<matrix[0].length && matrix[x][y+1]==dot.getColor())){
+			tryCyclefils(dot.getColor(),x,y,matrix);
+			System.out.println("djkfadjfak");
 		}
 		
-	}
+			
+			
+	
+		
+}
 
-	private void tryCycle(int color, int fila, int col, int nfila , int ncol,
-			int[][] matrix,int incrfila,int incrcol) {
-			for(;nfila<=matrix.length&&fila<matrix.length &&col<matrix[0].length&&ncol<matrix[0].length;){{
+	private void tryCyclefils(int color, int fila, int col, int[][] matrix) {
+		boolean flag=false;
+		int i=fila+1;
+		int c=((col-1)>=0&& matrix[fila][col-1]==color)?col-1:col+1;
+		while(i<matrix.length)
+		{	if(matrix[i][col]==-1&& matrix[i][c]==-1)
+		{	flag=true;
+			matrix[i][col]=color;
+			matrix[i][c]=color;
+			i+=1;
+		}
+		else{
+			i=matrix.length;
+		}
+		}
+		
+		if(!flag)
+		{	i=fila-1;
+			while(i<=0)
+			{	if(matrix[i][col]==-1&& matrix[i][c]==-1)
+			{	flag=true;
+				matrix[i][c]=color;
+				matrix[i][col]=color;
+				i-=1;
+			}
+			else{
+				return;
+			}}
+		}
+		}
+		
+	
+
+	private void tryCycleCols(int color, int fila, int col,int[][]matrix) /*trata de ciclar por columna*/
+	{
+		System.out.println("llega a tryCycle");
+		int f=((fila-1)>=0&& matrix[fila-1][col]==color)?fila-1:fila+1;
+		System.out.println("vALOR DE FILA");
+		System.out.println(f);
+		boolean flag=false;
+		int i=col+1;
+		while(i<matrix[0].length){	
+		if((matrix[fila][i])==-1&&( matrix[f][i]==-1))
+		{	flag=true;
+			matrix[fila][i]=color;
+			matrix[f][i]=color;
+			i+=1;
+		}
+		else{
+			i=matrix[0].length;
+		}
+		}
+		
+		if(!flag)
+		{	i=col-1;
+			while(i<=0){	
+				if((matrix[fila][i]==-1)&& (matrix[f][i]==-1))
+				{	flag=true;
+				matrix[fila][i]=color;
+				matrix[f][i]=color;
+				i-=1;
+			}
+			else{
+				return;
+			}
+				}
+		
+		}
+	for(int h=0;h<matrix.length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
+	{
+		for(int k=0;k<matrix[0].length;k++){
+			System.out.print(matrix[h][k]);
+		}
+		System.out.println();
+	}
+		
+		}
+		
+		
+		
+		
+		
+		
+			
+			
+			/*for(;nfila<=matrix.length&&fila<matrix.length &&col<matrix[0].length&&ncol<matrix[0].length;){{
 					if((matrix[fila][col]==-1||matrix[fila][col]==color)&&(matrix[fila][col]==-1||matrix[fila][col]==color)){
 						matrix[fila][col]=color;
 						matrix[nfila][ncol]=color;
 						col+=incrcol;
+						System.out.println("llegue trycycle");
 						
 					}
 					return;
-				}
+				}*/
 				
-			}
-			for(int i=0;i<matrix.length;i++){
-				for(int j=0;j<matrix.length;j++){
-					System.out.print(matrix[i][j]);
-				}
-				System.out.println();
-			}
+		
 			
 		
-	}
 
 	/*
     private void solveAprox(int color, Position prevPos, Position currentPos, int index, Board solution){
@@ -337,7 +429,6 @@ public class Board {
                 return 7;
             }
         }
-
     }
 
 	public void addDot(Dot dot) {

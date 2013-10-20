@@ -3,7 +3,6 @@ package backend;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Parser {
@@ -14,6 +13,7 @@ public class Parser {
         ArrayList<Position> colorPosList = new ArrayList<Position>();
         int rowsSize, colsSize;
         String line;
+        int[] colorDotsAmount = new int[COLORS_AMOUNT];
         try {
             buffer = new BufferedReader(new FileReader(mapFile));
             if((line = buffer.readLine()) == null) throw new InvalidFileException("Invalid map file");
@@ -37,12 +37,17 @@ public class Parser {
                             throw new InvalidFileException("Invalid map file: unsupported character present");
                         colorPosList.add(new Position(row, col));
                         board[row][col] = currentChar -'0';
+                        colorDotsAmount[currentChar-'0']++;
                     }else{
                         board[row][col] = -1;
                     }
                 }
             }
             if(row != rowsSize) throw new InvalidFileException("Invalid map file: not all the rows are specified");
+            for(int i : colorDotsAmount){
+                if(i == 1) throw new InvalidFileException("There is a color which has a single dot instead of 2");
+                if(i > 2) throw new InvalidFileException("There are more than 2 dots for a single color");
+            }
 
             return new Board(board, createDotList(colorPosList, board));
         }finally{
@@ -52,21 +57,15 @@ public class Parser {
 
     private ArrayList<Dot> createDotList(ArrayList<Position> colorPosList, int[][] board) throws InvalidFileException{
         ArrayList<Dot> ret = new ArrayList<Dot>();
-        int[] presentColors = new int[COLORS_AMOUNT];
-        for(int v = 0; v < presentColors.length; v++){
-            presentColors[v] = -2;
-        }
-        for(int i = 0; i < colorPosList.size(); i++){
-            for(int j = i+1; j < colorPosList.size(); j++){
+        int i, j;
+        for(i = 0; i < colorPosList.size(); i++){
+            for(j = i+1; j < colorPosList.size(); j++){
                 Position pos1 = colorPosList.get(i);
                 Position pos2 = colorPosList.get(j);
                 int color;
                 if( (color = board[pos1.row][pos1.col]) == board[pos2.row][pos2.col] ){
                     ret.add(new Dot(pos1, pos2, color));
-                    if(presentColors[color] != -2){
-                        throw new InvalidFileException("There are more than 2 dots for a single color");
-                    }
-                    presentColors[color] = color;
+                    continue;
                 }
             }
         }
@@ -77,6 +76,5 @@ public class Parser {
         public InvalidFileException(String message){
             super(message);
         }
-
     }
 }
