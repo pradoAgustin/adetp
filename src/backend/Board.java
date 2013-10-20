@@ -165,8 +165,8 @@ public class Board {
 		int x=dot.getStart().row;
 		int y =dot.getStart().col;
 		int [][] matrix=board.getIntBoard();
-		if ((x+1)<=matrix.length&& matrix[x+1][y]==dot.getColor()){
-			tryCycle(dot.getColor(),x,y,x+1,y,matrix,0,1);
+		if ((x+1)<=matrix.length&& matrix[x-1][y]==dot.getColor()){
+			tryCycle(dot.getColor(),x,y,x-1,y,matrix,0,1);
 			
 			
 		}
@@ -183,9 +183,14 @@ public class Board {
 						
 					}
 					return;
-					
 				}
 				
+			}
+			for(int i=0;i<matrix.length;i++){
+				for(int j=0;j<matrix.length;j++){
+					System.out.print(matrix[i][j]);
+				}
+				System.out.println();
 			}
 			
 		
