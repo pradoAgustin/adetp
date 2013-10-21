@@ -319,9 +319,11 @@ public class Board {
 		while(i<board.getIntBoard()[0].length){	
 		if((board.getIntBoard()[fila][i])==-1&&( board.getIntBoard()[f][i]==-1))
 		{	flag=true;
+
 			board.getIntBoard()[fila][i]=color;
 			board.getIntBoard()[f][i]=color;
 			i+=1;
+
 		}
 		else{
 			break;
@@ -341,8 +343,6 @@ public class Board {
 				break;
 			}
 				}
-			
-		
 		}
 		System.out.println("valor del flag en ciclo cols"+flag);
 	for(int h=0;h<board.getIntBoard().length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
@@ -352,8 +352,10 @@ public class Board {
 		}
 		System.out.println();
 	}
+
 	return flag;
 		
+
 		}
 
 
@@ -414,15 +416,16 @@ public class Board {
 */
     private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l){
         if(matrix.length <= currentPos.row || currentPos.row < 0
-                || matrix[0].length <= currentPos.col || currentPos.col < 0) return false;
+           || matrix[0].length <= currentPos.col || currentPos.col < 0) return false;
 
         int currentPosColor = this.matrix[currentPos.row][currentPos.col];
 
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
-                    if(dots.size() == index+1 && solution != null){
-                        saveSolution(solution);System.out.println("entro en el save solution"); // TODO borrar, es para debugger nomás
+                    if(dots.size() == index+1){
+                        saveSolution(solution);
+                        System.out.println("entro en el save solution"); // TODO borrar, es para debugger nomás
                         return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
@@ -435,15 +438,12 @@ public class Board {
                 return false;
             }
         }else if(currentPosColor != -1) return false;
-
         this.matrix[currentPos.row][currentPos.col] = color;
-
-        Direction[] dir = optimalDir[getOptimalDirIndex(currentPos, dots.get(index).getEnd())];
-        Position nextPos;
-        
         /*secci�n para imprimir con intervalos de a 100ms*/
         if(l!=null)	l.printToScreen();
 
+        Direction[] dir = getOptimalDirArray(currentPos, dots.get(index).getEnd());
+        Position nextPos;
         for(int i = 0; i < 4; i++){
             if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
                 if(findInitialSolution(color,currentPos,nextPos,index,solution,l))
@@ -457,8 +457,7 @@ public class Board {
     
     
     public  Position[] getPositionsWithPriority(Position currentPos,Position finalPos){
-    	
-    	
+
     	Position[] positions = new Position[4];
     	int c=finalPos.col-finalPos.col;
     	int f=finalPos.row-currentPos.row;
@@ -503,38 +502,19 @@ public class Board {
      * |                  |
      * | ><     =<     << |
      * --------------------
-     * @param from
-     * @param to
-     * @return Índice donde se encuentra el arreglo de direcciones óptimas
-     *         correspondientes para cada caso.
+     * @param from Posicion en la que se encuentra el algoritmo
+     * @param to Posición a la que busca llegar el algoritmo
+     * @return Arreglo de direcciones óptimas que corresponda
      */
 
-    private int getOptimalDirIndex(Position from, Position to){
+    private Direction[] getOptimalDirArray(Position from, Position to){
         int horizontal = from.col - to.col;
         int vertical = from.row - to.row;
-        if(horizontal > 0){
-            if(vertical > 0){
-                return 0;
-            }else if(vertical < 0){
-                return 5;
-            }else{
-                return 3;
-            }
-        }else if(horizontal == 0){
-            if(vertical > 0){
-                return 1;
-            }else{
-                return 6;
-            }
-        }else{
-            if(vertical > 0){
-                return 2;
-            }else if(vertical == 0){
-                return 4;
-            }else{
-                return 7;
-            }
-        }
+        if(horizontal > 0)
+            return (vertical > 0) ? optimalDir[0] : (vertical < 0) ? optimalDir[5] : optimalDir[3];
+        if(horizontal == 0)
+            return (vertical > 0) ? optimalDir[1]: optimalDir[6];
+        return (vertical > 0) ? optimalDir[2] : vertical == 0 ? optimalDir[4] : optimalDir[7];
     }
 
 	public void addDot(Dot dot) {
