@@ -466,4 +466,41 @@ public class Board {
 	public void addDot(Dot dot) {
 		dots.add(dot);
 	}
+
+    public static void main(String args[]){
+        if(args.length < 2){
+            System.out.println("Arguments are lacking");
+            return;
+        }
+        Board board;
+        try{
+            board = (new Parser()).parseLevel(args[0].toString());
+        }catch(Exception e){
+            e.getMessage();
+            return;
+        }
+
+        if(args[1].equals("exact")){
+            if(args.length > 2 && args[2].equals("progress")){
+                board.solve(null /*reemplazar por listener*/);
+                return;
+            }else{
+                board.solve(null);
+                return;
+            }
+        }else if(args[1].equals("approx")){
+            if(args.length > 2){
+                if(args.length > 3 && args[2].equals("progress")){
+                    board.solveAprox(null, null /*reemplazar por valores!*/);
+                    return;
+                }
+                board.solveAprox(null, null /*reemplazar por valores!*/);
+                return;
+            }
+            board.solveAprox(null, null);
+        }else{
+            throw new IllegalArgumentException();
+        }
+    }
+
 }
