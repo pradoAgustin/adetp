@@ -155,12 +155,23 @@ public class Board {
     private void tryBestSolution(Board solution, Listener l)
     {
 		for(Dot dot:dots){
+			System.out.println("color"+dot.getColor());
 		tryCycle(dot,solution,l);
+		System.out.println("luego de trycle");
+		for(int h=0;h<solution.getIntBoard().length;h++)
+		{
+			for(int k=0;k<solution.getIntBoard()[0].length;k++){
+				System.out.print(solution.getIntBoard()[h][k]);
+			}
+			System.out.println();
+		}
 			
+			}
+			
+		/*tryCycleRandom(dot,solution,l)*/	
 		}
 		
 		
-	}
 
 	private void tryCycle(Dot dot,Board board,Listener l) {
 		Position pos = dot.getStart();
@@ -168,64 +179,89 @@ public class Board {
 		int x=dot.getStart().row;
 		int y =dot.getStart().col;
 		int [][] matrix=board.getIntBoard();
+		//for(int i=0;i<matrix.length*2;i++)   /*posible ciclo for para poder tirar random y no empezar a tratar de ciclar por el mismo punto siempre*/
+		//{int ctr=0;
+			/*int x=(int) (Math.random()*matrix.length);
+			int y =(int) (Math.random()*matrix[0].length);
+			ctr+=check(x+1,y,dot.getColor());
+			ctr+=check(x-1,y,dot.getColor());
+			ctr+=check(x,y-1,dot.getColor());
+			ctr+=check(x,y+1,dot.getColor());
+			System.out.println("este es el valor de ctr"+ctr);
+			System.out.println("val de x"+x+"val de y "+y);*/
+		//if(ctr==2){}
 		
 		if ((x+1)<matrix.length && matrix[x+1][y]==dot.getColor()||(x-1)>=0&& matrix[x-1][y]==dot.getColor()){
-			tryCycleCols(dot.getColor(),x,y,matrix);
-			tryCycleFils(dot.getColor(),x,y,matrix);
+			if(tryCycleCols(dot.getColor(),x,y,board)){
+				tryCycleFils(dot.getColor(),x,y,board);
+			}
+			
 			}
 			  /*secci�n para imprimir con intervalos de a 100ms*/
 	       /* if(l!=null) l.printToScreen();*/
 		
 		
 		else if(((y-1)>=0&& matrix[x][y-1]==dot.getColor())||((y+1)<matrix[0].length && matrix[x][y+1]==dot.getColor())){
-			tryCycleFils(dot.getColor(),x,y,matrix);
-			tryCycleCols(dot.getColor(),x,y,matrix);
-			System.out.println("entro en ciclo filas");
+			if(tryCycleFils(dot.getColor(),x,y,board)){
+				tryCycleCols(dot.getColor(),x,y,board);
+			}
 		}
-		
-			
-			
-	
-		
-}
+			}
 
-	private void tryCycleFils(int color, int fila, int col, int[][] matrix) {
-		System.out.println("got here");
+	private int check(int x, int y, int color) {
+		if(x>=0&&x<matrix.length && y>=0 && y<matrix[0].length){
+			return (matrix[x][y]==color)?1:0;
+		}
+		return 0;
+		
+	}
+
+	private boolean tryCycleFils(int color, int fila, int col, Board board) {
+	
 		boolean flag=false;
 		int i=fila+1;
-		int c=((col-1)>=0&& matrix[fila][col-1]==color)?col-1:col+1;
-		while(i<matrix.length)
-		{	if(matrix[i][col]==-1&& matrix[i][c]==-1)
-		{	flag=true;
-			matrix[i][col]=color;
-			matrix[i][c]=color;
-			i+=1;
-		}
+		int c=((col-1)>=0&& board.getIntBoard()[fila][col-1]==color)?col-1:col+1;
+		while(i<board.getIntBoard().length)
+		{		if(board.getIntBoard()[i][col]==-1&& board.getIntBoard()[i][c]==-1)
+			{	flag=true;
+				board.getIntBoard()[i][col]=color;
+				board.getIntBoard()[i][c]=color;
+				i+=1;	
+			
+			}
 		else{
-			i=matrix.length;
-		}
+				break;
+			}
 		}
 		
 		if(!flag)
 		{	i=fila-1;
-			while(i<=0)
-			{	if(matrix[i][col]==-1&& matrix[i][c]==-1)
-			{	flag=true;
-				matrix[i][c]=color;
-				matrix[i][col]=color;
-				i-=1;
-			}
+		
+			while(i>=0)
+			{	System.out.println("valor de la fila i col c");
+				System.out.println("fila"+i+"col"+c);
+				
+				
+				if(board.getIntBoard()[i][col]==-1&& board.getIntBoard()[i][c]==-1)
+				{	flag=true;
+					board.getIntBoard()[i][c]=color;
+					board.getIntBoard()[i][col]=color;
+					i-=1;
+				}
 			else{
-				return;
-			}}
-		}
-		for(int h=0;h<matrix.length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
-		{
-			for(int k=0;k<matrix[0].length;k++){
-				System.out.print(matrix[h][k]);
+				break;
+				}
 			}
-			System.out.println();
 		}
+			for(int h=0;h<board.getIntBoard().length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
+				{
+				for(int k=0;k<board.getIntBoard()[0].length;k++){
+				System.out.print(board.getIntBoard()[h][k]);
+				}
+				System.out.println();
+				}
+			System.out.println("valor del flag en ciclo fils"+flag);
+		return flag;
 			
 			}
 			
@@ -233,49 +269,49 @@ public class Board {
 		
 	
 
-	private void tryCycleCols(int color, int fila, int col,int[][]matrix) /*trata de ciclar por columna*/
+	private boolean tryCycleCols(int color, int fila, int col,Board board) /*trata de ciclar por columna*/
 	{
 		System.out.println("llega a tryCycle");
-		int f=((fila-1)>=0&& matrix[fila-1][col]==color)?fila-1:fila+1;
-		System.out.println("vALOR DE FILA");
-		System.out.println(f);
+		int f=((fila-1)>=0&& board.getIntBoard()[fila-1][col]==color)?fila-1:fila+1;
 		boolean flag=false;
 		int i=col+1;
-		while(i<matrix[0].length){	
-		if((matrix[fila][i])==-1&&( matrix[f][i]==-1))
+		while(i<board.getIntBoard()[0].length){	
+		if((board.getIntBoard()[fila][i])==-1&&( board.getIntBoard()[f][i]==-1))
 		{	flag=true;
-			matrix[fila][i]=color;
-			matrix[f][i]=color;
+			board.getIntBoard()[fila][i]=color;
+			board.getIntBoard()[f][i]=color;
 			i+=1;
 		}
 		else{
-			i=matrix[0].length;
+			break;
 		}
 		}
 		
 		if(!flag)
 		{	i=col-1;
 			while(i<=0){	
-				if((matrix[fila][i]==-1)&& (matrix[f][i]==-1))
+				if((board.getIntBoard()[fila][i]==-1)&& (board.getIntBoard()[f][i]==-1))
 				{	flag=true;
-				matrix[fila][i]=color;
-				matrix[f][i]=color;
+				board.getIntBoard()[fila][i]=color;
+				board.getIntBoard()[f][i]=color;
 				i-=1;
 			}
 			else{
-				return;
+				break;
 			}
 				}
 			
 		
 		}
-	for(int h=0;h<matrix.length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
+		System.out.println("valor del flag en ciclo cols"+flag);
+	for(int h=0;h<board.getIntBoard().length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
 	{
-		for(int k=0;k<matrix[0].length;k++){
+		for(int k=0;k<board.getIntBoard()[0].length;k++){
 			System.out.print(matrix[h][k]);
 		}
 		System.out.println();
 	}
+	return flag;
 		
 		}
 		
