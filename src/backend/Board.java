@@ -2,15 +2,17 @@ package backend;
 import java.util.ArrayList;
 
 public class Board {
+    /* Array con las direcciones en el orden óptimo precalculadas, para usar
+       en la solución aproximáda a la hora de buscar una solución inicial */
     private final static Direction[][] optimalDir = new Direction[][]{
-            {Direction.UP, Direction.LEFT, Direction.DOWN, Direction.RIGHT},
-            {Direction.UP, Direction.LEFT, Direction.RIGHT, Direction.DOWN},
-            {Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT},
-            {Direction.LEFT, Direction.UP, Direction.DOWN, Direction.RIGHT},
-            {Direction.RIGHT, Direction.UP, Direction.DOWN, Direction.LEFT},
-            {Direction.DOWN, Direction.LEFT, Direction.UP, Direction.RIGHT},
-            {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP},
-            {Direction.DOWN, Direction.RIGHT, Direction.UP, Direction.LEFT}
+    /* 0 */ {Direction.UP, Direction.LEFT, Direction.DOWN, Direction.RIGHT},
+    /* 1 */ {Direction.UP, Direction.LEFT, Direction.RIGHT, Direction.DOWN},
+    /* 2 */ {Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT},
+    /* 3 */ {Direction.LEFT, Direction.UP, Direction.DOWN, Direction.RIGHT},
+    /* 4 */ {Direction.RIGHT, Direction.UP, Direction.DOWN, Direction.LEFT},
+    /* 5 */ {Direction.DOWN, Direction.LEFT, Direction.UP, Direction.RIGHT},
+    /* 6 */ {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP},
+    /* 7 */ {Direction.DOWN, Direction.RIGHT, Direction.UP, Direction.LEFT}
     };
 	private int matrix[][];
 	private ArrayList<Dot> dots = new ArrayList<Dot>();
@@ -63,8 +65,7 @@ public class Board {
         Dot initialDot = dots.get(0);
         Board solution = new Board(null, dots);
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution,listener);
-        if(solution.matrix == null) return null;
-        return solution;
+        return solution.matrix == null? null : solution;
     }
 
     private void solve(int color, Position prevPos, Position currentPos, int index, Board solution,Listener listener){
@@ -144,10 +145,10 @@ public class Board {
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
     	boolean ans=findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
-    	if(!ans) //no hay soluci�n
+    	if(!ans) //no hay soluci�n
     		return null;
     	
-    	if(solution.unPaintedCells()==0 ){//hay soluci�n inicial y es la mejor
+    	if(solution.unPaintedCells()==0 ){//hay soluci�n inicial y es la mejor
     	   return solution;
        }
     	
@@ -259,10 +260,6 @@ public class Board {
 		}
 			
 			}
-			
-	
-		
-	
 
 	private void tryCycleCols(int color, int fila, int col,int[][]matrix) /*trata de ciclar por columna*/
 	{
@@ -309,14 +306,14 @@ public class Board {
 	}
 		
 		}
-		
-		
-		
-		
-		
-		
-			
-			
+
+
+
+
+
+
+
+
 			/*for(;nfila<=matrix.length&&fila<matrix.length &&col<matrix[0].length&&ncol<matrix[0].length;){{
 					if((matrix[fila][col]==-1||matrix[fila][col]==color)&&(matrix[fila][col]==-1||matrix[fila][col]==color)){
 						matrix[fila][col]=color;
@@ -327,7 +324,7 @@ public class Board {
 					}
 					return;
 				}*/
-				
+
 		
 			
 		
@@ -376,7 +373,7 @@ public class Board {
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
                     if(dots.size() == index+1 && solution != null){
-                        saveSolution(solution);System.out.println("entro en el save solugion");
+                        saveSolution(solution);System.out.println("entro en el save solution"); // TODO borrar, es para debugger nomás
                         return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
@@ -392,14 +389,11 @@ public class Board {
 
         this.matrix[currentPos.row][currentPos.col] = color;
 
-        Direction[] dir = optimalDir[getOptimalDirIndex(
-                currentPos.col - dots.get(index).getEnd().col,currentPos.row - dots.get(index).getEnd().row)];
+        Direction[] dir = optimalDir[getOptimalDirIndex(currentPos, dots.get(index).getEnd())];
         Position nextPos;
         
         /*secci�n para imprimir con intervalos de a 100ms*/
-        if(l!=null){
-        	l.printToScreen();
-               }
+        if(l!=null)	l.printToScreen();
 
         for(int i = 0; i < 4; i++){
             if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
@@ -449,7 +443,26 @@ public class Board {
     	return positions;
     }
 
-    private int getOptimalDirIndex(int horizontal, int vertical){
+    /**
+     * Siendo C el "current point", hay 8 posibles posiciones diferentes
+     * en las que el destino puede encontrarse, numeradas desde el extremo
+     * izquierdo superior al derecho inferior.
+     * --------------------
+     * | >>     =>     <> |
+     * |                  |
+     * | >=     C      <= |
+     * |                  |
+     * | ><     =<     << |
+     * --------------------
+     * @param from
+     * @param to
+     * @return Índice donde se encuentra el arreglo de direcciones óptimas
+     *         correspondientes para cada caso.
+     */
+
+    private int getOptimalDirIndex(Position from, Position to){
+        int horizontal = from.col - to.col;
+        int vertical = from.row - to.row;
         if(horizontal > 0){
             if(vertical > 0){
                 return 0;
@@ -462,7 +475,7 @@ public class Board {
             if(vertical > 0){
                 return 1;
             }else{
-                return 7;
+                return 6;
             }
         }else{
             if(vertical > 0){
