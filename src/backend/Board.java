@@ -143,8 +143,11 @@ public class Board {
     public Board solveAprox(Listener l,Chronometer chronometer){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
-    	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
-       if(solution.unPaintedCells()==0){
+    	boolean ans=findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
+    	if(!ans) //no hay solución
+    		return null;
+    	
+    	if(solution.unPaintedCells()==0 ){//hay solución inicial y es la mejor
     	   return solution;
        }
     	
@@ -177,7 +180,7 @@ public class Board {
     		//}
     		
         
-    	}while(chronometer.isThereTimeRemaining());
+    	}while(chronometer.isThereTimeRemaining());//se controla que quede tiempo
     	return solution;
     }
     private void tryBestSolution(Board solution, Listener l)
