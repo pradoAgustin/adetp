@@ -1,7 +1,7 @@
 package backend;
 
 	/**
-     * Clase que modela un cronometro. El tiempo se almacena internamente en milisegundos.
+     * Clase que modela un cronometro. Todos los metodos de entrada y de salida son con parametros en segundos.El tiempo se almacena internamente en milisegundos.
 	 * Se puede consultar el tiempo transcurrido en segundos en milisegundos.
 	 * Tambi�n permite saber si queda tiempo, usando el metodo isThereTime remaining
 	 */

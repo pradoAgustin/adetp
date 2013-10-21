@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import backend.Board;
+import backend.Chronometer;
 import backend.Color;
 import backend.Dot;
 import backend.Parser;
@@ -101,7 +102,7 @@ public class testaprox{
 	   		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3(2).txt");
 	   		FlowJframe frame=new FlowJframe(board);
 	   		frame.showBoard();
-	   		board=board.solveAprox(new PrintListener(frame));
+	   		board=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));//puse un tiempo grande para testear
 	   		
 	   		frame=new FlowJframe(board);
 	   		frame.showBoard();
@@ -114,7 +115,7 @@ public class testaprox{
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
-		 board=board.solveAprox(new PrintListener(frame));
+		 board=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));
 		 frame.showBoard();
 
 		int cant=board.unPaintedCells();
@@ -128,7 +129,7 @@ public class testaprox{
 		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
-		Board boardSolution2=board.solveAprox(null/*new PrintListener(frame)*/);
+		Board boardSolution2=board.solveAprox(null/*new PrintListener(frame)*/,new Chronometer(1000000000));
 		
 		frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
@@ -202,7 +203,7 @@ public class testaprox{
 		
 	 frame=new FlowJframe(board);
 		frame.showBoard();
-		Board boardSolution2=board.solveAprox(new PrintListener(frame));
+		Board boardSolution2=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));
 		
 		frame=new FlowJframe(boardSolution2);
 		frame.showBoard();

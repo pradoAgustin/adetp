@@ -140,16 +140,44 @@ public class Board {
     	return colsSize()*rowsSize()-paintedCells();
     }
     /*Algoritmo basado en Hill Climbing */
-    public Board solveAprox(Listener l){
+    public Board solveAprox(Listener l,Chronometer chronometer){
     	Dot initialDot = dots.get(0);
     	Board solution = new Board(null, dots);
     	findInitialSolution(initialDot.getColor(), null,initialDot.getStart(), 0, solution,l);
-        if(solution.matrix ==null) 
-        	return null;
-        Board best=new Board(null, dots);
-        copyMatrix(best);
-        tryBestSolution(best,l);
+       if(solution.unPaintedCells()==0){
+    	   return solution;
+       }
+    	
+    	
+    	boolean wasChange=true;
+    	do{
+    		Board best;
+    		best=new Board(null, dots);
+//    		if(!wasChange){
+//    			
+//    			sortDots(initialDot);//funcion que hace un sort de la lista de colores
+//    			
+//    			
+//    			//se llama a la funcion inicial, pero con la lista de colores mezclada para simular una solucion al azar.
+//    			//De esta manera, se busca una solucion  trabajando con los colores en un orden al azar distinto del inicial
+//    			findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, best, l);
+//    		}
+//    		else{
+    			wasChange=false;
+    			if(solution.matrix ==null)//es decir que no hay solucion 
+    				return null;
+    			 best=new Board(null, dots);
+    			copyMatrix(best);
+    			tryBestSolution(best,l);
+    			if(best!=null && best.unPaintedCells()<solution.unPaintedCells()){
+    				solution=best;
+    				wasChange=true;
+    			}
+    		
+    		//}
+    		
         
+    	}while(chronometer.isThereTimeRemaining());
     	return solution;
     }
     private void tryBestSolution(Board solution, Listener l)
@@ -170,7 +198,7 @@ public class Board {
 		int [][] matrix=board.getIntBoard();
 		
 		if ((x+1)<matrix.length && matrix[x+1][y]==dot.getColor()||(x-1)>=0&& matrix[x-1][y]==dot.getColor()){
-			tryCycleCols(dot.getColor(),x,y,matrix);
+			tryCycleCols(dot.getColor(),x,y,matrix);//
 			tryCycleFils(dot.getColor(),x,y,matrix);
 			}
 			  /*secci�n para imprimir con intervalos de a 100ms*/
@@ -178,7 +206,7 @@ public class Board {
 		
 		
 		else if(((y-1)>=0&& matrix[x][y-1]==dot.getColor())||((y+1)<matrix[0].length && matrix[x][y+1]==dot.getColor())){
-			tryCycleFils(dot.getColor(),x,y,matrix);
+			tryCycleFils(dot.getColor(),x,y,matrix);//
 			tryCycleCols(dot.getColor(),x,y,matrix);
 			System.out.println("entro en ciclo filas");
 		}
@@ -202,7 +230,7 @@ public class Board {
 			i+=1;
 		}
 		else{
-			i=matrix.length;
+			break;
 		}
 		}
 		
