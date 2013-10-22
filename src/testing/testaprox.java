@@ -102,7 +102,7 @@ public class testaprox{
 	   		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3(2).txt");
 	   		FlowJframe frame=new FlowJframe(board);
 	   		frame.showBoard();
-	   		board=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));//puse un tiempo grande para testear
+	   		board=board.solveAprox(new PrintListener(frame),new Chronometer(1));//puse un tiempo grande para testear
 	   		
 	   		frame=new FlowJframe(board);
 	   		frame.showBoard();

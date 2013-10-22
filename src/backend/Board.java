@@ -288,10 +288,10 @@ public class Board {
 				
 				
 				if(board.getIntBoard()[i][col]==-1&& board.getIntBoard()[i][c]==-1)
-				{	flag=true;
+				{	
 					board.getIntBoard()[i][c]=color;
 					board.getIntBoard()[i][col]=color;
-					i-=1;
+					return true;
 				}
 			else{
 				break;
