@@ -1,0 +1,34 @@
+<project name="Flow" default="dist" basedir=".">
+	<!-- Compila el proyecto, deja los archivos class en el directorio bin -->
+	<target name="compile">
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin" classpath="lib/junit-4.7.jar" />
+	</target>
+	
+
+	
+
+	<!-- Crea el jar ejecutable con todo el proyecto compilado. -->
+	<target name="dist" depends="compile">
+		<copy todir="bin/resources">
+		<fileset dir="resources"/>
+		</copy>
+		<jar destfile="Flow.jar" basedir="bin">
+			<manifest>
+				<attribute name="Main-Class" value="frontEnd.Main" />
+			</manifest>
+		</jar>
+	</target>
+
+	
+	
+	
+	
+	
+	<!-- Borra todos los archivos generados luego de compilar. -->
+	<target name="clean">
+		<delete dir="bin" />
+		<delete dir="doc" />
+		<delete file="flow.jar" />
+	</target>
+</project>
