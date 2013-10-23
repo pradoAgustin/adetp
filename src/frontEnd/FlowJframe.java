@@ -9,14 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import backend.Board;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.plaf.metal.MetalIconFactory;
+import backend.Cell;
 public class FlowJframe {
 	private Board board;
 	private JFrame frame;
 	private JPanel squares[][] ;
-	private int [][] boardMatrix;
+	private Cell [][] boardMatrix;
 	public FlowJframe(Board board){
 	    this.board=board;
 		squares = new JPanel[board.rowsSize()][board.colsSize()];
