@@ -107,8 +107,12 @@ public class TestExact {
     @Test
 	public void testSolve3() throws Exception{
 		Parser parser=new Parser();
-		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt");
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
+		Chronometer chrono=new Chronometer();
+		chrono.start();
+		
 		Board boardSolution2=board.solve(null);
+		chrono.stop();System.out.println(chrono.getElapsedTimeInMilisecs());
 		
 		FlowJframe frame=new FlowJframe(boardSolution2);
 		frame.showBoard();

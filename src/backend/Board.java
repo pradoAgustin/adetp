@@ -166,6 +166,7 @@ public class Board {
     
     /*Algoritmo basado en Hill Climbing */
     public Board solveAprox(Listener l,Chronometer chronometer){
+
         int dotIndex = 0;
         Board copy = new Board(null, dots);
         Board solution = new Board(null, dots);
@@ -178,7 +179,7 @@ public class Board {
             /*improve sol*/
             dotIndex++;
         }
-        return null; // TODO poner valor correcto !!
+        return solution;
     }
     public void improveSolution(Board solution, Listener l){
         for(Dot dot: dots){
@@ -269,13 +270,16 @@ public class Board {
 			matrix[r][c].color=color;
             return true;
 		}
+		
+
         r = row-1;
 		if(r >= 0 && matrix[r][col].color == -1 && matrix[r][col].color == -1){
             System.out.println("valor de la fila i col c");
             System.out.println("fila"+r+"col"+c);
-            matrix[r][c].color =color;
+            matrix[r][c].color=color;
             matrix[r][col].color=color;
              return true;
+
 		}
 
 		for(int h=0;h<board.getIntBoard().length;h++){/*cableo una impresion de la matrix para probar que se cambiaron*/
@@ -309,7 +313,7 @@ public class Board {
 	    for(int h=0;h<board.getIntBoard().length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
 	    {
 		for(int k=0;k<board.getIntBoard()[0].length;k++){
-			System.out.print(matrix[h][k]);
+			System.out.print(matrix[h][k].color);
 		}
 		System.out.println();
 	    }
