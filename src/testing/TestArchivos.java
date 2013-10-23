@@ -17,7 +17,7 @@ public class TestArchivos {
 	@Test
 	public void lecturaArchivoValido() throws Exception{
 		Parser parser=new Parser();
-		Board aux=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
+		Board aux=parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt");
 		assertTrue(aux!=null);
 		assertTrue(aux.rowsSize()>0);
 	}
@@ -29,7 +29,7 @@ public class TestArchivos {
 	public void lecturaArchivoNoValido1() throws Exception{
 	
 		Parser parser=new Parser();
-		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido1.txt");
+		parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoInvalido1.txt");
 	}
 
 	/*se trata de leer el archivo invalido2, el cual tiene menos columnas delas que especifica
@@ -39,7 +39,7 @@ public class TestArchivos {
 	public void lecturaArchivoNoValido2() throws Exception{
 		
 		Parser parser=new Parser();
-		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido2.txt");
+		parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoInvalido2.txt");
 	}
 
 	/*se trata de leer el archivo invalido3, el cual tiene menos filas delas que especifica en la primera l�nea
@@ -49,7 +49,7 @@ public class TestArchivos {
 	public void lecturaArchivoNoValido3() throws Exception{
 		Parser parser=new Parser();
 		
-		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido3.txt");
+		parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoInvalido3.txt");
 	}
 	
 
@@ -60,7 +60,7 @@ public class TestArchivos {
 	public void lecturaArchivoNoValido4() throws Exception{
 		Parser parser=new Parser();
 		
-		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido4.txt");
+		parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoInvalido4.txt");
 	}
 
 	/*se trata de leer el archivo invalido5, el cual tiene un color sin destino
@@ -70,7 +70,7 @@ public class TestArchivos {
 	public void lecturaArchivoNoValido5() throws Exception{
 		
 		Parser parser=new Parser();
-		parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoInvalido5.txt");
+		parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoInvalido5.txt");
 	}
 
 	/*se trata de leer  un archivo que no existe
@@ -80,6 +80,6 @@ public class TestArchivos {
 	public void lecturaArchivoNoValido6() throws Exception{
 		Parser parser=new Parser();
 		
-		parser.levantarNivel("ArchivosEntrada"+File.separator+"inexistente.txt");
+		parser.parseLevel("ArchivosEntrada" + File.separator + "inexistente.txt");
 	}
 }
