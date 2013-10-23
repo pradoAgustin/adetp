@@ -43,13 +43,13 @@ public class FlowJframe {
 	public void showBoard(){
 		
 		//Border border = LineBorder.createGrayLineBorder();
-		int [][] boardMatrix=board.getIntBoard();
+		Cell [][] boardMatrix=board.getIntBoard();
 		
 		
 		for (int i = 0; i < squares.length; i++) {
 		    for (int j = 0; j < squares[0].length; j++) {
 		        
-		        int current=boardMatrix[i][j];
+		        int current=boardMatrix[i][j].getColor();
 		        java.awt.Color backgroundColor;
 		        //squares[i][j].setBackground(java.awt.Color.white);
                 switch(current){
