@@ -153,7 +153,7 @@ public class Board {
         int cellsPainted = 0;
         for(int row = 0; row < matrix.length; row++){
             for(int col = 0; col < matrix[0].length; col++){
-                if(matrix[row][col] != -1)           /* -1 era la marca para espacio no? */
+                if(matrix[row][col].color != -1)           /* -1 era la marca para espacio no? */
                     cellsPainted++;
             }
         }
@@ -178,45 +178,8 @@ public class Board {
             /*improve sol*/
             dotIndex++;
         }
-        /*
-    	Board solution = new Board(null, dots);
-    	if(!ans) //no hay soluci�n
-    		return null;
-    	
-    	if(solution.unPaintedCells()==0 ){//hay soluci�n inicial y es la mejor
-    	   return solution;
-       }
-    	
-    	
-    	boolean wasChange=true;
-    	do{
-    		Board best;
-    		best=new Board(null, dots);
-//    		if(!wasChange){
-//    			
-//    			sortDots(initialDot);//funcion que hace un sort de la lista de colores
-//    			
-//    			
-//    			//se llama a la funcion inicial, pero con la lista de colores mezclada para simular una solucion al azar.
-//    			//De esta manera, se busca una solucion  trabajando con los colores en un orden al azar distinto del inicial
-//    			findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, best, l);
-//    		}
-//    		else{
-    			wasChange=false;
-    			if(solution.matrix ==null)//es decir que no hay solucion 
-    				return null;
-    			 best=new Board(null, dots);
-    			copyMatrix(best);
-    			tryBestSolution(best,l);
-    			if(best!=null && best.unPaintedCells()<solution.unPaintedCells()){
-    				solution=best;
-    				wasChange=true;
-    			}
-    		//}
-    	}while(chronometer.isThereTimeRemaining());//se controla que quede tiempo
-    	return solution;
+        return null; // TODO poner valor correcto !!
     }
-*/
     public void improveSolution(Board solution, Listener l){
         for(Dot dot: dots){
             for(Direction dir : Direction.values()){
@@ -224,7 +187,7 @@ public class Board {
                 Position currentPos = dot.getStart();
                 if(nextPos.row < matrix.length && nextPos.row >= 0 &&
                         nextPos.col < matrix[0].length && nextPos.col >= 0 &&
-                        matrix[nextPos.row][nextPos.col] == dot.getColor()){
+                        matrix[nextPos.row][nextPos.col].color == dot.getColor()){
                     if(dir.equals(Direction.DOWN) || dir.equals(Direction.UP)){
                         tryCycleCols(dot.getColor(), currentPos.row, currentPos.col, solution);
                     }else{
@@ -238,7 +201,7 @@ public class Board {
     }
 
     private void improveSolution(Board solution, Position pos, Direction prevPathDir, int color, Dot dot, Listener l){
-        int posColor = matrix[pos.row][pos.col];
+        int posColor = matrix[pos.row][pos.col].color;
         if(pos.equals(dot.getEnd()) || posColor != color) return;
         Position nextPos;
         nextPos = pos.getPosition(prevPathDir);
@@ -283,11 +246,11 @@ public class Board {
 		int col =dot.getStart().col;
 
         /* si el camino sigue verticalmente... */
-		if ( (row+1) < matrix.length && matrix[row+1][col] == color || (row-1) >= 0 && matrix[row-1][col] == color){
+		if ( (row+1) < matrix.length && matrix[row+1][col].color == color || (row-1) >= 0 && matrix[row-1][col].color == color){
 			if(tryCycleCols(color, row, col, board)){
 				tryCycleFils(color, row, col, board);
 			}
-		}else if(((col-1)>=0&& matrix[row][col-1]==color)||((col+1)<matrix[0].length && matrix[row][col+1]==color)){
+		}else if(((col-1)>=0&& matrix[row][col-1].color==color)||((col+1)<matrix[0].length && matrix[row][col+1].color==color)){
 			if(tryCycleFils(color,row,col,board)){
 				tryCycleCols(color,row,col,board);
 			}
@@ -295,23 +258,23 @@ public class Board {
 		}
 	}
 	private boolean check(int x, int y, int color) {
-		return x>=0&&x<matrix.length && y>=0 && y<matrix[0].length && matrix[x][y] == color;
+		return x>=0&&x<matrix.length && y>=0 && y<matrix[0].length && matrix[x][y].color == color;
 	}
 
 	private boolean tryCycleFils(int color, int row, int col, Board board) {
 		int r = row+1;
-		int c = ( (col-1) >= 0 && matrix[row][col-1] == color)? col-1 : col+1;
-        if(r < matrix.length && matrix[r][col] == 1 && matrix[r][c] == -1 ){
-			matrix[r][col]=color;
-			matrix[r][c]=color;
+		int c = ( (col-1) >= 0 && matrix[row][col-1].color == color)? col-1 : col+1;
+        if(r < matrix.length && matrix[r][col].color == 1 && matrix[r][c].color == -1 ){
+			matrix[r][col].color=color;
+			matrix[r][c].color=color;
             return true;
 		}
         r = row-1;
-		if(r >= 0 && matrix[r][col] == -1 && matrix[r][col] == -1){
+		if(r >= 0 && matrix[r][col].color == -1 && matrix[r][col].color == -1){
             System.out.println("valor de la fila i col c");
             System.out.println("fila"+r+"col"+c);
-            matrix[r][c]=color;
-            matrix[r][col]=color;
+            matrix[r][c].color =color;
+            matrix[r][col].color=color;
              return true;
 		}
 
@@ -328,17 +291,17 @@ public class Board {
 	private boolean tryCycleCols(int color, int fila, int col,Board board) /*trata de ciclar por columna*/
 	{
 		System.out.println("llega a tryCycle");
-		int f=((fila-1)>=0&& board.getIntBoard()[fila-1][col]==color)?fila-1:fila+1;
+		int f=((fila-1)>=0&& board.getIntBoard()[fila-1][col].color==color)?fila-1:fila+1;
 		int i=col+1;
-		if( i < board.matrix[0].length && board.matrix[fila][i] == -1 && board.matrix[f][i] == -1){
-			board.getIntBoard()[fila][i]=color;
-			board.getIntBoard()[f][i]=color;
+		if( i < board.matrix[0].length && board.matrix[fila][i].color == -1 && board.matrix[f][i].color == -1){
+			board.getIntBoard()[fila][i].color=color;
+			board.getIntBoard()[f][i].color=color;
             return true;
 		}else{
 		    i=col-1;
-		    if(i<=0 && board.getIntBoard()[fila][i]==-1 && board.getIntBoard()[f][i]==-1){
-                board.getIntBoard()[fila][i]=color;
-				board.getIntBoard()[f][i]=color;
+		    if(i<=0 && board.getIntBoard()[fila][i].color==-1 && board.getIntBoard()[f][i].color==-1){
+                board.getIntBoard()[fila][i].color=color;
+				board.getIntBoard()[f][i].color=color;
 			    return true;
 			}
 		}
@@ -365,11 +328,11 @@ public class Board {
 				}*/
 
     private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l){
-        int[][] cpMatrix = boardCopy.matrix;
+        Cell[][] cpMatrix = boardCopy.matrix;
         if(cpMatrix.length <= currentPos.row || currentPos.row < 0
            || cpMatrix[0].length <= currentPos.col || currentPos.col < 0) return false;
 
-        int currentPosColor = cpMatrix[currentPos.row][currentPos.col];
+        int currentPosColor = cpMatrix[currentPos.row][currentPos.col].color;
 
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
@@ -389,7 +352,7 @@ public class Board {
                 return false;
             }
         }else if(currentPosColor != -1) return false;
-        cpMatrix[currentPos.row][currentPos.col] = color;
+        cpMatrix[currentPos.row][currentPos.col].color = color;
 
         /*secci�n para imprimir con intervalos de a 100ms*/
         if(l!=null)	l.printToScreen();
@@ -403,7 +366,7 @@ public class Board {
                 boardCopy.dots.get(index).getPath().remove(dir[i]);
             }
         }
-        cpMatrix[currentPos.row][currentPos.col] = currentPosColor;
+        cpMatrix[currentPos.row][currentPos.col].color = currentPosColor;
         return false;
     }
     
