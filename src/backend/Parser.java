@@ -24,7 +24,7 @@ public class Parser {
                 throw new InvalidFileException("Invalid map file: No comma present on the first line");
             colsSize = line.charAt(2)-'0';
 
-            int board[][] = new int[rowsSize][colsSize];
+            Cell board[][] = new Cell[rowsSize][colsSize];
             int row;
 
             for(row = 0; (line = (buffer.readLine())) != null; row++) {
@@ -36,10 +36,10 @@ public class Parser {
                         if(currentChar < '0' && currentChar >'9')
                             throw new InvalidFileException("Invalid map file: unsupported character present");
                         colorPosList.add(new Position(row, col));
-                        board[row][col] = currentChar -'0';
+                        board[row][col] = new Cell(currentChar -'0');
                         colorDotsAmount[currentChar-'0']++;
                     }else{
-                        board[row][col] = -1;
+                        board[row][col] =new Cell(-1);
                     }
                 }
             }
@@ -55,7 +55,7 @@ public class Parser {
         }
     }
 
-    private ArrayList<Dot> createDotList(ArrayList<Position> colorPosList, int[][] board) throws InvalidFileException{
+    private ArrayList<Dot> createDotList(ArrayList<Position> colorPosList, Cell[][] board) throws InvalidFileException{
         ArrayList<Dot> ret = new ArrayList<Dot>();
         int i, j;
         for(i = 0; i < colorPosList.size(); i++){
@@ -63,7 +63,7 @@ public class Parser {
                 Position pos1 = colorPosList.get(i);
                 Position pos2 = colorPosList.get(j);
                 int color;
-                if( (color = board[pos1.row][pos1.col]) == board[pos2.row][pos2.col] ){
+                if( (color = board[pos1.row][pos1.col].color) == board[pos2.row][pos2.col].color ){
                     ret.add(new Dot(pos1, pos2, color));
                     continue;
                 }
