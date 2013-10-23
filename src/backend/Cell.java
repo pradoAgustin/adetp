@@ -12,4 +12,8 @@ public class Cell {
         this.color = color;
         this.nextPathDir = nextPathDir;
     }
+
+    public int getColor(){
+        return color;
+    }
 }
