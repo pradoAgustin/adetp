@@ -110,7 +110,7 @@ public class Board {
             }
         }else if(currentPosColor!= -1) return false;
 
-        this.matrix[currentPos.row][currentPos.col].getColor() = color;
+        this.matrix[currentPos.row][currentPos.col].color = color;
         Position nextPos;
 
         /*secci�n para imprimir con intervalos de a 100ms*/
