@@ -13,7 +13,7 @@ public static void main(String[] args) {
 	Parser parser=new Parser();
 	Board board = null;
 	try {
-		board = parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
+		board = parser.parseLevel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
