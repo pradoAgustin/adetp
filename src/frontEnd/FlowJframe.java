@@ -16,10 +16,28 @@ public class FlowJframe {
 	private Board board;
 	private JFrame frame;
 	private JPanel squares[][] ;
-
+	private int [][] boardMatrix;
 	public FlowJframe(Board board){
 	    this.board=board;
 		squares = new JPanel[board.rowsSize()][board.colsSize()];
+		
+		 frame = new JFrame("Flow");
+		 frame.setSize(500, 500);
+		 if(board.rowsSize()<=0 || board.colsSize()<=0)
+			 return;
+		 frame.setLayout(new GridLayout(squares.length, squares[0].length));
+		 
+		 boardMatrix=board.getIntBoard();
+		 
+		 for (int i = 0; i < squares.length; i++) {
+			    for (int j = 0; j < squares[0].length; j++) {
+			        squares[i][j] = new JPanel();
+			        frame.add(squares[i][j]);
+			    }
+		 }
+		 
+		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 frame.setVisible(true);
 	}
 	protected void changeBoard(Board b){
 		board=b;
@@ -27,15 +45,12 @@ public class FlowJframe {
 	public void showBoard(){
 		
 		//Border border = LineBorder.createGrayLineBorder();
-		 frame = new JFrame("Flow");
-		 frame.setSize(500, 500);
-		 if(board.rowsSize()<=0 || board.colsSize()<=0)
-			 return;
-		 frame.setLayout(new GridLayout(squares.length, squares[0].length));
-		 int [][] boardMatrix=board.getIntBoard();
-		 for (int i = 0; i < squares.length; i++) {
+		int [][] boardMatrix=board.getIntBoard();
+		
+		
+		for (int i = 0; i < squares.length; i++) {
 		    for (int j = 0; j < squares[0].length; j++) {
-		        squares[i][j] = new JPanel();
+		        
 		        int current=boardMatrix[i][j];
 		        java.awt.Color backgroundColor;
 		        //squares[i][j].setBackground(java.awt.Color.white);
@@ -88,15 +103,21 @@ public class FlowJframe {
 
                     }
                     //image.setBorder(border);
+                    
+                    squares[i][j].removeAll();
                     squares[i][j].add(image);
-
+                    squares[i][j].validate();
+                  
+                    
                 }
                 //squares[i][j].add(new JLabel(new ImageIcon("resources"+File.separator+"punto.png")));
-                frame.add(squares[i][j]);
+                //  squares[i][j].paintImmediately(squares[i][j].getX(), squares[i][j].getY(), squares[i][j].getWidth(), squares[i][j].getHeight());
 		    }
 		 }
-		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 frame.setVisible(true);
+		frame.validate();
+		frame.repaint();
+		 
+		
 	}
 	public void refresh(){
 		frame.invalidate();
