@@ -2,15 +2,14 @@ package backend;
 
 public class Cell {
     protected int color;
-    protected Direction nextPathDir;
+    protected Direction nextPathDir = null;
 
     public Cell(int color){
+       this(color, null);
+    }
+
+    public Cell(int color, Direction nextPathDir){
         this.color = color;
-        nextPathDir = null;
+        this.nextPathDir = nextPathDir;
     }
-
-    public Direction getNextPathDir(){
-        return nextPathDir;
-    }
-
 }

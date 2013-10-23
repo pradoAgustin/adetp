@@ -91,7 +91,7 @@ public class Board {
         if(matrix.length <= currentPos.row || currentPos.row < 0
            || matrix[0].length <= currentPos.col || currentPos.col < 0) return false;
 
-        int currentPosColor = this.matrix[currentPos.row][currentPos.col].getColor(); //color original de la celda
+        int currentPosColor = this.matrix[currentPos.row][currentPos.col].color; //color original de la celda
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
@@ -121,7 +121,7 @@ public class Board {
                 if(solve(color, currentPos, nextPos, index, solution,listener)) return true;
             }
         }
-        this.matrix[currentPos.row][currentPos.col] = currentPosColor;
+        this.matrix[currentPos.row][currentPos.col].color = currentPosColor;
         return false;
     }
 
@@ -138,10 +138,11 @@ public class Board {
      */
     private void copyMatrix(Board board){
         int row, col;
-        board.matrix = new int[matrix.length][matrix[0].length];
+        board.matrix = new Cell[matrix.length][matrix[0].length];
         for(row = 0; row < matrix.length; row++){
             for(col = 0; col < matrix[0].length; col++){
-                board.matrix[row][col] = this.matrix[row][col];
+                Cell c = this.matrix[row][col];
+                board.matrix[row][col] = new Cell(c.color,c.nextPathDir);
             }
         }
     }
