@@ -99,11 +99,12 @@ public class testaprox{
 	 @Test
 	   	public void testSolve5() throws Exception{
 	   		Parser parser=new Parser();
-	   		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3(2).txt");
+	   		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "test3x3(2).txt");
 	   		FlowJframe frame=new FlowJframe(board);
 	   		frame.showBoard();
-	   		board=board.solveAprox(new PrintListener(frame),new Chronometer(1));//puse un tiempo grande para testear
-	   		
+
+	   		board=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));//puse un tiempo grande para testear
+
 	   		frame=new FlowJframe(board);
 	   		frame.showBoard();
 	   		int cant=board.unPaintedCells();
@@ -112,7 +113,7 @@ public class testaprox{
 	@Test
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
-		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3.txt");
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "test3x3.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		 board=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));
@@ -126,7 +127,7 @@ public class testaprox{
 	@Test
 	public void testSolve3() throws Exception{
 		Parser parser=new Parser();
-		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		Board boardSolution2=board.solveAprox(null/*new PrintListener(frame)*/,new Chronometer(1000000000));

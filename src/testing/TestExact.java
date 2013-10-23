@@ -3,14 +3,12 @@ package testing;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import backend.*;
 
 import org.junit.Test;
 
 import frontEnd.FlowJframe;
-import frontEnd.PrintListener;
 
 public class TestExact {
 	/*mapa a resolver se encuentra en /resources/level30png
@@ -81,7 +79,7 @@ public class TestExact {
 	@Test
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
-		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		//Board boardSolution2=board.solve(new printListener(frame));/* para ver la opcion "progress"*/
@@ -95,7 +93,7 @@ public class TestExact {
     @Test
     public void unsolvableLevelTest() throws Exception{
         Parser parser = new Parser();
-        Board solution = parser.levantarNivel("levels"+File.separator+"withoutSolution.txt").solve(null);
+        Board solution = parser.parseLevel("levels" + File.separator + "withoutSolution.txt").solve(null);
         
         if(solution != null){
             FlowJframe frame = new FlowJframe(solution);
@@ -107,8 +105,12 @@ public class TestExact {
     @Test
 	public void testSolve3() throws Exception{
 		Parser parser=new Parser();
-		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"ArchivoEnunciado.txt");
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
+		Chronometer chrono=new Chronometer();
+		chrono.start();
+		
 		Board boardSolution2=board.solve(null);
+		chrono.stop();System.out.println(chrono.getElapsedTimeInMilisecs());
 		
 		FlowJframe frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
@@ -118,7 +120,7 @@ public class TestExact {
     @Test
    	public void testSolve4() throws Exception{
    		Parser parser=new Parser();
-   		Board board=parser.levantarNivel("ArchivosEntrada"+File.separator+"test3x3(2).txt");
+   		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "test3x3(2).txt");
    		Board boardSolution2=board.solve(null);
    		
    		FlowJframe frame=new FlowJframe(boardSolution2);
