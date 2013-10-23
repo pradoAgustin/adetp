@@ -141,7 +141,8 @@ public class Board {
         board.matrix = new Cell[matrix.length][matrix[0].length];
         for(row = 0; row < matrix.length; row++){
             for(col = 0; col < matrix[0].length; col++){
-                board.matrix[row][col] = this.matrix[row][col];
+                Cell c = this.matrix[row][col];
+                board.matrix[row][col] = new Cell(c.color,c.nextPathDir);
             }
         }
     }
