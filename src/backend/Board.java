@@ -20,17 +20,17 @@ public class Board {
        hill-climber estocástico */
     private final static int T = 1;
     private List<Direction> path;
-	private int matrix[][];
+	private Cell matrix[][];
 	private ArrayList<Dot> dots = new ArrayList<Dot>();
     private long calls = 0;
     private int paintedCells = 0;
 
-    public Board(int[][] matrix, ArrayList<Dot> dots) {
+    public Board(Cell[][] matrix, ArrayList<Dot> dots) {
         this.matrix = matrix;
         this.dots = dots;
     }
 
-	public int[][] getIntBoard(){
+	public Cell[][] getIntBoard(){
 		return matrix;
 	}
 
@@ -91,7 +91,7 @@ public class Board {
         if(matrix.length <= currentPos.row || currentPos.row < 0
            || matrix[0].length <= currentPos.col || currentPos.col < 0) return false;
 
-        int currentPosColor = this.matrix[currentPos.row][currentPos.col]; //color original de la celda
+        int currentPosColor = this.matrix[currentPos.row][currentPos.col].getColor(); //color original de la celda
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
@@ -110,7 +110,7 @@ public class Board {
             }
         }else if(currentPosColor!= -1) return false;
 
-        this.matrix[currentPos.row][currentPos.col] = color;
+        this.matrix[currentPos.row][currentPos.col].getColor() = color;
         Position nextPos;
 
         /*secci�n para imprimir con intervalos de a 100ms*/
