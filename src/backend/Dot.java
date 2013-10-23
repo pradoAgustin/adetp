@@ -1,16 +1,23 @@
 package backend;
 
+import java.util.LinkedList;
+
 public class Dot {
 	private Position start;
 	private Position end;
     private int color;
+    private LinkedList<Direction> path = new LinkedList<Direction>();
 
 	public Dot(Position start , Position end, int color){
 		this.start = start;
 		this.end = end;
         this.color = color;
 	}
-	
+
+    public LinkedList<Direction> getPath(){
+        return path;
+    }
+
     @Override
 	public int hashCode() {
 		final int prime = 31;
