@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import backend.Board;
+import backend.Cell;
 import backend.Chronometer;
 import backend.Color;
 import backend.Dot;
@@ -143,7 +144,7 @@ public class testaprox{
 	public void testSolve4() throws Exception{
 		
 
-	        int matrix[][]=new int[9][9];
+	        Cell matrix[][]=new Cell[9][9];
 	          Board board=new Board(matrix,new ArrayList<Dot>());
 	           
 	            for(int i=0;i<9;i++){
@@ -153,9 +154,9 @@ public class testaprox{
 	          }
 	            FlowJframe frame=new FlowJframe(board);
 	            frame.showBoard();
-	            matrix[0][6]=Color.RED.getNum();   matrix[2][3]=Color.RED.getNum();board.addDot(new Dot(new Position(0, 6), new Position(2, 3), backend.Color.RED.getNum()));
-	            matrix[0][7]=Color.GRAY.getNum();   matrix[3][3]=Color.GRAY.getNum();board.addDot(new Dot(new Position(0,7 ), new Position(3,3 ), backend.Color.GRAY.getNum()));
-	            matrix[0][8]=Color.GREEN.getNum();   matrix[4][1]=Color.GREEN.getNum();board.addDot(new Dot(new Position(0,8 ), new Position(4,1 ), backend.Color.GREEN.getNum()));
+	            matrix[0][6]=new Cell(Color.RED.getNum());   matrix[2][3]=Color.RED.getNum();board.addDot(new Dot(new Position(0, 6), new Position(2, 3), backend.Color.RED.getNum()));
+	            matrix[0][7]=new Cell(Color.GRAY.getNum());   matrix[3][3]=Color.GRAY.getNum();board.addDot(new Dot(new Position(0,7 ), new Position(3,3 ), backend.Color.GRAY.getNum()));
+	            matrix[0][8]=new Cell(Color.GREEN.getNum() );  matrix[4][1]=Color.GREEN.getNum();board.addDot(new Dot(new Position(0,8 ), new Position(4,1 ), backend.Color.GREEN.getNum()));
 	            matrix[1][1]=Color.BLUE.getNum();   matrix[8][0]=Color.BLUE.getNum();board.addDot(new Dot(new Position(1,1 ), new Position(8,0 ), backend.Color.BLUE.getNum()));
 	            
 	            matrix[2][0]=Color.BLACK.getNum();   matrix[7][3]=Color.BLACK.getNum();board.addDot(new Dot(new Position(2,0 ), new Position(7, 3), backend.Color.BLACK.getNum()));
@@ -172,7 +173,7 @@ public class testaprox{
 			//frame.showBoard();
 			
 			Board boardSolution=board.solve(null);
-			int [][] matrix2=boardSolution.getIntBoard();
+			Cell[][] matrix2=boardSolution.getIntBoard();
 			
 			
 			for(int i=0;i<matrix2[0].length;i++)

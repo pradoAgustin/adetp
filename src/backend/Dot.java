@@ -1,6 +1,7 @@
 package backend;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Dot {
 	private Position start;
@@ -67,4 +68,6 @@ public class Dot {
     public String toString(){
     	return "["+"1:"+"start"+start.toString()+"end"+end.toString()+"]";
     }
+
+	
 }

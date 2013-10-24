@@ -177,30 +177,69 @@ public class Board {
             
             /*improve sol*/
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
+            improveSolution(solution, l);
         }
         return solution;
     }
 
+    public Cell at(Position pos){
+        return this.matrix[pos.row][pos.col];
+    }
+
     public void improveSolution(Board solution, Listener l){
         for(Dot dot: dots){
-            for(Direction dir : Direction.values()){
-                Position nextPos = dot.getStart().getPosition(dir);
-                Position currentPos = dot.getStart();
-                if(nextPos.row < matrix.length && nextPos.row >= 0 &&
-                        nextPos.col < matrix[0].length && nextPos.col >= 0 &&
-                        matrix[nextPos.row][nextPos.col].color == dot.getColor()){
-                    if(dir.equals(Direction.DOWN) || dir.equals(Direction.UP)){
-                        tryCycleCols(dot.getColor(), currentPos.row, currentPos.col, solution);
-                    }else{
-                        tryCycleFils(dot.getColor(), currentPos.row, currentPos.col, solution);
-                    }
-                    improveSolution(solution, nextPos, dir, dot.getColor(), dot, null);
-                    break;
+            Position currentPos = dot.getStart();
+            Cell currentCell = solution.matrix[currentPos.row][currentPos.col];
+            Position nextPos = currentPos.getPosition(currentCell.nextPathDir);
+            Cell aux1, aux2;
+            Direction currentDir = currentCell.nextPathDir;
+            while(currentDir != null){
+                switch(currentDir){
+                    case UP:    if((aux1 = solution.at(currentPos.getPosition(Direction.LEFT))).color == -1 &&
+                                (aux2 = solution.at(currentPos.getPosition(Direction.UPPERLEFT))).color == -1){
+                                    setNewPath(aux1, aux2, currentCell,dot.getColor(), Direction.UP, Direction.RIGHT, Direction.LEFT);
+                                }else if((aux1 = solution.at(currentPos.getPosition(Direction.RIGHT))).color == -1 &&
+                                (aux2 = solution.at(currentPos.getPosition(Direction.UPPERRIGHT))).color == -1){
+                                    setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.UP, Direction.LEFT, Direction.RIGHT);
+                                }
+                                break;
+                    case DOWN:  if((aux1 = solution.at(currentPos.getPosition(Direction.LEFT))).color == -1 &&
+                                (aux2 = solution.at(currentPos.getPosition(Direction.LOWERLEFT))).color == -1){
+                                    setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.UP, Direction.RIGHT, Direction.LEFT);
+                                }else if((aux1 = solution.at(currentPos.getPosition(Direction.RIGHT))).color == -1 &&
+                                (aux2 = solution.at(currentPos.getPosition(Direction.LOWERRIGHT))).color == -1){
+                                    setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.DOWN, Direction.LEFT, Direction.RIGHT);
+                                }
+                                break;
+                    case LEFT:  if((aux1 = solution.at(currentPos.getPosition(Direction.UP))).color == -1 &&
+                                (aux2 = solution.at(currentPos.getPosition(Direction.UPPERLEFT))).color == -1){
+                                    setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.LEFT, Direction.DOWN, Direction.UP);
+                                }else if((aux1 = solution.at(currentPos.getPosition(Direction.DOWN))).color == -1 &&
+                                (aux2 = solution.at(currentPos.getPosition(Direction.LOWERLEFT))).color == -1){
+                                    setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.LEFT, Direction.UP, Direction.DOWN);
+                                }
+                                break;
+                    case RIGHT: if((aux1 = solution.at(currentPos.getPosition(Direction.UP))).color == -1 &&
+                                (aux2 = solution.at(currentPos.getPosition(Direction.UPPERRIGHT))).color == -1){
+                                    setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.RIGHT, Direction.DOWN, Direction.UP);
+                                }else if((aux1 = solution.at(currentPos.getPosition(Direction.DOWN))).color == -1 &&
+                                (aux2 = solution.at(currentPos.getPosition(Direction.LOWERRIGHT))).color == -1){
+                                    setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.RIGHT, Direction.UP, Direction.DOWN);
+                                }
+                                break;
                 }
+                currentPos = nextPos;
             }
         }
     }
 
+    private static void setNewPath(Cell c1, Cell c2, Cell currentCell, int color, Direction dirC1, Direction dirC2, Direction dirCCell){
+        c1.color = color;
+        c2.color = color;
+        currentCell.nextPathDir = dirCCell;
+        c1.nextPathDir = dirC1;
+        c2.nextPathDir = dirC2;
+    }
 
     private void improveSolution(Board solution, Position pos, Direction prevPathDir, int color, Dot dot, Listener l){
         int posColor = matrix[pos.row][pos.col].color;
@@ -264,6 +303,7 @@ public class Board {
 	}
 
 	private boolean tryCycleFils(int color, int row, int col, Board board) {
+		if(Math.random()>0.45){
 		int r = row+1;
 		int c = ( (col-1) >= 0 && matrix[row][col-1].color == color)? col-1 : col+1;
         if(r < matrix.length && matrix[r][col].color == 1 && matrix[r][c].color == -1 ){
@@ -291,10 +331,12 @@ public class Board {
 		}
 		System.out.println("valor del flag en ciclo fils");
         return false;
+		}
+		return false;
     }
 
 	private boolean tryCycleCols(int color, int fila, int col,Board board) /*trata de ciclar por columna*/
-	{
+	{	if(Math.random()>0.45){
 		System.out.println("llega a tryCycle");
 		int f=((fila-1)>=0&& board.getIntBoard()[fila-1][col].color==color)?fila-1:fila+1;
 		int i=col+1;
@@ -309,7 +351,11 @@ public class Board {
 				board.getIntBoard()[f][i].color=color;
 			    return true;
 			}
+		    
 		}
+		return false;
+	}
+		
 		System.out.println("valor del flag en ciclo cols");
 	    for(int h=0;h<board.getIntBoard().length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
 	    {
