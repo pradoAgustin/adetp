@@ -199,44 +199,43 @@ public class Board {
                 switch(currentDir){
                     case UP:    if((solution.at(aux1 = currentPos.getPosition(Direction.LEFT)).color == -1 &&
                                 (solution.at(aux2 = currentPos.getPosition(Direction.UPPERLEFT)).color == -1))){
-                    				change=new Change(currentCell,aux1,aux2,);
                                   // setNewPath(aux1, aux2, currentCell,dot.getColor(), Direction.UP, Direction.RIGHT, Direction.LEFT);
-                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor()));
-                                }else if((solution.at(aux1 =(currentPos.getPosition(Direction.RIGHT))).color == -1 &&
-                                ((solution.at(aux2 = (currentPos.getPosition(Direction.UPPERRIGHT))).color == -1){
+                                    change = new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor());
+                                }else if((solution.at(aux1 =currentPos.getPosition(Direction.RIGHT))).color == -1 &&
+                                ((solution.at(aux2 =currentPos.getPosition(Direction.UPPERRIGHT))).color == -1)){
                                     //setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.UP, Direction.LEFT, Direction.RIGHT);
-                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.UP,Direction.LEFT,0,dot.getColor()));
+                                    change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.UP,Direction.LEFT,0,dot.getColor());
                                     
                                 }
                                 break;
                     case DOWN:  if((solution.at(aux1=currentPos.getPosition(Direction.LEFT))).color == -1 &&
                     		  (solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT))).color == -1){
                                    // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.UP, Direction.RIGHT, Direction.LEFT);
-                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor()));
+                                    change = new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor());
                                 }else if((solution.at(aux1 =currentPos.getPosition(Direction.RIGHT))).color == -1 &&
                                 		(solution.at(aux2=currentPos.getPosition(Direction.LOWERRIGHT))).color == -1){
                                    // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.DOWN, Direction.LEFT, Direction.RIGHT);
-                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,0,dot.getColor()));
+                                    change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,0,dot.getColor());
                                 }
                                 break;
                     case LEFT:  if(((solution.at(aux1 =currentPos.getPosition(Direction.UP))).color == -1 &&
                     		(solution.at(aux2=currentPos.getPosition(Direction.UPPERLEFT))).color == -1)){
                                    // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.LEFT, Direction.DOWN, Direction.UP);
-                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.UP,Direction.LEFT,Direction.DOWN,0,dot.getColor()));
+                                    change = new Change(currentPos,aux1,aux2,Direction.UP,Direction.LEFT,Direction.DOWN,0,dot.getColor());
                                 } else if((solution.at(aux1 =currentPos.getPosition(Direction.DOWN))).color == -1 &&
                                 		  (solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT))).color == -1){
                                    // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.LEFT, Direction.UP, Direction.DOWN);
-                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.LEFT,Direction.UP,0,dot.getColor()));
+                                    change = new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.LEFT,Direction.UP,0,dot.getColor());
                                 }
                                 break;
                     case RIGHT: if((solution.at(aux1 =currentPos.getPosition(Direction.UP))).color == -1 &&
                     		(solution.at(aux2=currentPos.getPosition(Direction.UPPERRIGHT))).color == -1){
                                     //setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.RIGHT, Direction.DOWN, Direction.UP);
-                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.UP,Direction.RIGHT,Direction.DOWN,0,dot.getColor()));
+                                    change = new Change(currentPos,aux1,aux2,Direction.UP,Direction.RIGHT,Direction.DOWN,0,dot.getColor());
                                 }else if((solution.at(aux1 =currentPos.getPosition(Direction.DOWN))).color == -1 &&
                                 		  (solution.at(aux2 =currentPos.getPosition(Direction.LOWERRIGHT))).color == -1){
                                    // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.RIGHT, Direction.UP, Direction.DOWN);
-                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.RIGHT,Direction.UP,0,dot.getColor()));
+                                    change = new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.RIGHT,Direction.UP,0,dot.getColor());
                                 }
                                 break;
                 }
