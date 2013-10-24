@@ -13,7 +13,7 @@ import frontEnd.FlowJframe;
 import frontEnd.PrintListener;
 
 public class TestExact {
-	/*mapa a resolver se encuentra en /resources/level30png
+	/*mapa a resolver se encuentra resuelto  en /resources/level30png
 	 * casilleros vacios que deberian quedar :0
 	 */
 
@@ -95,7 +95,7 @@ public class TestExact {
     @Test
     public void unsolvableLevelTest() throws Exception{
         Parser parser = new Parser();
-        Board solution = parser.parseLevel("levels" + File.separator + "withoutSolution.txt").solve(null);
+        Board solution = parser.parseLevel("ArchivosEntrada" + File.separator + "withoutSolution.txt").solve(null);
         
         if(solution != null){
             FlowJframe frame = new FlowJframe(solution);

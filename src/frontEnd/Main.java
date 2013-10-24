@@ -15,6 +15,13 @@ public static void main(String[] args) {
 	
 	
 	Parser parser=new Parser();
+	if(args.length<2){
+		System.out.println("Error:cantidad de parametros menor a dos");
+		return;
+	}
+	
+	
+	
 	try {
 		board = parser.parseLevel(args[0]);
 	} catch (FileNotFoundException e) {
@@ -33,35 +40,50 @@ public static void main(String[] args) {
 	Listener l=null;
 	
 	
-	Chronometer chronometer=null;//cronometro que se usa para medir el tiempo total tardado por el algoritmo
+	Chronometer chronometer=new Chronometer();//cronometro que se usa para medir el tiempo total tardado por el algoritmo
 
 	if(args[1].equals("exact")){
 		
-		chronometer=new Chronometer();//cronometro que se usa para medir el tiempo total tardado por el algoritmo
+		
 		chronometer.start();
 
 		
 		System.out.println("Se busca la solucion en forma exacta");
-		if(args[2].equals("progress"))
+		if(args.length>=3 && args[2].equals("progress"))
 			l=new PrintListener(frame);
+		else if(args.length>=3){
+			System.out.println("Error: tercer parametro ingresado invalido ");
+			return;
+		}
 		
 		boardSolution=board.solve(l);
+		chronometer.stop();
 		
 	}
 	else if(args[1].equals("approx")){
+		if(args.length<2 ){
+			System.out.println("Error: hay que pasar como parametro el tiempo que se le desea dedicar al algoritmo");
+			return;
+		}
 		System.out.println("Se busca la solucion en forma aproximada con "+Integer.valueOf(args[2]));
 		Chronometer timer=new Chronometer(Integer.valueOf(args[2]));
 		
-		if(args[3].equals("progress"))
+		
+		
+		if(args.length>3 && args[3].equals("progress"))
 			l=new PrintListener(frame);
+		chronometer.start();
+		
 		boardSolution=board.solveAprox(l, timer);
+		chronometer.stop();
 	}else{
 		System.out.println("Error:los parametros ingresados son invalidos.");
+		return;
 	}
 	
-	if(chronometer!=null){
-		System.out.println("Tiempo transcurrido en obtener la solucion exacta:"+chronometer.getElapsedTimeInSecs()+" segundos.");
-	}
+		frame.changeBoard(boardSolution);
+		System.out.println("Tiempo transcurrido en obtener la solucion exacta:"+chronometer.getElapsedTimeInMilisecs()+" milisegundos.");
+		frame.showBoard();
 	
 	
 }
