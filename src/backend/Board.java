@@ -1,5 +1,6 @@
 package backend;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Board {
@@ -166,100 +167,93 @@ public class Board {
     
     /*Algoritmo basado en Hill Climbing */
     public Board solveAprox(Listener l,Chronometer chronometer){
-
-        int dotIndex = 0;
         Board copy = new Board(null, dots);
         Board solution = new Board(null, dots);
         copyMatrix(copy);
-        while(chronometer.isThereTimeRemaining() && dotIndex < dots.size()){
-            Dot nextDot = dots.get(dotIndex);
-            boolean ans=findInitialSolution(nextDot.getColor(), null,nextDot.getStart(), 0, copy, solution,l);
+        while(chronometer.isThereTimeRemaining()){
+            Dot initialDot = dots.get(0);
+            boolean ans=findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, copy, solution, l);
             if(solution == null) return null; 
             
+            /*improve sol*/
+            Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
             improveSolution(solution, l);
-            dotIndex++;
         }
         return solution;
     }
-        /*
->>>>>>> d2a7835280acba7535b8a6328a591c59149bc833
-    	Board solution = new Board(null, dots);
-    	if(!ans) //no hay soluci�n
-    		return null;
-    	
-    	if(solution.unPaintedCells()==0 ){//hay soluci�n inicial y es la mejor
-    	   return solution;
-       }
-    	
-    	
-    	boolean wasChange=true;
-    	do{
-    		;
-//    		if(!wasChange){
-//    			
-//    			sortDots(initialDot);//funcion que hace un sort de la lista de colores
-//    			
-//    			
-//    			//se llama a la funcion inicial, pero con la lista de colores mezclada para simular una solucion al azar.
-//    			//De esta manera, se busca una solucion  trabajando con los colores en un orden al azar distinto del inicial
-//    			findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, best, l);
-//    		}
-//    		else{
-    			wasChange=false;
-    			if(solution.matrix ==null)//es decir que no hay solucion 
-    				return null;
-    			 current=new Board(null, dots);
-    			copyMatrix(current);
-    			//tryBestSolution(best,l);
-    			improveSolution(solution, l);
-    			if(current!=null && current.unPaintedCells()<solution.unPaintedCells()){
-    				solution=current;
-    				wasChange=true;
-    			}
-    		//}
-<<<<<<< HEAD
-    			for(int k=0;k<solution.getIntBoard().length;k++)
-    			{
-    				for(int h=0;h<solution.getIntBoard()[0].length;h++){
-    					System.out.print(solution.getIntBoard()[k][h]);
-    				}
-    				System.out.println();
-    			}
-    		
-        
-=======
->>>>>>> d2a7835280acba7535b8a6328a591c59149bc833
-    	}while(chronometer.isThereTimeRemaining());//se controla que quede tiempo
-    	
-    	
-    	return current;
+
+    public Cell at(Position pos){
+        return this.matrix[pos.row][pos.col];
     }
-*/
+
     public void improveSolution(Board solution, Listener l){
+    	Change change;
+    	
         for(Dot dot: dots){
-            for(Direction dir : Direction.values()){
-                Position nextPos = dot.getStart().getPosition(dir);
-                Position currentPos = dot.getStart();
-                if(nextPos.row < matrix.length && nextPos.row >= 0 &&
-                        nextPos.col < matrix[0].length && nextPos.col >= 0 &&
-                        matrix[nextPos.row][nextPos.col].color == dot.getColor()){
-                    if(dir.equals(Direction.DOWN) || dir.equals(Direction.UP)){
-                        tryCycleCols(dot.getColor(), currentPos.row, currentPos.col, solution);
-                    }else{
-                        tryCycleFils(dot.getColor(), currentPos.row, currentPos.col, solution);
-                    }
-                    improveSolution(solution, nextPos, dir, dot.getColor(), dot, null);
-                    break;
+            Position currentPos = dot.getStart();
+            Cell currentCell = solution.matrix[currentPos.row][currentPos.col];
+            Position nextPos = currentPos.getPosition(currentCell.nextPathDir);
+            Position aux1, aux2;
+            Direction currentDir = currentCell.nextPathDir;
+            while(currentDir != null){
+                switch(currentDir){
+                    case UP:    if((solution.at(aux1 = currentPos.getPosition(Direction.LEFT)).color == -1 &&
+                                (solution.at(aux2 = currentPos.getPosition(Direction.UPPERLEFT)).color == -1))){
+                    				change=new Change(currentCell,aux1,aux2,);
+                                  // setNewPath(aux1, aux2, currentCell,dot.getColor(), Direction.UP, Direction.RIGHT, Direction.LEFT);
+                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor()));
+                                }else if((solution.at(aux1 =(currentPos.getPosition(Direction.RIGHT))).color == -1 &&
+                                ((solution.at(aux2 = (currentPos.getPosition(Direction.UPPERRIGHT))).color == -1){
+                                    //setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.UP, Direction.LEFT, Direction.RIGHT);
+                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.UP,Direction.LEFT,0,dot.getColor()));
+                                    
+                                }
+                                break;
+                    case DOWN:  if((solution.at(aux1=currentPos.getPosition(Direction.LEFT))).color == -1 &&
+                    		  (solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT))).color == -1){
+                                   // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.UP, Direction.RIGHT, Direction.LEFT);
+                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor()));
+                                }else if((solution.at(aux1 =currentPos.getPosition(Direction.RIGHT))).color == -1 &&
+                                		(solution.at(aux2=currentPos.getPosition(Direction.LOWERRIGHT))).color == -1){
+                                   // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.DOWN, Direction.LEFT, Direction.RIGHT);
+                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,0,dot.getColor()));
+                                }
+                                break;
+                    case LEFT:  if(((solution.at(aux1 =currentPos.getPosition(Direction.UP))).color == -1 &&
+                    		(solution.at(aux2=currentPos.getPosition(Direction.UPPERLEFT))).color == -1)){
+                                   // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.LEFT, Direction.DOWN, Direction.UP);
+                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.UP,Direction.LEFT,Direction.DOWN,0,dot.getColor()));
+                                } else if((solution.at(aux1 =currentPos.getPosition(Direction.DOWN))).color == -1 &&
+                                		  (solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT))).color == -1){
+                                   // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.LEFT, Direction.UP, Direction.DOWN);
+                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.LEFT,Direction.UP,0,dot.getColor()));
+                                }
+                                break;
+                    case RIGHT: if((solution.at(aux1 =currentPos.getPosition(Direction.UP))).color == -1 &&
+                    		(solution.at(aux2=currentPos.getPosition(Direction.UPPERRIGHT))).color == -1){
+                                    //setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.RIGHT, Direction.DOWN, Direction.UP);
+                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.UP,Direction.RIGHT,Direction.DOWN,0,dot.getColor()));
+                                }else if((solution.at(aux1 =currentPos.getPosition(Direction.DOWN))).color == -1 &&
+                                		  (solution.at(aux2 =currentPos.getPosition(Direction.LOWERRIGHT))).color == -1){
+                                   // setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.RIGHT, Direction.UP, Direction.DOWN);
+                                    this.applyChanges(new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.RIGHT,Direction.UP,0,dot.getColor()));
+                                }
+                                break;
                 }
-            }
-            System.out.println("asi queda el tablero");
-            for(int k=0;k<solution.getIntBoard().length;k++){
-            	for(int h=0;h<solution.getIntBoard()[0].length;h++){
-            		System.out.print(solution.getIntBoard()[k][h].getColor());
-            	}
-            	System.out.println();
+
+            
+  
+                currentPos = nextPos;
             }
         }
+    }
+
+    private static void setNewPath(Cell c1, Cell c2, Cell currentCell, int color, Direction dirC1, Direction dirC2, Direction dirCCell){
+        c1.color = color;
+        c2.color = color;
+        currentCell.nextPathDir = dirCCell;
+        c1.nextPathDir = dirC1;
+        c2.nextPathDir = dirC2;
     }
 
     private void improveSolution(Board solution, Position pos, Direction prevPathDir, int color, Dot dot, Listener l){
@@ -505,4 +499,42 @@ public class Board {
             throw new IllegalArgumentException();
         }
     }
+    
+    
+    private void applyChanges(Change change){
+    	this.at(change.pos1).color=change.color;
+    	this.at(change.pos2).color=change.color;
+    	this.at(change.origin).nextPathDir = change.d0;
+    	this.at(change.pos1).nextPathDir=change.d1;
+    	this.at(change.pos2).nextPathDir=change.d2;
+    	this.paintedCells=change.paintedcells;
+    }
+   
+
+    private class Change {
+    	int paintedcells;
+    	int color;
+    	Position origin;
+    	Position pos1;
+    	Direction d0;
+    	Direction d1;
+    	Direction d2;
+    	Position pos2;
+    	Change(Position origin,Position c1,Position c2,Direction d0, Direction d1,Direction d2,int pc,int color){
+    		this.origin=origin;
+    		this.d0=d0;
+    		this.pos1=c1;
+    		this.d1=d1;
+    		this.pos2=c2;
+    		this.d2=d2;
+    		paintedcells=pc;
+    		this.color=color;
+    	}
+    	
+    	
+
+    }
+
+    
+    
 }
