@@ -72,9 +72,5 @@ public class Parser {
         return ret;
     }
 
-    private class InvalidFileException extends Exception{
-        public InvalidFileException(String message){
-            super(message);
-        }
-    }
+    
 }
