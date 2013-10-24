@@ -176,7 +176,7 @@ public class Board {
             boolean ans=findInitialSolution(nextDot.getColor(), null,nextDot.getStart(), 0, copy, solution,l);
             if(solution == null) return null; 
             
-            /*improve sol*/
+            improveSolution(solution, l);
             dotIndex++;
         }
         return solution;
@@ -252,6 +252,11 @@ public class Board {
                     break;
                 }
             }
+            for(int k=0;k<solution.getIntBoard().length;k++){
+            	for(int h=0;h<solution.getIntBoard()[0].length;h++){
+            		System.out.print(solution.getIntBoard()[k][h].getColor());
+            	}
+            }
         }
     }
 
@@ -317,6 +322,7 @@ public class Board {
 	}
 
 	private boolean tryCycleFils(int color, int row, int col, Board board) {
+		if(Math.random()>0.45){
 		int r = row+1;
 		int c = ( (col-1) >= 0 && matrix[row][col-1].color == color)? col-1 : col+1;
         if(r < matrix.length && matrix[r][col].color == 1 && matrix[r][c].color == -1 ){
@@ -344,10 +350,12 @@ public class Board {
 		}
 		System.out.println("valor del flag en ciclo fils");
         return false;
+		}
+		return false;
     }
 
 	private boolean tryCycleCols(int color, int fila, int col,Board board) /*trata de ciclar por columna*/
-	{
+	{	if(Math.random()>0.45){
 		System.out.println("llega a tryCycle");
 		int f=((fila-1)>=0&& board.getIntBoard()[fila-1][col].color==color)?fila-1:fila+1;
 		int i=col+1;
@@ -362,7 +370,11 @@ public class Board {
 				board.getIntBoard()[f][i].color=color;
 			    return true;
 			}
+		    
 		}
+		return false;
+	}
+		
 		System.out.println("valor del flag en ciclo cols");
 	    for(int h=0;h<board.getIntBoard().length;h++)/*cableo una impresion de la matrix para probar que se cambiaron*/
 	    {
