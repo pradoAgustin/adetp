@@ -1,12 +1,9 @@
 package frontEnd;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 
-import backend.Board;
-import backend.Chronometer;
-import backend.InvalidFileException;
-import backend.Listener;
-import backend.Parser;
+import backend.*;
 
 public class Main {
 public static void main(String[] args) {
@@ -84,7 +81,28 @@ public static void main(String[] args) {
 		frame.changeBoard(boardSolution);
 		System.out.println("Tiempo transcurrido en obtener la solucion exacta:"+chronometer.getElapsedTimeInMilisecs()+" milisegundos.");
 		frame.showBoard();
+		printBoardMatrixConsole(boardSolution);
 	
 	
 }
+
+
+private static void printBoardMatrixConsole(Board b){
+	Cell[][] matrix=b.getBoardMatrix();
+	
+	System.out.println("Matriz solucion:");
+	for(int h=0;h<matrix.length;h++){
+		for(int k=0;k<matrix[0].length;k++){
+			if(matrix[h][k].getColor()!=-1)
+				System.out.print(matrix[h][k].getColor());
+			else
+				System.out.print(" ");
+		}
+		System.out.println();
+	}
+	
+	
+}
+
+
 }
