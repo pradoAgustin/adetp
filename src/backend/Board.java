@@ -196,15 +196,15 @@ public class Board {
             Position aux1, aux2;
             Direction currentDir = currentCell.nextPathDir;
 
-            while(currentDir != null && ){
+            while(currentDir != null){
                 switch(currentDir){
-                    case UP:    if((solution.at(aux1 = currentPos.getPosition(Direction.LEFT)).color == -1 &&
-                                (solution.at(aux2 = currentPos.getPosition(Direction.UPPERLEFT)).color == -1))){
+                    case UP:    if(solution.at(aux1 = currentPos.getPosition(Direction.LEFT)).color == -1 &&
+                                (solution.at(aux2 = currentPos.getPosition(Direction.UPPERLEFT)).color == -1)){
                     				change=new Change(currentCell,aux1,aux2,);
                                   // setNewPath(aux1, aux2, currentCell,dot.getColor(), Direction.UP, Direction.RIGHT, Direction.LEFT);
                                     this.applyChanges(new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor()));
-                                }else if((solution.at(aux1 =(currentPos.getPosition(Direction.RIGHT))).color == -1 &&
-                                ((solution.at(aux2 = (currentPos.getPosition(Direction.UPPERRIGHT))).color == -1){
+                                }else if(solution.at(aux1 =(currentPos.getPosition(Direction.RIGHT))).color == -1 &&
+                                ((solution.at(aux2 = (currentPos.getPosition(Direction.UPPERRIGHT))).color == -1))){
                                     //setNewPath(aux1,aux2,currentCell,dot.getColor(),Direction.UP, Direction.LEFT, Direction.RIGHT);
                                     this.applyChanges(new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.UP,Direction.LEFT,0,dot.getColor()));
                                     
