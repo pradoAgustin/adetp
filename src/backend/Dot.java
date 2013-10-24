@@ -1,23 +1,22 @@
 package backend;
 
 import java.util.LinkedList;
-import java.util.List;
 
+/**
+ * Clase que simula un par de puntos (destinos en un tablero)
+ * Guarda dos instancias de Position representando arbitrariamente el comienzo
+ * y el fin de un camino, el color correspondiente al mismo
+ */
 public class Dot {
 	private Position start;
 	private Position end;
     private int color;
-    private LinkedList<Direction> path = new LinkedList<Direction>();
 
 	public Dot(Position start , Position end, int color){
 		this.start = start;
 		this.end = end;
         this.color = color;
 	}
-
-    public LinkedList<Direction> getPath(){
-        return path;
-    }
 
     @Override
 	public int hashCode() {
@@ -68,6 +67,4 @@ public class Dot {
     public String toString(){
     	return "["+"1:"+"start"+start.toString()+"end"+end.toString()+"]";
     }
-
-	
 }

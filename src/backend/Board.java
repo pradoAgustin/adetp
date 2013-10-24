@@ -193,7 +193,8 @@ public class Board {
             Position nextPos = currentPos.getPosition(currentCell.nextPathDir);
             Cell aux1, aux2;
             Direction currentDir = currentCell.nextPathDir;
-            while(currentDir != null){
+
+            while(currentDir != null && ){
                 switch(currentDir){
                     case UP:    if((aux1 = solution.at(currentPos.getPosition(Direction.LEFT))).color == -1 &&
                                 (aux2 = solution.at(currentPos.getPosition(Direction.UPPERLEFT))).color == -1){
@@ -390,7 +391,6 @@ public class Board {
                 if(currentPos.equals(dots.get(index).getEnd())){
                     if(dots.size() == index+1){
                         saveSolution(solution);
-                        System.out.println("entro en el save solution"); // TODO borrar, es para debugger nomás
                         return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
@@ -409,12 +409,14 @@ public class Board {
         if(l!=null)	l.printToScreen();
 
         Direction[] dir = getOptimalDirArray(currentPos, dots.get(index).getEnd());
+        Direction prevDir;
         Position nextPos;
         for(int i = 0; i < 4; i++){
             if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
-                boardCopy.dots.get(index).getPath().add(dir[i]);
+                prevDir = boardCopy.at(currentPos).nextPathDir;
+                boardCopy.at(currentPos).nextPathDir = dir[i];
                 if(findInitialSolution(color,currentPos,nextPos,index,boardCopy,solution,l)) return true;
-                boardCopy.dots.get(index).getPath().remove(dir[i]);
+                boardCopy.at(currentPos).nextPathDir = prevDir;
             }
         }
         cpMatrix[currentPos.row][currentPos.col].color = currentPosColor;
