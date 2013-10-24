@@ -1,5 +1,6 @@
 package backend;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Board {
@@ -166,21 +167,20 @@ public class Board {
     
     /*Algoritmo basado en Hill Climbing */
     public Board solveAprox(Listener l,Chronometer chronometer){
-
-        int dotIndex = 0;
         Board copy = new Board(null, dots);
         Board solution = new Board(null, dots);
         copyMatrix(copy);
-        while(chronometer.isThereTimeRemaining() && dotIndex < dots.size()){
-            Dot nextDot = dots.get(dotIndex);
-            boolean ans=findInitialSolution(nextDot.getColor(), null,nextDot.getStart(), 0, copy, solution,l);
+        while(chronometer.isThereTimeRemaining()){
+            Dot initialDot = dots.get(0);
+            boolean ans=findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, copy, solution, l);
             if(solution == null) return null; 
             
             /*improve sol*/
-            dotIndex++;
+            Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
         }
         return solution;
     }
+
     public void improveSolution(Board solution, Listener l){
         for(Dot dot: dots){
             for(Direction dir : Direction.values()){
@@ -200,6 +200,7 @@ public class Board {
             }
         }
     }
+
 
     private void improveSolution(Board solution, Position pos, Direction prevPathDir, int color, Dot dot, Listener l){
         int posColor = matrix[pos.row][pos.col].color;
