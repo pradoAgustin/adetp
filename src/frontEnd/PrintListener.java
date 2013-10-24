@@ -19,13 +19,13 @@ public class PrintListener implements Listener{
 		if(frame!=null){
 			//frame.hide();
 			frame.showBoard();
-//			
-//			try {
-//				Thread.sleep(sleepTime);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+		
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 	}
