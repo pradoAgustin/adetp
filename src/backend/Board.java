@@ -294,6 +294,9 @@ public class Board {
 		}
 	}
 
+    public Cell[][] getBoardMatrix(){
+    	return matrix;
+    }
 	private void tryCycle(Dot dot,Board board,Listener l) {
 		Position pos = dot.getStart();
 		int color = dot.getColor();

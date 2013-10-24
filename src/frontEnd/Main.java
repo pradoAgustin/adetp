@@ -87,4 +87,19 @@ public static void main(String[] args) {
 	
 	
 }
+
+
+private static void printBoardMatrixConsole(){
+	solution
+	for(int h=0;h<solution.getIntBoard().length;h++){
+		for(int k=0;k<solution.getIntBoard()[0].length;k++){
+			System.out.print(solution.getIntBoard()[h][k]);
+		}
+		System.out.println();
+	}
+	
+	
+}
+
+
 }
