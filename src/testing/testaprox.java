@@ -140,6 +140,11 @@ public class testaprox{
 		int cant=boardSolution2.unPaintedCells();
 		assertTrue(cant<10);
 	}
+	
+	
+	/*mapa a resolver se encuentra resuelto  en /resources/level30png
+	 * casilleros vacios que deberian quedar :0
+	 */
 	@Test
 	public void testSolve4() throws Exception{
 		
