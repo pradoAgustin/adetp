@@ -252,10 +252,12 @@ public class Board {
                     break;
                 }
             }
+            System.out.println("asi queda el tablero");
             for(int k=0;k<solution.getIntBoard().length;k++){
             	for(int h=0;h<solution.getIntBoard()[0].length;h++){
             		System.out.print(solution.getIntBoard()[k][h].getColor());
             	}
+            	System.out.println();
             }
         }
     }
