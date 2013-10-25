@@ -112,6 +112,16 @@ public class FlowJframe {
                 //  squares[i][j].paintImmediately(squares[i][j].getX(), squares[i][j].getY(), squares[i][j].getWidth(), squares[i][j].getHeight());
 		    }
 		 }
+		System.out.println("Matriz solucion:");
+		for(int h=0;h<boardMatrix.length;h++){
+			for(int k=0;k<boardMatrix[0].length;k++){
+				if(boardMatrix[h][k].getColor()!=-1)
+					System.out.print(boardMatrix[h][k].getColor());
+				else
+					System.out.print(" ");
+			}
+			System.out.println();
+		}
 		frame.validate();
 		frame.repaint();
 		 

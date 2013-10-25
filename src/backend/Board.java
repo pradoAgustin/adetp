@@ -66,6 +66,23 @@ public class Board {
 	public int rowsSize(){
 		return matrix != null ? matrix.length : 0;
 	}
+	
+	public String toString(){
+		String ans="";
+		for(int h=0;h<matrix.length;h++){
+			for(int k=0;k<matrix[0].length;k++){
+				if(matrix[h][k].getColor()!=-1)
+					ans+=matrix[h][k].getColor();
+				else
+					ans+=" ";
+			}
+			ans+="\n";
+		}
+		
+		return ans;
+		
+	}
+	
 
     /**
      * @return una instancia de Board con la variable de instancia matrix
@@ -89,6 +106,7 @@ public class Board {
      * @param listener
      * @return true si la solución cubre el tablero completo, false en caso contrario
      */
+	
     private boolean solve(int color, Position prevPos, Position currentPos, int index, Board solution,Listener listener){
         calls++;
         if(matrix.length <= currentPos.row || currentPos.row < 0
