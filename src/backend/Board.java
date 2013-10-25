@@ -257,7 +257,7 @@ public class Board {
                                     break;
                         case DOWN:  if(thereIsSpaceAtCellPair(solution.at(aux1=currentPos.getPosition(Direction.LEFT)),
                                     solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,dot.getColor());
+                                        change = new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.DOWN,Direction.RIGHT,dot.getColor());
                                     }else if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.RIGHT)),
                                     solution.at(aux2=currentPos.getPosition(Direction.LOWERRIGHT)))){
                                         change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,dot.getColor());
