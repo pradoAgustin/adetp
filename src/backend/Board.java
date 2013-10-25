@@ -204,7 +204,7 @@ public class Board {
     }
 
     public void improveSolution(Board solution, Listener l){
-        Change change = null;
+        Change change=null;
         int previousPaintedCells;
         do{
             previousPaintedCells = solution.paintedCells();
@@ -213,24 +213,30 @@ public class Board {
                 Cell currentCell = solution.matrix[currentPos.row][currentPos.col];
                 Position aux1, aux2;
                 Direction currentDir = currentCell.nextPathDir;
+                if(currentDir==null)System.out.println("no estoy guardando los dir");
                 int paintedCells = solution.paintedCells;
                 while(currentDir != null){
+                	System.out.println("chequeo current dir");
                     switch(currentDir){
+       
                         case UP:    if((solution.at(aux1 = currentPos.getPosition(Direction.LEFT)).color == -1 &&
                                     (solution.at(aux2 = currentPos.getPosition(Direction.UPPERLEFT)).color == -1))){
+                        				System.out.println("case up");
                                         change = new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor());
                                     }else if((solution.at(aux1 =currentPos.getPosition(Direction.RIGHT))).color == -1 &&
                                     ((solution.at(aux2 =currentPos.getPosition(Direction.UPPERRIGHT))).color == -1)){
+                                    	System.out.println("case up");
                                         change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.UP,Direction.LEFT,0,dot.getColor());
                                     }
                                     break;
                         case DOWN:  if((solution.at(aux1=currentPos.getPosition(Direction.LEFT))).color == -1 &&
                                   (solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT))).color == -1){
+                        	
                                         change = new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,0,dot.getColor());
                                     }else if((solution.at(aux1 =currentPos.getPosition(Direction.RIGHT))).color == -1 &&
                                             (solution.at(aux2=currentPos.getPosition(Direction.LOWERRIGHT))).color == -1){
                                         change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,0,dot.getColor());
-                                    }
+                                    }System.out.println("case down");
                                     break;
                         case LEFT:  if(((solution.at(aux1 =currentPos.getPosition(Direction.UP))).color == -1 &&
                                 (solution.at(aux2=currentPos.getPosition(Direction.UPPERLEFT))).color == -1)){
@@ -239,6 +245,7 @@ public class Board {
                                               (solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT))).color == -1){
                                         change = new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.LEFT,Direction.UP,0,dot.getColor());
                                     }
+                        			System.out.println("case left");
                                     break;
                         case RIGHT: if((solution.at(aux1 =currentPos.getPosition(Direction.UP))).color == -1 &&
                                 (solution.at(aux2=currentPos.getPosition(Direction.UPPERRIGHT))).color == -1){
@@ -247,12 +254,14 @@ public class Board {
                                               (solution.at(aux2 =currentPos.getPosition(Direction.LOWERRIGHT))).color == -1){
                                         change = new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.RIGHT,Direction.UP,0,dot.getColor());
                                     }
+                        			System.out.println("case right");
                                     break;
                         default:    change = null;
                     }
                     currentPos = currentPos.getPosition(solution.at(currentPos).nextPathDir);
                     currentDir = solution.at(currentPos).nextPathDir;
                     if(change != null && Math.random() < 1/(1+ Math.pow(Math.E, (double)(paintedCells - change.paintedcells)/T))){
+                    	System.out.println("se hizo la potencia");
                         break;
                     }
                 }
@@ -306,7 +315,7 @@ public class Board {
                 boardCopy.at(currentPos).nextPathDir = prevDir;
             }
         }
-        cpMatrix[currentPos.row][currentPos.col].color = currentPosColor;
+        boardCopy.matrix[currentPos.row][currentPos.col].color = currentPosColor;
         return false;
     }
     
