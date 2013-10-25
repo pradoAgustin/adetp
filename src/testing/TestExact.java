@@ -84,8 +84,8 @@ public class TestExact {
 		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
-		Board boardSolution2=board.solve(new PrintListener(frame));/* para ver la opcion "progress"*/
-		//Board boardSolution2=board.solve(null);
+		//Board boardSolution2=board.solve(new PrintListener(frame));/* para ver la opcion "progress"*/
+		Board boardSolution2=board.solve(null);
 		frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
 		int cant=boardSolution2.unPaintedCells();
