@@ -70,6 +70,23 @@ public class Board {
 	public int rowsSize(){
 		return matrix != null ? matrix.length : 0;
 	}
+	
+	public String toString(){
+		String ans="";
+		for(int h=0;h<matrix.length;h++){
+			for(int k=0;k<matrix[0].length;k++){
+				if(matrix[h][k].getColor()!=-1)
+					ans+=matrix[h][k].getColor();
+				else
+					ans+=" ";
+			}
+			ans+="\n";
+		}
+		
+		return ans;
+		
+	}
+	
 
     /**
      * @return una instancia de Board con la variable de instancia matrix
@@ -93,6 +110,7 @@ public class Board {
      * @param listener
      * @return true si la solución cubre el tablero completo, false en caso contrario
      */
+	
     private boolean solve(int color, Position prevPos, Position currentPos, int index, Board solution,Listener listener){
         calls++;
         if(matrix.length <= currentPos.row || currentPos.row < 0
@@ -125,9 +143,11 @@ public class Board {
         if(listener!=null) listener.printToScreen();
 
         for(Direction d : Direction.values()){
+        	if(d!=Direction.LOWERLEFT&& d!=Direction.LOWERRIGHT && d!=Direction.UPPERLEFT && d!=Direction.UPPERRIGHT){
             if( !(nextPos = currentPos.getPosition(d)).equals(prevPos) ){
                 if(solve(color, currentPos, nextPos, index, solution,listener)) return true;
             }
+        }
         }
         this.matrix[currentPos.row][currentPos.col].color = currentPosColor;
         this.paintedCells--;
@@ -214,7 +234,7 @@ public class Board {
     }
 
     public void improveSolution(Board solution, Listener l){
-        Change change = null;
+        Change change=null;
         int previousPaintedCells;
         do{
             previousPaintedCells = solution.getPaintedCells();
@@ -223,7 +243,9 @@ public class Board {
                 Cell auxCell = solution.matrix[currentPos.row][currentPos.col];
                 Position aux1, aux2;
                 Direction currentDir = auxCell.nextPathDir;
+                if(currentDir==null)System.out.println("no estoy guardando los dir");
                 while(currentDir != null){
+                	System.out.println("chequeo current dir");
                     switch(currentDir){
                         case UP:    if(thereIsSpaceAtCellPair(solution.at(aux1 = currentPos.getPosition(Direction.LEFT)),
                                         solution.at(aux2 = currentPos.getPosition(Direction.UPPERLEFT)))){
@@ -240,7 +262,6 @@ public class Board {
                                     solution.at(aux2=currentPos.getPosition(Direction.LOWERRIGHT)))){
                                         change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,dot.getColor());
                                     }
-                                    break;
                         case LEFT:  if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.UP)),
                                     solution.at(aux2=currentPos.getPosition(Direction.UPPERLEFT)))){
                                         change = new Change(currentPos,aux1,aux2,Direction.UP,Direction.LEFT,Direction.DOWN,dot.getColor());
@@ -248,6 +269,7 @@ public class Board {
                                     solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT)))){
                                         change = new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.LEFT,Direction.UP,dot.getColor());
                                     }
+                        			System.out.println("case left");
                                     break;
                         case RIGHT: if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.UP)),
                                     solution.at(aux2=currentPos.getPosition(Direction.UPPERRIGHT)))){
@@ -256,12 +278,14 @@ public class Board {
                                     solution.at(aux2 =currentPos.getPosition(Direction.LOWERRIGHT)))){
                                         change = new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.RIGHT,Direction.UP,dot.getColor());
                                     }
+                        			System.out.println("case right");
                                     break;
                         default:    change = null;
                     }
                     currentPos = currentPos.getPosition(solution.at(currentPos).nextPathDir);
                     currentDir = solution.at(currentPos).nextPathDir;
                     if(change != null && Math.random() < 1/(1+ Math.pow(Math.E, (double)(solution.paintedCells - 2)/T))){
+                    	System.out.println("se hizo la potencia");
                         break;
                     }
                 }
