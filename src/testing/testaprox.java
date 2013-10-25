@@ -35,8 +35,10 @@ public class testaprox{
 	   		Chronometer chronometer=new Chronometer();chronometer.start();
 	   		board=board.solve(null);
 	   		chronometer.stop();
+	   		frame.changeBoard(board);
+	   		frame.showBoard();
 	   		//frame=new FlowJframe(board);
-	  
+	   		frame.showBoard();
 	   		int cant=board.unPaintedCells();
 	   		
 	   		
@@ -53,8 +55,8 @@ public class testaprox{
 	   			double currentTime=((double)chronometer.getElapsedTimeInSecs())*porcentaje;	/*limite de tiempo*/
 	   			
 	   			
-	   			int currentFreeCels=5;
-	   			//int currentFreeCels=board.solveAprox(null,new Chronometer((long) Math.abs(currentTime))).unPaintedCells();
+	   			//int currentFreeCels=5;
+	   			int currentFreeCels=board.solveAprox(null,new Chronometer((long) Math.abs(currentTime))).unPaintedCells();
 	   		System.out.println(porcentaje+"                              "+currentTime+"          "+currentFreeCels+"                           "+(currentFreeCels-cant));
 	   		}
 	   		
