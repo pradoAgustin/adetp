@@ -55,7 +55,7 @@ public class testaprox{
 	   			
 	   			int currentFreeCels=5;
 	   			//int currentFreeCels=board.solveAprox(null,new Chronometer((long) Math.abs(currentTime))).unPaintedCells();
-	   		System.out.println(porcentaje+"                                    "+currentTime+"               "+currentFreeCels+"                           "+(currentFreeCels-cant));
+	   		System.out.println(porcentaje+"                              "+currentTime+"          "+currentFreeCels+"                           "+(currentFreeCels-cant));
 	   		}
 	   		
 	 }
