@@ -99,7 +99,7 @@ public class Board {
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
                     if(dots.size() == index+1){
-                        saveSolution(solution);
+                        saveSolution(this, solution);
                         if(solution.unPaintedCells() == 0) return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
@@ -128,24 +128,23 @@ public class Board {
         return false;
     }
 
-    private void saveSolution(Board solution){
+    private static void saveSolution(Board board, Board solution){
         if( (solution.matrix==null)
-                || (solution.paintedCells() < this.paintedCells()) ){
-           this.copyMatrix(solution);
+                || (solution.paintedCells() < board.paintedCells()) ){
+           Board.copyMatrix(board,solution);
         }
     }
 
     /**
-     * @param board
      * @return a Board with it's matrix initialized with a copy of this Board's matrix
      */
-    private void copyMatrix(Board board){
+    private static void copyMatrix(Board source, Board dest){
         int row, col;
-        board.matrix = new Cell[matrix.length][matrix[0].length];
-        for(row = 0; row < matrix.length; row++){
-            for(col = 0; col < matrix[0].length; col++){
-                Cell c = this.matrix[row][col];
-                board.matrix[row][col] = new Cell(c.color,c.nextPathDir);
+        dest.matrix = new Cell[source.matrix.length][source.matrix[0].length];
+        for(row = 0; row < source.matrix.length; row++){
+            for(col = 0; col < source.matrix[0].length; col++){
+                Cell c = source.matrix[row][col];
+                dest.matrix[row][col] = new Cell(c.color,c.nextPathDir);
             }
         }
     }
@@ -174,7 +173,7 @@ public class Board {
     public Board solveAprox(Listener l,Chronometer chronometer){
     	
         Board copy = new Board(null, dots);
-        copyMatrix(copy);
+        copyMatrix(this, copy);
         Board solution = new Board(null, dots);
         Board bestSolution = null;
         chronometer.start();
@@ -277,7 +276,7 @@ public class Board {
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
                     if(dots.size() == index+1){
-                        saveSolution(solution);
+                        saveSolution(this, solution);
                         return true;
                     }else{
                         Dot nextDot = dots.get(index+1);

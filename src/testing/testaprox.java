@@ -117,7 +117,7 @@ public class testaprox{
 		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "test3x3.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
-		 board=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));
+		 board=board.solveAprox(new PrintListener(frame),new Chronometer(10000));
 		 frame.showBoard();
 
 		int cant=board.unPaintedCells();
