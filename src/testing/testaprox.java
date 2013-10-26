@@ -25,7 +25,7 @@ public class testaprox{
 	 @Test
 	   	public void testCOMPARACION() throws Exception{
 		 
-		 	String fileName="ArchivosEntrada" + File.separator + "comparacion.txt";
+		 	String fileName="ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt";
 	   		Parser parser=new Parser();
 	   		
 	   		Board board=parser.parseLevel(fileName);
@@ -33,7 +33,14 @@ public class testaprox{
 	   		frame.showBoard();
 
 	   		Chronometer chronometer=new Chronometer();chronometer.start();
-	   		board=board.solve(null);
+	   		board=board.solve(null); 
+	   		/*sacar sleep para el mapa dificil*/
+	   		try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	   		chronometer.stop();
 	   		frame.changeBoard(board);
 	   		frame.showBoard();
@@ -47,14 +54,14 @@ public class testaprox{
 	   		System.out.println("cantidad minima de lugares libres:"+cant);
 	   		
 	   		System.out.println("Solucion aproximada");
-	   		System.out.println("% de tiempo respecto aproximada --tiempo      --celdas libres-- diferencia de lugares libres con exacta");
+	   		System.out.println("% de tiempo respecto exact--tiempo      --celdas libres-- diferencia de lugares libres con exacta");
 	   		double[] porcentajesTiempos={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1};
-	 
+	   		
 	   		for(double porcentaje:porcentajesTiempos){
 	   			board=parser.parseLevel(fileName);
 	   			double currentTime=((double)chronometer.getElapsedTimeInSecs())*porcentaje;	/*limite de tiempo*/
 	   			
-	   			
+	   			double aux=((double)chronometer.getElapsedTimeInSecs());
 	   			//int currentFreeCels=5;
 	   			int currentFreeCels=board.solveAprox(null,new Chronometer((long) Math.abs(currentTime))).unPaintedCells();
 	   		System.out.println(porcentaje+"                              "+currentTime+"          "+currentFreeCels+"                           "+(currentFreeCels-cant));
