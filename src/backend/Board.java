@@ -33,7 +33,9 @@ public class Board {
         this.matrix = matrix;
         this.dots = dots;
         if(dots != null){
-            paintedCells = dots.size()*2 -dots.size(); // El -1 es necesario por como estan escritos los algoritmos
+
+            paintedCells = dots.size()*2;
+
         }else{
             paintedCells = 0;
         }
@@ -187,10 +189,9 @@ public class Board {
         Board bestSolution = null;
         chronometer.start();
         while(chronometer.thereIsTimeRemaining() && solution.unPaintedCells() != 0){
-            Dot initialDot = dots.get(0);
-            if(findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, initialBoardCopy, solution, l))
-            	System.out.println(("encontre solucion aprox"));
-            if(solution == null) return null; 
+            solution = findInitialSolution(l);
+            if(solution == null) return null;
+            if(solution.unPaintedCells() == 0) return solution;
             improveSolution(solution, l);
             if(bestSolution == null ||  bestSolution.getPaintedCells() < solution.getPaintedCells()){
                 bestSolution = solution;
@@ -198,12 +199,12 @@ public class Board {
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
         }
         System.out.println("la mejor mejora fue");
-        for(int i=0;i<solution.matrix.length;i++){
-        	for(int j=0;j<solution.matrix[0].length;j++){
-        		System.out.print(solution.matrix[i][j].color);
+        for(int i=0;i<bestSolution.matrix.length;i++){
+        	for(int j=0;j<bestSolution.matrix[0].length;j++){
+        		System.out.print(bestSolution.matrix[i][j].color);
         	}System.out.println();
         }
-        return solution;
+        return bestSolution;
     }
 
     public Cell at(Position pos){
@@ -281,6 +282,16 @@ public class Board {
 
     public Cell[][] getBoardMatrix(){
     	return matrix;
+    }
+
+    private Board findInitialSolution(Listener l){
+        Board initialBoardCopy = new Board(null, dots);
+        initialBoardCopy.cloneMatrix(this);
+        Board solution = new Board(null, dots);
+        Dot initialDot = dots.get(0);
+        initialBoardCopy.paintedCells /= 2;
+        findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, initialBoardCopy, solution, l);
+        return solution;
     }
 
     private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l){
