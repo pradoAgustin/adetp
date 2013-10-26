@@ -99,6 +99,7 @@ public class Board {
 	public Board solve(Listener listener){
         Dot initialDot = dots.get(0);
         Board solution = new Board(null, dots);
+        this.paintedCells = this.dots.size();
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution,listener);
         return solution.matrix == null ? null : solution;
     }
