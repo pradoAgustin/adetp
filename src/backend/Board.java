@@ -138,8 +138,8 @@ public class Board {
         /*secci�n para imprimir con intervalos de a 100ms*/
         if(listener!=null) listener.printToScreen();
 
-        for(Direction4axis d : Direction4axis.values()){
-            if( !(nextPos = currentPos.getPosition4axis(d)).equals(prevPos) ){
+        for(Direction d : this.optimalDir[0]){
+            if( !(nextPos = currentPos.getPosition(d)).equals(prevPos) ){
                 if(solve(color, currentPos, nextPos, index, solution,listener)) return true;
             }
         }
