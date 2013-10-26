@@ -142,12 +142,10 @@ public class Board {
         /*secci�n para imprimir con intervalos de a 100ms*/
         if(listener!=null) listener.printToScreen();
 
-        for(Direction d : Direction.values()){
-        	if(d!=Direction.LOWERLEFT&& d!=Direction.LOWERRIGHT && d!=Direction.UPPERLEFT && d!=Direction.UPPERRIGHT){
-            if( !(nextPos = currentPos.getPosition(d)).equals(prevPos) ){
+        for(Direction4axis d : Direction4axis.values()){
+            if( !(nextPos = currentPos.getPosition4axis(d)).equals(prevPos) ){
                 if(solve(color, currentPos, nextPos, index, solution,listener)) return true;
             }
-        }
         }
         this.matrix[currentPos.row][currentPos.col].color = currentPosColor;
         this.paintedCells--;

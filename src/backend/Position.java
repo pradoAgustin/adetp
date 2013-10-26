@@ -24,4 +24,9 @@ public class Position {
         Position other = ((Position)o);
         return this.row == other.row && this.col == other.col;
     }
+
+	public Position getPosition4axis(Direction4axis d) {
+		// TODO Auto-generated method stub
+		return new Position(this.row + d.row, this.col + d.col);
+	}
 }

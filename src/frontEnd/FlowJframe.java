@@ -37,7 +37,7 @@ public class FlowJframe {
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 frame.setVisible(true);
 	}
-	protected void changeBoard(Board b){
+	public void changeBoard(Board b){
 		board=b;
 	}
 	public void showBoard(){

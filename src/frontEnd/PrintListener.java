@@ -10,7 +10,7 @@ import backend.Listener;
  */
 public class PrintListener implements Listener{
 
-	private static final long sleepTime=500;
+	private static final long sleepTime=100;
 	private FlowJframe frame;
 	@SuppressWarnings("unused")
 	private PrintWriter file;

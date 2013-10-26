@@ -55,7 +55,12 @@ public static void main(String[] args) {
 		
 		boardSolution=board.solve(l);
 		chronometer.stop();
-		
+		if(boardSolution==null){
+			System.out.println("El mapa ingresado no tiene solución.");
+			System.out.println("Tiempo demorado:"+chronometer.getElapsedTimeInMilisecs()+"milisegundos");
+			return;
+		}
+			
 	}
 	else if(args[1].equals("approx")){
 		if(args.length<2 ){
@@ -72,6 +77,10 @@ public static void main(String[] args) {
 		chronometer.start();
 		
 		boardSolution=board.solveAprox(l, timer);
+		if(boardSolution==null){
+			System.out.println("No se encontro solución al mapa en el tiempo dado");
+			return;
+		}
 		chronometer.stop();
 	}else{
 		System.out.println("Error:los parametros ingresados son invalidos.");

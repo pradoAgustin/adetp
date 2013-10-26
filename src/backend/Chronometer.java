@@ -14,7 +14,7 @@ public class Chronometer {
     public Chronometer(long maxSecs){
         maxTime = maxSecs*1000;
     }
-
+   
     public void start(){
         start = System.currentTimeMillis();
         System.out.println("comienszo"+start);
