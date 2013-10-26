@@ -23,7 +23,7 @@ public class Chronometer {
         end = System.currentTimeMillis();
     }
 
-    public boolean isThereTimeRemaining(){
+    public boolean thereIsTimeRemaining(){
         return maxTime > System.currentTimeMillis()- start;
     }
 
