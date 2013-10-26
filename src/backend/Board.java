@@ -33,7 +33,7 @@ public class Board {
         this.matrix = matrix;
         this.dots = dots;
         if(dots != null){
-            paintedCells = dots.size()*2 -1; // El -1 es necesario por como estan escritos los algoritmos
+            paintedCells = dots.size()*2;
         }else{
             paintedCells = 0;
         }
@@ -303,6 +303,8 @@ public class Board {
             }
             if(prevPos != null){
                 return false;
+            }else{
+                boardCopy.paintedCells--;
             }
         }else if(currentPosColor != -1) return false;
         cpMatrix[currentPos.row][currentPos.col].color = color;
