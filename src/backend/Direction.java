@@ -13,4 +13,6 @@ public enum Direction {
         this.row = row;
         this.col = col;
     }
+    
+    
 }
