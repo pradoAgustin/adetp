@@ -16,12 +16,7 @@ public class PrintListener implements Listener{
 	private PrintWriter file;
 	public PrintListener(FlowJframe f){
 		frame=f;
-		 try {
-			file=new PrintWriter("output.txt");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 	
 	@Override

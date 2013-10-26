@@ -173,7 +173,7 @@ public class Board {
     }
 
     public int unPaintedCells(){
-    	return rowsSize()*colsSize() - paintedCells;
+    	return (rowsSize()*colsSize()) - paintedCells;
     }
     
     /* Algoritmo basado en Hill Climbing  ,
