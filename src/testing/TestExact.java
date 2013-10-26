@@ -49,7 +49,7 @@ public class TestExact {
 		
 		Board boardSolution=board.solve(null);
 		Cell[][] matrix2=boardSolution.getIntBoard();
-		
+		frame.showBoard();
 		
 		for(int i=0;i<matrix2[0].length;i++)
 		{
