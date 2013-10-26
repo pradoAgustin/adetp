@@ -171,6 +171,7 @@ public class testaprox{
 
 		int cant=board.unPaintedCells();
 		assertTrue(board!=null && board.colsSize()>0);/*se controla la matriz del tablero solucion no este vacia*/
+		assertTrue(cant>=0);
 		assertTrue(cant<9);
 	}
 	
@@ -187,6 +188,7 @@ public class testaprox{
 		assertTrue( boardSolution2.rowsSize()>0 && boardSolution2.colsSize()>0);/* se comprueba que se grabo correctamente la matriz solucion del Board*/
 		int cant=boardSolution2.unPaintedCells();
 		assertTrue(cant<10);
+		assertTrue(cant>=0);
 	}
 	
 	
@@ -225,7 +227,7 @@ public class testaprox{
 			//frame=new FlowJframe(board);
 			//frame.showBoard();
 			
-			Board boardSolution=board.solve(null);
+			Board boardSolution=board.solveAprox(null, new Chronometer(20));
 			Cell[][] matrix2=boardSolution.getIntBoard();
 			
 			
@@ -265,7 +267,7 @@ public class testaprox{
 		assertTrue(boardSolution2!=null);
 		assertTrue( boardSolution2.rowsSize()>0 && boardSolution2.colsSize()>0);/* se comprueba que se grabo correctamente la matriz solucion del Board*/
 		 cant=boardSolution2.unPaintedCells();
-		assertTrue(cant<6);
+		assertTrue(cant<6);assertTrue(cant>=0);
 	
 	
 }
