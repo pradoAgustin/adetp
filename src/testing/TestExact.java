@@ -63,8 +63,8 @@ public class TestExact {
 		int cant=boardSolution.unPaintedCells();
 		
 		//frame=new FlowJframe(boardSolution);frame.showBoard();/*se muestra el tablero al finalizar*/
-		
-		 assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
+        System.out.println(cant);
+        assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
 		System.out.println("cantidad que quedo libre:"+cant);
 		
 		System.out.println("fin");
@@ -130,4 +130,11 @@ public class TestExact {
    		int cant=boardSolution2.unPaintedCells();
    		assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
    	}
+
+    @Test
+    public void testpaintedCells() throws Exception{
+        Board board = (new Parser()).parseLevel("ArchivosEntrada" + File.separator + "3x3ConDots.txt");
+        board = board.solve(null);
+        System.out.println(board.unPaintedCells());
+    }
 }
