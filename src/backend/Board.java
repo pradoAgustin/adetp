@@ -215,6 +215,9 @@ public class Board {
                 bestSolution = solution;
             }
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
+            if(solution.unPaintedCells() == 0){         //TODO ponerlo bien como condicion del while
+                break;
+            }
         }
         System.out.println("la mejor mejora fue");
         for(int i=0;i<solution.matrix.length;i++){
@@ -260,6 +263,7 @@ public class Board {
                                     solution.at(aux2=currentPos.getPosition(Direction.LOWERRIGHT)))){
                                         change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,dot.getColor());
                                     }
+                                    break;
                         case LEFT:  if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.UP)),
                                     solution.at(aux2=currentPos.getPosition(Direction.UPPERLEFT)))){
                                         change = new Change(currentPos,aux1,aux2,Direction.UP,Direction.LEFT,Direction.DOWN,dot.getColor());
@@ -287,7 +291,10 @@ public class Board {
                         break;
                     }
                 }
-                if(change != null) solution.applyChanges(change);
+                if(change != null){
+                    solution.applyChanges(change);
+                    change = null;
+                }
             }
         }while(previousPaintedCells < solution.getPaintedCells());
     }
