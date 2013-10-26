@@ -14,7 +14,7 @@ public class Chronometer {
     public Chronometer(long maxSecs){
         maxTime = maxSecs*1000;
     }
-
+   
     public void start(){
         start = System.currentTimeMillis();
         System.out.println("comienszo"+start);
@@ -23,7 +23,7 @@ public class Chronometer {
         end = System.currentTimeMillis();
     }
 
-    public boolean isThereTimeRemaining(){
+    public boolean thereIsTimeRemaining(){
         return maxTime > System.currentTimeMillis()- start;
     }
 

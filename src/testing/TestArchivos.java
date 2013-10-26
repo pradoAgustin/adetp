@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import org.junit.Test;
 
 import backend.Board;
-import backend.InvalidFileException;
 import backend.Parser;
 
 public class TestArchivos {
@@ -26,7 +25,7 @@ public class TestArchivos {
 	/*se trata de leer el archivo invalido1, el cual no especifica la cantidad de filas y de columnas
 	 * 
 	 */
-	@Test(expected = InvalidFileException.class)
+	@Test(expected = Exception.class)
 	public void lecturaArchivoNoValido1() throws Exception{
 	
 		Parser parser=new Parser();
@@ -36,7 +35,7 @@ public class TestArchivos {
 	/*se trata de leer el archivo invalido2, el cual tiene menos columnas delas que especifica
 	 * 
 	 */
-	@Test(expected = InvalidFileException.class)
+	@Test(expected = Exception.class)
 	public void lecturaArchivoNoValido2() throws Exception{
 		
 		Parser parser=new Parser();
@@ -46,7 +45,7 @@ public class TestArchivos {
 	/*se trata de leer el archivo invalido3, el cual tiene menos filas delas que especifica en la primera l�nea
 	 * 
 	 */
-	@Test(expected = InvalidFileException.class)
+	@Test(expected = Exception.class)
 	public void lecturaArchivoNoValido3() throws Exception{
 		Parser parser=new Parser();
 		
@@ -57,7 +56,7 @@ public class TestArchivos {
 	/*se trata de leer el archivo invalido4, el cual tiene una columna menos en la segunda l�nea
 	 * 
 	 */
-	@Test(expected = InvalidFileException.class)
+	@Test(expected = Exception.class)
 	public void lecturaArchivoNoValido4() throws Exception{
 		Parser parser=new Parser();
 		
@@ -67,7 +66,7 @@ public class TestArchivos {
 	/*se trata de leer el archivo invalido5, el cual tiene un color sin destino
 	 * 
 	 */
-	@Test(expected = InvalidFileException.class)
+	@Test(expected = Exception.class)
 	public void lecturaArchivoNoValido5() throws Exception{
 		
 		Parser parser=new Parser();
