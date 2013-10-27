@@ -293,14 +293,12 @@ public class Board {
         Dot initialDot = dots.get(0);
         initialBoardCopy.paintedCells = 0;
         initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
+        if(l!=null) l.changeBoard(initialBoardCopy);
         return solution.matrix == null ? null : solution;
     }
-
-
    	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l,Chronometer chronometer){
         if(matrix.length <= currentPos.row || currentPos.row < 0
            ||matrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
-
         int currentPosColor = matrix[currentPos.row][currentPos.col].color;
 
         if(color == currentPosColor){

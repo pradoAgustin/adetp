@@ -242,8 +242,10 @@ public class testaprox{
 			frame.showBoard();
 			//frame=new FlowJframe(board);
 			//frame.showBoard();
-			
-			Board boardSolution=board.solveAprox(null, new Chronometer(30000));
+			//PrintListener listener=new PrintListener(frame);
+			PrintListener listener=null;
+			Chronometer chrono= new Chronometer(300);chrono.start();
+			Board boardSolution=board.findInitialSolution(listener,chrono);
 			if(boardSolution!=null){
 			Cell[][] matrix2=boardSolution.getIntBoard();
 			frame.changeBoard(boardSolution);
