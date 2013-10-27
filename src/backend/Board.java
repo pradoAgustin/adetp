@@ -33,7 +33,9 @@ public class Board {
         this.matrix = matrix;
         this.dots = dots;
         if(dots != null){
+
             paintedCells = dots.size()*2;
+
         }else{
             paintedCells = 0;
         }
@@ -197,12 +199,14 @@ public class Board {
             }
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
         }
-        System.out.println("la mejor mejora fue");
+        
+        /*System.out.println("la mejor mejora fue");
         for(int i=0;i<bestSolution.matrix.length;i++){
         	for(int j=0;j<bestSolution.matrix[0].length;j++){
         		System.out.print(bestSolution.matrix[i][j].color);
         	}System.out.println();
-        }
+        }*/
+        System.out.println("cant pintadas"+bestSolution.getPaintedCells());
         return bestSolution;
     }
 
@@ -270,6 +274,7 @@ public class Board {
                 }
             }
         }while(previousPaintedCells < solution.getPaintedCells());
+        System.out.println(previousPaintedCells);
     }
 
     private boolean thereIsSpaceAtCellPair(Cell c1, Cell c2){
@@ -281,7 +286,7 @@ public class Board {
     	return matrix;
     }
 
-    private Board findInitialSolution(Listener l, Chronometer chronometer){
+    public Board findInitialSolution(Listener l, Chronometer chronometer){
         Board initialBoardCopy = new Board(null, dots);
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
@@ -291,8 +296,10 @@ public class Board {
         return solution.matrix == null ? null : solution;
     }
 
-    private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
+
+   	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
         Cell[][] cpMatrix = boardCopy.matrix;
+
         if(cpMatrix.length <= currentPos.row || currentPos.row < 0
            || cpMatrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
 
