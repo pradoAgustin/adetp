@@ -157,6 +157,7 @@ public class Board {
                 || (solution.getPaintedCells() < board.getPaintedCells()) ){
             solution.cloneMatrix(board);
         }
+        System.out.println("llegue a salvar solucion");
     }
 
     private void cloneMatrix(Board board){
@@ -197,6 +198,16 @@ public class Board {
             improveSolution(solution, l);
             if(bestSolution == null ||  bestSolution.getPaintedCells() < solution.getPaintedCells()){
                 bestSolution = solution;
+                System.out.println("como queda la solucion paso a paso");
+            	for(int i=0;i<bestSolution.matrix.length;i++)
+    			{
+    				for(int j=0;j<bestSolution.matrix[0].length;j++)
+    				{
+    					System.out.print(bestSolution.matrix[i][j]);
+    				}
+    				System.out.println();
+    			}
+    			
             }
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
         }
@@ -293,14 +304,16 @@ public class Board {
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
         initialBoardCopy.paintedCells /= 2;
-        findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, initialBoardCopy, solution, l,chronometer);
-        return solution.matrix == null ? null : solution;
+        System.out.println("pintadas originalmente antes de arrancar   "+initialBoardCopy.getPaintedCells());
+       findInitialSolution(initialDot.getColor(), null, initialDot.getStart(),0, initialBoardCopy, solution, l,chronometer);
+        System.out.println();
+        return solution;
     }
 
 
    	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
         Cell[][] cpMatrix = boardCopy.matrix;
-
+System.out.println("ASI QUEDA EL INDICE"+index);
         if(cpMatrix.length <= currentPos.row || currentPos.row < 0
            || cpMatrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
 
@@ -309,7 +322,7 @@ public class Board {
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
-                    if(dots.size() == index+1){
+                    if(dots.size()==index+1){
                         saveSolution(boardCopy, solution);
                         return true;
                     }else{

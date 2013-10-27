@@ -290,6 +290,19 @@ public class testaprox{
 		
 	
 	
-}
-
+}	@Test
+	public void testSolve7()  throws Exception{
+		Parser parser=new Parser();
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
+		FlowJframe frame=new FlowJframe(board);
+		frame.showBoard();
+		Board boardSolution=board.findInitialSolution(null, new Chronometer(1000000));
+		System.out.println("cantidad de celdas pintadas for(int )en solucion inicial"+boardSolution.getPaintedCells());
+		if(boardSolution.getBoardMatrix()==null){
+			System.out.println("esta quedando nula la matrix");
+		}
+			
+		
+		
+	}
 }
