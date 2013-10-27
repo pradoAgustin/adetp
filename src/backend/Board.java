@@ -287,7 +287,7 @@ public class Board {
     	return matrix;
     }
 
-    private Board findInitialSolution(Listener l, Chronometer chronometer){
+    public Board findInitialSolution(Listener l, Chronometer chronometer){
         Board initialBoardCopy = new Board(null, dots);
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
@@ -298,7 +298,7 @@ public class Board {
     }
 
 
-    private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
+   	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
         Cell[][] cpMatrix = boardCopy.matrix;
 
         if(cpMatrix.length <= currentPos.row || currentPos.row < 0

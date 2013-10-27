@@ -67,7 +67,7 @@ public static void main(String[] args) {
 		
 		boardSolution=board.solveAprox(l, timer);
 		if(boardSolution==null){
-			System.out.println("No se encontro soluciï¿½n al mapa en el tiempo dado");
+			System.out.println("No se encontro solución al mapa en el tiempo dado");
 			return;
 		}
 		chronometer.stop();

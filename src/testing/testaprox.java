@@ -69,6 +69,9 @@ public class testaprox{
 	   			if(currentSol!=null){
 	   				int currentFreeCels=currentSol.countFreecels();
 	   				System.out.println(porcentaje+"                              "+currentTime+"          "+currentFreeCels+"                           "+(currentFreeCels-cant));
+	   			
+	   				frame.changeBoard(currentSol);
+	   				frame.showBoard();
 	   			}else{
 	   				System.out.println("no se alcanzo alguna solucion");
 	   			}
@@ -240,7 +243,7 @@ public class testaprox{
 			//frame=new FlowJframe(board);
 			//frame.showBoard();
 			
-			Board boardSolution=board.solveAprox(null, new Chronometer(300));
+			Board boardSolution=board.findInitialSolution(null, new Chronometer(200));
 			if(boardSolution!=null){
 			Cell[][] matrix2=boardSolution.getIntBoard();
 			frame.changeBoard(boardSolution);
@@ -255,7 +258,7 @@ public class testaprox{
 				System.out.println();
 			}
 			
-			int cant=boardSolution.countFreecels();
+			int cant=boardSolution.unPaintedCells();
 			
 			//frame=new FlowJframe(boardSolution);frame.showBoard();/*se muestra el tablero al finalizar*/
 			
