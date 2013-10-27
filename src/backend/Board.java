@@ -292,6 +292,8 @@ public class Board {
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
         initialBoardCopy.paintedCells = 0;
+        if(l!=null)
+        	l.changeBoard(initialBoardCopy);
         findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, initialBoardCopy, solution, l,chronometer);
         return solution.matrix == null ? null : solution;
     }
@@ -300,6 +302,8 @@ public class Board {
    	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
         Cell[][] cpMatrix = boardCopy.matrix;
 
+        if(!chronometer.thereIsTimeRemaining())
+        	System.out.println("tiempo acabado");
         if(cpMatrix.length <= currentPos.row || currentPos.row < 0
            || cpMatrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
 
