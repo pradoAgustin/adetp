@@ -292,31 +292,29 @@ public class Board {
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
         initialBoardCopy.paintedCells = 0;
-        findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, initialBoardCopy, solution, l,chronometer);
+        initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
         return solution.matrix == null ? null : solution;
     }
 
 
-   	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
-        Cell[][] cpMatrix = boardCopy.matrix;
+   	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l,Chronometer chronometer){
+        if(matrix.length <= currentPos.row || currentPos.row < 0
+           ||matrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
 
-        if(cpMatrix.length <= currentPos.row || currentPos.row < 0
-           || cpMatrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
-
-        int currentPosColor = cpMatrix[currentPos.row][currentPos.col].color;
+        int currentPosColor = matrix[currentPos.row][currentPos.col].color;
 
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
-                    boardCopy.paintedCells++;
+                    this.paintedCells++;
                     if(dots.size() == index+1){
-                        saveSolution(boardCopy, solution);
+                        saveSolution(this, solution);
                         return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, boardCopy, solution,l,chronometer);
+                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l,chronometer);
                     }
-                    boardCopy.paintedCells--;
+                    this.paintedCells--;
                 }
                 return false;
             }
@@ -324,8 +322,8 @@ public class Board {
                 return false;
             }
         }else if(currentPosColor != -1) return false;
-        cpMatrix[currentPos.row][currentPos.col].color = color;
-        boardCopy.paintedCells++;
+        matrix[currentPos.row][currentPos.col].color = color;
+        this.paintedCells++;
 
         /*secci�n para imprimir con intervalos de a 100ms*/
         if(l!=null)	l.printToScreen();
@@ -335,14 +333,14 @@ public class Board {
         Position nextPos;
         for(int i = 0; i < 4; i++){
             if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
-                prevDir = boardCopy.at(currentPos).nextPathDir;
-                boardCopy.at(currentPos).nextPathDir = dir[i];
-                if(findInitialSolution(color,currentPos,nextPos,index,boardCopy,solution,l,chronometer)) return true;
-                boardCopy.at(currentPos).nextPathDir = prevDir;
+                prevDir = this.at(currentPos).nextPathDir;
+                this.at(currentPos).nextPathDir = dir[i];
+                if(findInitialSolution(color,currentPos,nextPos,index, solution,l,chronometer)) return true;
+                this.at(currentPos).nextPathDir = prevDir;
             }
         }
-        cpMatrix[currentPos.row][currentPos.col].color = currentPosColor;
-        boardCopy.paintedCells--;
+        matrix[currentPos.row][currentPos.col].color = currentPosColor;
+        this.paintedCells--;
         return false;
     }
     
