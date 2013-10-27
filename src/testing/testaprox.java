@@ -177,7 +177,7 @@ public class testaprox{
 		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
-		 board=board.solveAprox(new PrintListener(frame),new Chronometer((int)(185.088*0.2)));
+		 board=board.solveAprox(new PrintListener(frame),new Chronometer((int)(185.088*0.6)));
 		 System.out.println("cantidad de celdas pintadas"+board.getPaintedCells());
 		 frame.changeBoard(board);
 		 frame.showBoard();
