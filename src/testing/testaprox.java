@@ -242,8 +242,11 @@ public class testaprox{
 			frame.showBoard();
 			//frame=new FlowJframe(board);
 			//frame.showBoard();
-			
-			Board boardSolution=board.solveAprox(null, new Chronometer(30000));
+			Chronometer chrono= new Chronometer();
+			chrono.start();
+			Board boardSolution=board.solveAprox(null, new Chronometer(10000));
+			chrono.stop();
+			System.out.println("tiempo total tardado  "+chrono.getElapsedTimeInMilisecs());
 			if(boardSolution!=null){
 			Cell[][] matrix2=boardSolution.getIntBoard();
 			frame.changeBoard(boardSolution);
@@ -292,8 +295,12 @@ public class testaprox{
 		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
-		Board boardSolution=board.findInitialSolution(null, new Chronometer(1000000));
-		System.out.println("cantidad de celdas pintadas for(int )en solucion inicial"+boardSolution.getPaintedCells());
+		Chronometer chrono= new Chronometer();
+		chrono.start();
+		Board boardSolution=board.solveAprox(null, new Chronometer(100));
+		chrono.stop();
+		System.out.println("tiempo total tardado  "+ chrono.getElapsedTimeInMilisecs());
+		System.out.println("cantidad de celdas pintadas en solucion inicial"+boardSolution.getPaintedCells());
 		if(boardSolution.getBoardMatrix()==null){
 			System.out.println("esta quedando nula la matrix");
 		}
