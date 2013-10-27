@@ -81,11 +81,15 @@ public class TestExact {
 	@Test
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
+		Chronometer chrono=new  Chronometer();
+		chrono.start();
 		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt");
+		chrono.stop();
+		System.out.println("crhono"+chrono.getElapsedTimeInMilisecs());
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		//Board boardSolution2=board.solve(new PrintListener(frame));/* para ver la opcion "progress"*/
-		Board boardSolution2=board.solve(null);
+		/*Board boardSolution2=board.solve(null);
 		frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
 		int cant=boardSolution2.unPaintedCells();
@@ -107,14 +111,14 @@ public class TestExact {
     @Test
 	public void testSolve3() throws Exception{
 		Parser parser=new Parser();
-		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt");
 		Chronometer chrono=new Chronometer();
 		chrono.start();
 		
 		Board boardSolution2=board.solve(null);
 		chrono.stop();System.out.println(chrono.getElapsedTimeInMilisecs());
 		
-		FlowJframe frame=new FlowJframe(boardSolution2);
+		/*FlowJframe frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
 		int cant=boardSolution2.unPaintedCells();
 		assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/

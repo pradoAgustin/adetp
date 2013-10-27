@@ -200,12 +200,14 @@ public class Board {
             }
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
         }
-        System.out.println("la mejor mejora fue");
+        
+        /*System.out.println("la mejor mejora fue");
         for(int i=0;i<bestSolution.matrix.length;i++){
         	for(int j=0;j<bestSolution.matrix[0].length;j++){
         		System.out.print(bestSolution.matrix[i][j].color);
         	}System.out.println();
-        }
+        }*/
+        System.out.println("cant pintadas"+bestSolution.getPaintedCells());
         return bestSolution;
     }
 
@@ -218,7 +220,6 @@ public class Board {
     public void improveSolution(Board solution, Listener l){
         Change change=null;
         int previousPaintedCells;
-        System.out.println("pintadas antes de empexar"+solution.getPaintedCells());
         do{
             previousPaintedCells = solution.getPaintedCells();
             for(Dot dot: dots){
@@ -296,15 +297,10 @@ public class Board {
         return solution.matrix == null ? null : solution;
     }
 
-<<<<<<< HEAD
-    private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l){
-       System.out.println("pintadas en intial solution"+solution.paintedCells);
-    	
-    	Cell[][] cpMatrix = boardCopy.matrix;
-=======
+
     private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
         Cell[][] cpMatrix = boardCopy.matrix;
->>>>>>> eb7a583ceafc52a229aacae7f65fb532c3dc00d6
+
         if(cpMatrix.length <= currentPos.row || currentPos.row < 0
            || cpMatrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
 
