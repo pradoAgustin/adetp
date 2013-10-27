@@ -83,13 +83,13 @@ public class TestExact {
 		Parser parser=new Parser();
 		Chronometer chrono=new  Chronometer();
 		chrono.start();
-		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "ArchivoEnunciado.txt");
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "level8*8B.txt");
 		chrono.stop();
 		System.out.println("crhono"+chrono.getElapsedTimeInMilisecs());
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		//Board boardSolution2=board.solve(new PrintListener(frame));/* para ver la opcion "progress"*/
-		/*Board boardSolution2=board.solve(null);
+		Board boardSolution2=board.solve(null);
 		frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
 		int cant=boardSolution2.unPaintedCells();
@@ -141,4 +141,22 @@ public class TestExact {
         board = board.solve(null);
         System.out.println(board.unPaintedCells());
     }
+
+    @Test
+    public void testIvana() throws Exception{
+        Parser parser=new Parser();
+        Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "level5*5Bj.txt");
+        Chronometer chrono=new Chronometer();
+        chrono.start();
+
+        Board boardSolution2=board.solve(null);
+        chrono.stop();System.out.println("tiempo tardado"+chrono.getElapsedTimeInMilisecs());
+        System.out.println("cantidad de cals "+boardSolution2.getCalls());
+
+        FlowJframe frame=new FlowJframe(boardSolution2);
+        frame.showBoard();
+        int cant=boardSolution2.unPaintedCells();
+        assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
+    }
+
 }

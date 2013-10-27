@@ -17,7 +17,6 @@ public class Chronometer {
    
     public void start(){
         start = System.currentTimeMillis();
-      
     }
     public void stop(){
         end = System.currentTimeMillis();

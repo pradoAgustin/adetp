@@ -243,7 +243,7 @@ public class testaprox{
 			//frame=new FlowJframe(board);
 			//frame.showBoard();
 			
-			Board boardSolution=board.findInitialSolution(null, new Chronometer(200));
+			Board boardSolution=board.solveAprox(null, new Chronometer(30000));
 			if(boardSolution!=null){
 			Cell[][] matrix2=boardSolution.getIntBoard();
 			frame.changeBoard(boardSolution);
@@ -274,10 +274,6 @@ public class testaprox{
 	       //     Thread.currentThread().interrupt();
 	       // }
 		
-		
-		
-		
-		
 //	 frame=new FlowJframe(board);
 //		frame.showBoard();
 //		Board boardSolution2=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));
@@ -286,7 +282,7 @@ public class testaprox{
 //		frame.showBoard();
 //		assertTrue(boardSolution2!=null);
 //		assertTrue( boardSolution2.rowsSize()>0 && boardSolution2.colsSize()>0);/* se comprueba que se grabo correctamente la matriz solucion del Board*/
-//		 cant=boardSolution2.unPaintedCells();
+//		 cant=boardSolution2.unPaintedCells(
 		
 	
 	
@@ -305,4 +301,6 @@ public class testaprox{
 		
 		
 	}
+
+
 }
