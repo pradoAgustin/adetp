@@ -140,6 +140,7 @@ public class Board {
                 || (solution.paintedCells < board.paintedCells) ){
             solution.cloneMatrix(board);
         }
+        System.out.println("llegue a salvar solucion");
     }
 
     private void cloneMatrix(Board board){
@@ -178,6 +179,16 @@ public class Board {
             improveSolution(solution, l);
             if(bestSolution == null ||  bestSolution.paintedCells < solution.paintedCells){
                 bestSolution = solution;
+                System.out.println("como queda la solucion paso a paso");
+            	for(int i=0;i<bestSolution.matrix.length;i++)
+    			{
+    				for(int j=0;j<bestSolution.matrix[0].length;j++)
+    				{
+    					System.out.print(bestSolution.matrix[i][j]);
+    				}
+    				System.out.println();
+    			}
+    			
             }
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
         }
@@ -269,22 +280,28 @@ public class Board {
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
+
         initialBoardCopy.paintedCells = 0;
         initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
         if(l!=null) l.changeBoard(initialBoardCopy);
         return solution.matrix == null ? null : solution;
+
     }
+
    	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l,Chronometer chronometer){
         if(matrix.length <= currentPos.row || currentPos.row < 0
            ||matrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
         int currentPosColor = matrix[currentPos.row][currentPos.col].color;
 
+
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
+
                     this.paintedCells++;
                     if(dots.size() == index+1){
                         saveSolution(this, solution);
+
                         return true;
                     }else{
                         Dot nextDot = dots.get(index+1);

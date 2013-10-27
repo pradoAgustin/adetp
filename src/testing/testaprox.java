@@ -180,7 +180,7 @@ public class testaprox{
 		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
-		 board=board.solveAprox(new PrintListener(frame),new Chronometer((int)(185.088*0.2)));
+		 board=board.solveAprox(new PrintListener(frame),new Chronometer((int)(185.088*0.6)));
 		 System.out.println("cantidad de celdas pintadas"+board.getPaintedCells());
 		 frame.changeBoard(board);
 		 frame.showBoard();
@@ -242,10 +242,11 @@ public class testaprox{
 			frame.showBoard();
 			//frame=new FlowJframe(board);
 			//frame.showBoard();
-			//PrintListener listener=new PrintListener(frame);
-			PrintListener listener=null;
-			Chronometer chrono= new Chronometer(300);chrono.start();
-			Board boardSolution=board.findInitialSolution(listener,chrono);
+			Chronometer chrono= new Chronometer();
+			chrono.start();
+			Board boardSolution=board.solveAprox(null, new Chronometer(10000));
+			chrono.stop();
+			System.out.println("tiempo total tardado  "+chrono.getElapsedTimeInMilisecs());
 			if(boardSolution!=null){
 			Cell[][] matrix2=boardSolution.getIntBoard();
 			frame.changeBoard(boardSolution);
@@ -284,7 +285,29 @@ public class testaprox{
 //		frame.showBoard();
 //		assertTrue(boardSolution2!=null);
 //		assertTrue( boardSolution2.rowsSize()>0 && boardSolution2.colsSize()>0);/* se comprueba que se grabo correctamente la matriz solucion del Board*/
-//		 cant=boardSolution2.unPaintedCells();
-}
+//		 cant=boardSolution2.unPaintedCells(
+		
+	
+	
+}	@Test
+	public void testSolve7()  throws Exception{
+		Parser parser=new Parser();
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
+		FlowJframe frame=new FlowJframe(board);
+		frame.showBoard();
+		Chronometer chrono= new Chronometer();
+		chrono.start();
+		Board boardSolution=board.solveAprox(null, new Chronometer(100));
+		chrono.stop();
+		System.out.println("tiempo total tardado  "+ chrono.getElapsedTimeInMilisecs());
+		System.out.println("cantidad de celdas pintadas en solucion inicial"+boardSolution.getPaintedCells());
+		if(boardSolution.getBoardMatrix()==null){
+			System.out.println("esta quedando nula la matrix");
+		}
+			
+		
+		
+	}
+
 
 }
