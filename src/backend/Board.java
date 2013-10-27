@@ -100,7 +100,9 @@ public class Board {
      */
 	public Board solve(Listener listener){
         Dot initialDot = dots.get(0);
+        this.paintedCells /=2;
         Board solution = new Board(null, dots);
+        this.paintedCells = this.dots.size();
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution,listener);
         return solution.matrix == null ? null : solution;
     }
@@ -189,7 +191,7 @@ public class Board {
         Board bestSolution = null;
         chronometer.start();
         while(chronometer.thereIsTimeRemaining() && solution.unPaintedCells() != 0){
-            solution = findInitialSolution(l);
+            solution = findInitialSolution(l,chronometer);
             if(solution == null) return null;
             if(solution.unPaintedCells() == 0) return solution;
             improveSolution(solution, l);
@@ -284,22 +286,27 @@ public class Board {
     	return matrix;
     }
 
-    private Board findInitialSolution(Listener l){
+    private Board findInitialSolution(Listener l, Chronometer chronometer){
         Board initialBoardCopy = new Board(null, dots);
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
         initialBoardCopy.paintedCells /= 2;
-        findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, initialBoardCopy, solution, l);
-        return solution;
+        findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, initialBoardCopy, solution, l,chronometer);
+        return solution.matrix == null ? null : solution;
     }
 
+<<<<<<< HEAD
     private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l){
        System.out.println("pintadas en intial solution"+solution.paintedCells);
     	
     	Cell[][] cpMatrix = boardCopy.matrix;
+=======
+    private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board boardCopy, Board solution,Listener l,Chronometer chronometer){
+        Cell[][] cpMatrix = boardCopy.matrix;
+>>>>>>> eb7a583ceafc52a229aacae7f65fb532c3dc00d6
         if(cpMatrix.length <= currentPos.row || currentPos.row < 0
-           || cpMatrix[0].length <= currentPos.col || currentPos.col < 0) return false;
+           || cpMatrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
 
         int currentPosColor = cpMatrix[currentPos.row][currentPos.col].color;
 
@@ -311,7 +318,7 @@ public class Board {
                         return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, boardCopy, solution,l);
+                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, boardCopy, solution,l,chronometer);
                     }
                 }
                 return false;
@@ -333,7 +340,7 @@ public class Board {
             if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
                 prevDir = boardCopy.at(currentPos).nextPathDir;
                 boardCopy.at(currentPos).nextPathDir = dir[i];
-                if(findInitialSolution(color,currentPos,nextPos,index,boardCopy,solution,l)) return true;
+                if(findInitialSolution(color,currentPos,nextPos,index,boardCopy,solution,l,chronometer)) return true;
                 boardCopy.at(currentPos).nextPathDir = prevDir;
             }
         }
@@ -400,5 +407,16 @@ public class Board {
     		this.d2=d2;
     		this.color=color;
     	}
+    }
+    
+    public int countFreecels(){
+    	int ans=0;
+    	for(int i=0;i<matrix.length;i++){
+    		for(int j=0;j<matrix[0].length;j++){
+    			if(matrix[i][j].getColor()==-1)
+    				ans++;
+    		}
+    	}
+    	return ans;
     }
 }
