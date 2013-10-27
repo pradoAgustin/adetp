@@ -98,9 +98,8 @@ public class Board {
      */
 	public Board solve(Listener listener){
         Dot initialDot = dots.get(0);
-        this.paintedCells /=2;
         Board solution = new Board(null, dots);
-        this.paintedCells = this.dots.size();
+        this.paintedCells = 0;
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution,listener);
         return solution.matrix == null ? null : solution;
     }
@@ -118,6 +117,7 @@ public class Board {
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
+                    this.paintedCells++;
                     if(dots.size() == index+1){
                         saveSolution(this, solution);
                         if(solution.unPaintedCells() == 0) return true;
@@ -125,6 +125,7 @@ public class Board {
                         Dot nextDot = dots.get(index+1);
                         solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,listener);
                     }
+                    this.paintedCells--;
                 }
                 return false;
             }
@@ -183,8 +184,6 @@ public class Board {
      * hasta que tenga tiempo
      */
     public Board solveAprox(Listener l,Chronometer chronometer){
-        Board initialBoardCopy = new Board(null, dots);
-        initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
         Board bestSolution = null;
         chronometer.start();
@@ -287,7 +286,7 @@ public class Board {
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
-        initialBoardCopy.paintedCells /= 2;
+        initialBoardCopy.paintedCells = 0;
         findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, initialBoardCopy, solution, l,chronometer);
         return solution.matrix == null ? null : solution;
     }
@@ -302,6 +301,7 @@ public class Board {
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
+                    boardCopy.paintedCells++;
                     if(dots.size() == index+1){
                         saveSolution(boardCopy, solution);
                         return true;
@@ -309,6 +309,7 @@ public class Board {
                         Dot nextDot = dots.get(index+1);
                         findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, boardCopy, solution,l,chronometer);
                     }
+                    boardCopy.paintedCells--;
                 }
                 return false;
             }

@@ -137,4 +137,21 @@ public class TestExact {
         board = board.solve(null);
         System.out.println(board.unPaintedCells());
     }
+
+    @Test
+    public void testIvana() throws Exception{
+        Parser parser=new Parser();
+        Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "test3.txt");
+        Chronometer chrono=new Chronometer();
+        chrono.start();
+
+        Board boardSolution2=board.solve(null);
+        chrono.stop();System.out.println(chrono.getElapsedTimeInMilisecs());
+
+        FlowJframe frame=new FlowJframe(boardSolution2);
+        frame.showBoard();
+        int cant=boardSolution2.unPaintedCells();
+        assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
+    }
+
 }
