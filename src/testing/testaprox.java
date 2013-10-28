@@ -4,17 +4,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import org.junit.Test;
 
 import backend.Board;
-import backend.Cell;
 import backend.Chronometer;
-import backend.Color;
-import backend.Dot;
 import backend.Parser;
-import backend.Position;
 import frontEnd.FlowJframe;
 import frontEnd.PrintListener;
 
@@ -128,66 +123,7 @@ public class testaprox{
 		assertTrue(cant<10);
 		assertTrue(cant>=0);
 	}
-	
-	
-	/*mapa a resolver se encuentra resuelto  en /resources/level30png
-	 * casilleros vacios que deberian quedar :0
-	 */
 	@Test
-	public void testSolve4() throws Exception{
-	        Cell matrix[][]=new Cell[9][9];
-	          Board board=new Board(matrix,new ArrayList<Dot>());
-	           
-	          for(int i=0;i<9;i++){
-	              for(int j=0;j<9;j++){
-	                matrix[i][j]=new Cell(-1);
-	               }
-	           }
-	            FlowJframe frame=new FlowJframe(board);
-	            frame.showBoard();
-	            matrix[0][6]=new Cell(Color.RED.getNum());   matrix[2][3]=new Cell(Color.RED.getNum());board.addDot(new Dot(new Position(0, 6), new Position(2, 3), backend.Color.RED.getNum()));
-	            matrix[0][7]=new Cell(Color.GRAY.getNum());   matrix[3][3]=new Cell(Color.GRAY.getNum());board.addDot(new Dot(new Position(0,7 ), new Position(3,3 ), backend.Color.GRAY.getNum()));
-	            matrix[0][8]=new Cell(Color.GREEN.getNum());   matrix[4][1]=new Cell(Color.GREEN.getNum());board.addDot(new Dot(new Position(0,8 ), new Position(4,1 ), backend.Color.GREEN.getNum()));
-	            matrix[1][1]=new Cell(Color.BLUE.getNum());   matrix[8][0]=new Cell(Color.BLUE.getNum());board.addDot(new Dot(new Position(1,1 ), new Position(8,0 ), backend.Color.BLUE.getNum()));
-	            
-	            matrix[2][0]=new Cell(Color.BLACK.getNum());   matrix[7][3]=new Cell(Color.BLACK.getNum());board.addDot(new Dot(new Position(2,0 ), new Position(7, 3), backend.Color.BLACK.getNum()));
-	            matrix[4][7]=new Cell(Color.ORANGE.getNum());   matrix[7][7]=new Cell(Color.ORANGE.getNum());board.addDot(new Dot(new Position(4,7 ), new Position(7,7 ), backend.Color.ORANGE.getNum()));
-	            matrix[5][4]=new Cell(Color.PINK.getNum());   matrix[7][6]=new Cell(Color.PINK.getNum());board.addDot(new Dot(new Position(5,4 ), new Position(7,6 ), backend.Color.PINK.getNum()));
-	            matrix[6][6]=new Cell(Color.YELLOW.getNum());   matrix[6][8]=new Cell(Color.YELLOW.getNum());board.addDot(new Dot(new Position(6,6 ), new Position(6,8 ), backend.Color.YELLOW.getNum()));
-	            
-	            matrix[8][5]=new Cell(Color.MAGENTA.getNum());   matrix[7][8]=new Cell(Color.MAGENTA.getNum());board.addDot(new Dot(new Position(8,5 ), new Position(7, 8), backend.Color.MAGENTA.getNum())); 
-	        
-
-	            frame=new FlowJframe(board);
-			frame.showBoard();
-			Chronometer chrono= new Chronometer();
-			chrono.start();
-			Board boardSolution=board.solveAprox(null, new Chronometer(10000));
-			chrono.stop();
-			System.out.println("tiempo total tardado  "+chrono.getElapsedTimeInMilisecs());
-			if(boardSolution!=null){
-			Cell[][] matrix2=boardSolution.getIntBoard();
-			frame.changeBoard(boardSolution);
-			frame.showBoard();
-			
-			for(int i=0;i<matrix2[0].length;i++)
-			{
-				for(int j=0;j<matrix2[0].length;j++)
-				{
-					System.out.print(matrix2[i][j]);
-				}
-				System.out.println();
-			}
-			
-			int cant=boardSolution.unPaintedCells();
-			
-			System.out.println("cantidad que quedo libre:"+cant);
-			assertTrue(cant<6);
-			assertTrue(cant>=0);
-			}
-			System.out.println("fin");
-
-}	@Test
 	public void testSolve7()  throws Exception{
 		Parser parser=new Parser();
 		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
@@ -198,13 +134,21 @@ public class testaprox{
 		Board boardSolution=board.solveAprox(null, new Chronometer(100));
 		chrono.stop();
 		System.out.println("tiempo total tardado  "+ chrono.getElapsedTimeInMilisecs());
-		if(boardSolution.getIntBoard()==null){
+		if(boardSolution.getMatrix()==null){
 			System.out.println("esta quedando nula la matrix");
 		}
-			
-		
-		
 	}
-
-
+    @Test
+    public void testSolve30x30()  throws Exception{
+        Parser parser=new Parser();
+        Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "30x30_1color.txt");
+        Chronometer chrono= new Chronometer();
+        chrono.start();
+        Board boardSolution=board.solveAprox(null, new Chronometer(100));
+        chrono.stop();
+        System.out.println("tiempo total tardado  "+ chrono.getElapsedTimeInMilisecs());
+        if(boardSolution.getMatrix()==null){
+            System.out.println("esta quedando nula la matrix");
+        }
+    }
 }

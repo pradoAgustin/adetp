@@ -20,7 +20,7 @@ public class Board {
     /* 7 */ {Direction.DOWN, Direction.RIGHT, Direction.UP, Direction.LEFT}
     };
 
-    /* Constante T de probabilidad para el algoritmo aproximádo
+    /* Constante T de probabilidad para el algoritmo aproximado
        hill-climber estocástico */
     private final static double T = 0.1;
  
@@ -33,15 +33,13 @@ public class Board {
         this.matrix = matrix;
         this.dots = dots;
         if(dots != null){
-
             paintedCells = dots.size()*2;
-
         }else{
             paintedCells = 0;
         }
     }
 
-	public Cell[][] getIntBoard(){
+	public Cell[][] getMatrix(){
 		return matrix;
 	}
 
@@ -91,7 +89,6 @@ public class Board {
     /**
      * @return true si la solución cubre el tablero completo, false en caso contrario
      */
-	
     private boolean solve(int color, Position prevPos, Position currentPos, int index, Board solution,Listener listener){
         calls++; // TODO recordar sacar calls antes de la entrega final!
         if(matrix.length <= currentPos.row || currentPos.row < 0
@@ -140,7 +137,6 @@ public class Board {
                 || (solution.paintedCells < board.paintedCells) ){
             solution.cloneMatrix(board);
         }
-        System.out.println("llegue a salvar solucion");
     }
 
     private void cloneMatrix(Board board){
@@ -179,27 +175,9 @@ public class Board {
             improveSolution(solution, l);
             if(bestSolution == null ||  bestSolution.paintedCells < solution.paintedCells){
                 bestSolution = solution;
-                System.out.println("como queda la solucion paso a paso");
-            	for(int i=0;i<bestSolution.matrix.length;i++)
-    			{
-    				for(int j=0;j<bestSolution.matrix[0].length;j++)
-    				{
-    					System.out.print(bestSolution.matrix[i][j]);
-    				}
-    				System.out.println();
-    			}
-    			
             }
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
         }
-        
-        /*System.out.println("la mejor mejora fue");
-        for(int i=0;i<bestSolution.matrix.length;i++){
-        	for(int j=0;j<bestSolution.matrix[0].length;j++){
-        		System.out.print(bestSolution.matrix[i][j].color);
-        	}System.out.println();
-        }*/
-        System.out.println("cant pintadas"+bestSolution.paintedCells);
         return bestSolution;
     }
 
@@ -210,7 +188,7 @@ public class Board {
     }
 
     public void improveSolution(Board solution, Listener l){
-        Change change=null;
+        Difference difference =null;
         int previousPaintedCells;
         do{
             previousPaintedCells = solution.paintedCells;
@@ -223,47 +201,46 @@ public class Board {
                     switch(currentDir){
                         case UP:    if(thereIsSpaceAtCellPair(solution.at(aux1 = currentPos.getPosition(Direction.LEFT)),
                                     solution.at(aux2 = currentPos.getPosition(Direction.UPPERLEFT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,dot.getColor());
+                                        difference = new Difference(currentPos,aux1,aux2,Direction.LEFT,Direction.UP,Direction.RIGHT,dot.getColor());
                                     }else if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.RIGHT)),
                                     solution.at(aux2 =currentPos.getPosition(Direction.UPPERRIGHT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.UP,Direction.LEFT,dot.getColor());
+                                        difference = new Difference(currentPos,aux1,aux2,Direction.RIGHT,Direction.UP,Direction.LEFT,dot.getColor());
                                     }
                                     break;
                         case DOWN:  if(thereIsSpaceAtCellPair(solution.at(aux1=currentPos.getPosition(Direction.LEFT)),
                                     solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.LEFT,Direction.DOWN,Direction.RIGHT,dot.getColor());
+                                        difference = new Difference(currentPos,aux1,aux2,Direction.LEFT,Direction.DOWN,Direction.RIGHT,dot.getColor());
                                     }else if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.RIGHT)),
                                     solution.at(aux2=currentPos.getPosition(Direction.LOWERRIGHT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,dot.getColor());
+                                        difference = new Difference(currentPos,aux1,aux2,Direction.RIGHT,Direction.DOWN,Direction.LEFT,dot.getColor());
                                     }
                                     break;
                         case LEFT:  if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.UP)),
                                     solution.at(aux2=currentPos.getPosition(Direction.UPPERLEFT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.UP,Direction.LEFT,Direction.DOWN,dot.getColor());
+                                        difference = new Difference(currentPos,aux1,aux2,Direction.UP,Direction.LEFT,Direction.DOWN,dot.getColor());
                                     } else if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.DOWN)),
                                     solution.at(aux2 =currentPos.getPosition(Direction.LOWERLEFT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.LEFT,Direction.UP,dot.getColor());
+                                        difference = new Difference(currentPos,aux1,aux2,Direction.DOWN,Direction.LEFT,Direction.UP,dot.getColor());
                                     }
                                     break;
                         case RIGHT: if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.UP)),
                                     solution.at(aux2=currentPos.getPosition(Direction.UPPERRIGHT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.UP,Direction.RIGHT,Direction.DOWN,dot.getColor());
+                                        difference = new Difference(currentPos,aux1,aux2,Direction.UP,Direction.RIGHT,Direction.DOWN,dot.getColor());
                                     }else if(thereIsSpaceAtCellPair(solution.at(aux1 =currentPos.getPosition(Direction.DOWN)),
                                     solution.at(aux2 =currentPos.getPosition(Direction.LOWERRIGHT)))){
-                                        change = new Change(currentPos,aux1,aux2,Direction.DOWN,Direction.RIGHT,Direction.UP,dot.getColor());
+                                        difference = new Difference(currentPos,aux1,aux2,Direction.DOWN,Direction.RIGHT,Direction.UP,dot.getColor());
                                     }
                                     break;
-                        default:    change = null;
                     }
                     currentPos = currentPos.getPosition(solution.at(currentPos).nextPathDir);
                     currentDir = solution.at(currentPos).nextPathDir;
-                    if(change != null && Math.random() < 1/(1+ Math.pow(Math.E, ((double)(solution.paintedCells - 2))/T))){
+                    if(difference != null && Math.random() < 1/(1+ Math.pow(Math.E, ((double)(solution.paintedCells - 2))/T))){
                         break;
                     }
                 }
-                if(change != null){
-                    solution.applyChanges(change);
-                    change = null;
+                if(difference != null){
+                    solution.applyDifferences(difference);
+                    difference = null;
                 }
             }
         }while(previousPaintedCells < solution.paintedCells);
@@ -280,24 +257,20 @@ public class Board {
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
-
         initialBoardCopy.paintedCells = 0;
         initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
         if(l!=null) l.changeBoard(initialBoardCopy);
         return solution.matrix == null ? null : solution;
-
     }
 
    	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l,Chronometer chronometer){
         if(matrix.length <= currentPos.row || currentPos.row < 0
            ||matrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
+
         int currentPosColor = matrix[currentPos.row][currentPos.col].color;
-
-
         if(color == currentPosColor){
             if(!currentPos.equals(dots.get(index).getStart())){
                 if(currentPos.equals(dots.get(index).getEnd())){
-
                     this.paintedCells++;
                     if(dots.size() == index+1){
                         saveSolution(this, solution);
@@ -318,8 +291,7 @@ public class Board {
         matrix[currentPos.row][currentPos.col].color = color;
         this.paintedCells++;
 
-        /*sección para imprimir con intervalos de a 100ms*/
-        if(l!=null)	l.printToScreen();
+        if(l != null) l.printToScreen();
 
         Direction[] dir = getOptimalDirArray(currentPos, dots.get(index).getEnd());
         Direction prevDir;
@@ -362,31 +334,27 @@ public class Board {
         return (vertical > 0) ? optimalDir[2] : vertical == 0 ? optimalDir[4] : optimalDir[7];
     }
 
-	public void addDot(Dot dot) { // TODO Borrar!
-		dots.add(dot);
-	}
-
-    private void applyChanges(Change change){
-    	this.at(change.pos1).color=change.color;
-    	this.at(change.pos2).color=change.color;
-    	this.at(change.origin).nextPathDir = change.d0;
-    	this.at(change.pos1).nextPathDir=change.d1;
-    	this.at(change.pos2).nextPathDir=change.d2;
+    private void applyDifferences(Difference difference){
+    	this.at(difference.pos1).color= difference.color;
+    	this.at(difference.pos2).color= difference.color;
+    	this.at(difference.origin).nextPathDir = difference.d0;
+    	this.at(difference.pos1).nextPathDir= difference.d1;
+    	this.at(difference.pos2).nextPathDir= difference.d2;
     	this.paintedCells += 2;
     }
 
     /**
      * Clase que almacena un cambio en el tablero. Al ser costosa la copia de
      * tableros para representar cada vecino de un estado del algoritmo
-     * hill-climbing, se almacena el cambio en una instancia de Change y luego
-     * se lo aplica mediante el método applyChanges
+     * hill-climbing, se almacena el cambio en una instancia de Difference y luego
+     * se lo aplica mediante el método applyDifferences
      */
-    private class Change {
+    private class Difference {
     	int color;
     	Position origin, pos1, pos2;
     	Direction d0, d1, d2;
 
-    	Change(Position origin,Position c1,Position c2,Direction d0, Direction d1,Direction d2,int color){
+    	Difference(Position origin, Position c1, Position c2, Direction d0, Direction d1, Direction d2, int color){
     		this.origin=origin;
     		this.d0=d0;
     		this.pos1=c1;
@@ -421,5 +389,4 @@ public class Board {
         }
         return ans;
     }
-
 }
