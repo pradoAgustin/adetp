@@ -18,40 +18,36 @@ public class FlowJframe {
 	public FlowJframe(Board board){
 	    this.board=board;
 		squares = new JPanel[board.rowsSize()][board.colsSize()];
-		
-		 frame = new JFrame("Flow");
-		 frame.setSize(500, 500);
-		 if(board.rowsSize()<=0 || board.colsSize()<=0)
+
+		frame = new JFrame("Flow");
+		frame.setSize(500, 500);
+		if(board.rowsSize()<=0 || board.colsSize()<=0)
 			 return;
-		 frame.setLayout(new GridLayout(squares.length, squares[0].length));
+		frame.setLayout(new GridLayout(squares.length, squares[0].length));
+		boardMatrix=board.getMatrix();
 		 
-		 boardMatrix=board.getIntBoard();
-		 
-		 for (int i = 0; i < squares.length; i++) {
-			    for (int j = 0; j < squares[0].length; j++) {
-			        squares[i][j] = new JPanel();
-			        frame.add(squares[i][j]);
-			    }
-		 }
-		 
-		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 frame.setVisible(true);
+		for (int i = 0; i < squares.length; i++){
+	        for (int j = 0; j < squares[0].length; j++){
+			    squares[i][j] = new JPanel();
+			    frame.add(squares[i][j]);
+			}
+		}
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
-	public void changeBoard(Board b){
+
+    public void changeBoard(Board b){
 		board=b;
 	}
-	public void showBoard(){
-		
+
+    public void showBoard(){
 		//Border border = LineBorder.createGrayLineBorder();
-		Cell [][] boardMatrix=board.getIntBoard();
-		
-		
+		Cell [][] boardMatrix=board.getMatrix();
+
 		for (int i = 0; i < squares.length; i++) {
 		    for (int j = 0; j < squares[0].length; j++) {
-		        
 		        int current=boardMatrix[i][j].getColor();
 		        java.awt.Color backgroundColor;
-		        //squares[i][j].setBackground(java.awt.Color.white);
                 switch(current){
 		            case -1:
                         backgroundColor=java.awt.Color.white;
@@ -90,7 +86,6 @@ public class FlowJframe {
 
                 if(current!=-1){
                     JLabel image;
-
                     if(board.isOrigin(i, j,current) ){
                         image=new JLabel(new ImageIcon("resources"+File.separator+"start.png"));
                     }
@@ -98,15 +93,11 @@ public class FlowJframe {
                     	 image=new JLabel(new ImageIcon("resources"+File.separator+"end.png"));
                     else{
                         image=new JLabel(new ImageIcon("resources"+File.separator+"punto.png"));
-
                     }
                     //image.setBorder(border);
-                    
                     squares[i][j].removeAll();
                     squares[i][j].add(image);
                     squares[i][j].validate();
-                  
-                    
                 }
                 //squares[i][j].add(new JLabel(new ImageIcon("resources"+File.separator+"punto.png")));
                 //  squares[i][j].paintImmediately(squares[i][j].getX(), squares[i][j].getY(), squares[i][j].getWidth(), squares[i][j].getHeight());
@@ -124,15 +115,15 @@ public class FlowJframe {
 		}
 		frame.validate();
 		frame.repaint();
-		 
-		
 	}
-	public void refresh(){
+
+    public void refresh(){
 		frame.invalidate();
 		frame.validate();
-		frame.repaint();	}
-	public void hide(){
+		frame.repaint();
+    }
+
+    public void hide(){
 		frame.setVisible(false);
 	}
-	
 }

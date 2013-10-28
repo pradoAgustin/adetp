@@ -10,74 +10,35 @@ import backend.*;
 import org.junit.Test;
 
 import frontEnd.FlowJframe;
-import frontEnd.PrintListener;
 
 public class TestExact {
 	/*mapa a resolver se encuentra resuelto  en /resources/level30png
 	 * casilleros vacios que deberian quedar :0
 	 */
 
-	@Test
-	public void testSolve1(){
-       Cell matrix[][]=new Cell[9][9];
-          Board board=new Board(matrix,new ArrayList<Dot>());
-           
-            for(int i=0;i<9;i++){
-             for(int j=0;j<9;j++){
-               matrix[i][j]=new Cell(-1);
-              }
-          }
-            FlowJframe frame=new FlowJframe(board);
-            frame.showBoard();
-            matrix[0][6]=new Cell(Color.RED.getNum());   matrix[2][3]=new Cell(Color.RED.getNum());board.addDot(new Dot(new Position(0, 6), new Position(2, 3), backend.Color.RED.getNum()));
-            matrix[0][7]=new Cell(Color.GRAY.getNum());   matrix[3][3]=new Cell(Color.GRAY.getNum());board.addDot(new Dot(new Position(0,7 ), new Position(3,3 ), backend.Color.GRAY.getNum()));
-            matrix[0][8]=new Cell(Color.GREEN.getNum());   matrix[4][1]=new Cell(Color.GREEN.getNum());board.addDot(new Dot(new Position(0,8 ), new Position(4,1 ), backend.Color.GREEN.getNum()));
-            matrix[1][1]=new Cell(Color.BLUE.getNum());   matrix[8][0]=new Cell(Color.BLUE.getNum());board.addDot(new Dot(new Position(1,1 ), new Position(8,0 ), backend.Color.BLUE.getNum()));
-            
-            matrix[2][0]=new Cell(Color.BLACK.getNum());   matrix[7][3]=new Cell(Color.BLACK.getNum());board.addDot(new Dot(new Position(2,0 ), new Position(7, 3), backend.Color.BLACK.getNum()));
-            matrix[4][7]=new Cell(Color.ORANGE.getNum());   matrix[7][7]=new Cell(Color.ORANGE.getNum());board.addDot(new Dot(new Position(4,7 ), new Position(7,7 ), backend.Color.ORANGE.getNum()));
-            matrix[5][4]=new Cell(Color.PINK.getNum());   matrix[7][6]=new Cell(Color.PINK.getNum());board.addDot(new Dot(new Position(5,4 ), new Position(7,6 ), backend.Color.PINK.getNum()));
-            matrix[6][6]=new Cell(Color.YELLOW.getNum());   matrix[6][8]=new Cell(Color.YELLOW.getNum());board.addDot(new Dot(new Position(6,6 ), new Position(6,8 ), backend.Color.YELLOW.getNum()));
-            
-            matrix[8][5]=new Cell(Color.MAGENTA.getNum());   matrix[7][8]=new Cell(Color.MAGENTA.getNum());board.addDot(new Dot(new Position(8,5 ), new Position(7, 8), backend.Color.MAGENTA.getNum())); 
-        
+    @Test
+    public void crearTabla() throws Exception{
+        Parser parser=new Parser();
+        Chronometer chrono=new  Chronometer();
 
-            frame=new FlowJframe(board);
-		frame.showBoard();
-		//frame=new FlowJframe(board);
-		//frame.showBoard();
-		
-		Board boardSolution=board.solve(null);
-		Cell[][] matrix2=boardSolution.getIntBoard();
-		frame.showBoard();
-		
-		for(int i=0;i<matrix2[0].length;i++)
-		{
-			for(int j=0;j<matrix2[0].length;j++)
-			{
-				System.out.print(matrix2[i][j]);
-			}
-			System.out.println();
-		}
-		
-		int cant=boardSolution.unPaintedCells();
-		
-		//frame=new FlowJframe(boardSolution);frame.showBoard();/*se muestra el tablero al finalizar*/
-        System.out.println(cant);
-        assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
-		System.out.println("cantidad que quedo libre:"+cant);
-		
-		System.out.println("fin");
-   //     try{
-     //       Thread.sleep(100000);
-      //  }catch(InterruptedException e){
-       //     Thread.currentThread().interrupt();
-       // }
-	}
-	
-	
-	
-	/*testeo del algoritmo exacto con el mapa test3x3.txt, la solucion debe dar todo el mapa cubierto*/
+        /*String[] niveles = {"3x3_1color.txt", "3x3_3colores.txt", "5x5_4colores.txt",
+                "5x5_4colores_B.txt", "6x6_4colores.txt", "8x8_7colores.txt", "8x8_8colores.txt",
+                "9x9_7colores.txt", "9x9_9colores.txt", "29x30_1color.txt"
+        };
+        */
+        String[] niveles = {"3x3_2colores.txt", "7x7_5colores.txt", "7x7_6colores.txt", "9x9_10colores.txt",
+                "14x14_10colores.txt"};
+        System.out.println("       Mapa       " + "    tiempo(ms)    " + "    llamadas    ");
+        for(String s: niveles){
+            Board board = parser.parseLevel("ArchivosEntrada" + File.separator + s);
+            chrono.start();
+            Board boardSolution2=board.solve(null);
+            chrono.stop();
+            System.out.println(s + "        " + chrono.getElapsedTimeInMilisecs() + "         "+board.getCalls());
+        }
+    }
+
+	/*testeo del algoritmo exacto con el mapa 3x3_1color.txt, la solucion debe dar todo el mapa cubierto*/
 	@Test
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
@@ -126,7 +87,7 @@ public class TestExact {
     @Test
    	public void testSolve4() throws Exception{
    		Parser parser=new Parser();
-   		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "test3x3.txt");
+   		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "3x3_1color.txt");
    		Board boardSolution2=board.solve(null);
    		
    		FlowJframe frame=new FlowJframe(boardSolution2);
@@ -137,25 +98,8 @@ public class TestExact {
 
     @Test
     public void testpaintedCells() throws Exception{
-        Board board = (new Parser()).parseLevel("ArchivosEntrada" + File.separator + "3x3ConDots.txt");
+        Board board = (new Parser()).parseLevel("ArchivosEntrada" + File.separator + "3x3_3colores.txt");
         board = board.solve(null);
         System.out.println(board.unPaintedCells());
     }
-
-    @Test
-    public void testIvana() throws Exception{
-        Parser parser=new Parser();
-        Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "level5*5Bj.txt");
-        Chronometer chrono=new Chronometer();
-        chrono.start();
-
-        Board boardSolution2=board.solve(null);
-        chrono.stop();System.out.println("tiempo tardado"+chrono.getElapsedTimeInMilisecs());
-
-        FlowJframe frame=new FlowJframe(boardSolution2);
-        frame.showBoard();
-        int cant=boardSolution2.unPaintedCells();
-        assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
-    }
-
 }
