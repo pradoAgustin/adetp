@@ -16,8 +16,29 @@ public class TestExact {
 	 * casilleros vacios que deberian quedar :0
 	 */
 
+    @Test
+    public void crearTabla() throws Exception{
+        Parser parser=new Parser();
+        Chronometer chrono=new  Chronometer();
 
-	/*testeo del algoritmo exacto con el mapa test3x3.txt, la solucion debe dar todo el mapa cubierto*/
+        /*String[] niveles = {"3x3_1color.txt", "3x3_3colores.txt", "5x5_4colores.txt",
+                "5x5_4colores_B.txt", "6x6_4colores.txt", "8x8_7colores.txt", "8x8_8colores.txt",
+                "9x9_7colores.txt", "9x9_9colores.txt", "29x30_1color.txt"
+        };
+        */
+        String[] niveles = {"3x3_2colores.txt", "7x7_5colores.txt", "7x7_6colores.txt", "9x9_10colores.txt",
+                "14x14_10colores.txt"};
+        System.out.println("       Mapa       " + "    tiempo(ms)    " + "    llamadas    ");
+        for(String s: niveles){
+            Board board = parser.parseLevel("ArchivosEntrada" + File.separator + s);
+            chrono.start();
+            Board boardSolution2=board.solve(null);
+            chrono.stop();
+            System.out.println(s + "        " + chrono.getElapsedTimeInMilisecs() + "         "+board.getCalls());
+        }
+    }
+
+	/*testeo del algoritmo exacto con el mapa 3x3_1color.txt, la solucion debe dar todo el mapa cubierto*/
 	@Test
 	public void testSolve2() throws Exception{
 		Parser parser=new Parser();
@@ -66,7 +87,7 @@ public class TestExact {
     @Test
    	public void testSolve4() throws Exception{
    		Parser parser=new Parser();
-   		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "test3x3.txt");
+   		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "3x3_1color.txt");
    		Board boardSolution2=board.solve(null);
    		
    		FlowJframe frame=new FlowJframe(boardSolution2);
@@ -77,25 +98,8 @@ public class TestExact {
 
     @Test
     public void testpaintedCells() throws Exception{
-        Board board = (new Parser()).parseLevel("ArchivosEntrada" + File.separator + "3x3ConDots.txt");
+        Board board = (new Parser()).parseLevel("ArchivosEntrada" + File.separator + "3x3_3colores.txt");
         board = board.solve(null);
         System.out.println(board.unPaintedCells());
     }
-
-    @Test
-    public void testIvana() throws Exception{
-        Parser parser=new Parser();
-        Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "level5*5Bj.txt");
-        Chronometer chrono=new Chronometer();
-        chrono.start();
-
-        Board boardSolution2=board.solve(null);
-        chrono.stop();System.out.println("tiempo tardado"+chrono.getElapsedTimeInMilisecs());
-
-        FlowJframe frame=new FlowJframe(boardSolution2);
-        frame.showBoard();
-        int cant=boardSolution2.unPaintedCells();
-        assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
-    }
-
 }

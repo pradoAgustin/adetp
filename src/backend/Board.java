@@ -1,5 +1,4 @@
 package backend;
-//import sun.util.resources.CurrencyNames_es_HN;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,11 +38,21 @@ public class Board {
         }
     }
 
+    public long getCalls(){
+        return calls;
+    }
+
 	public Cell[][] getMatrix(){
 		return matrix;
 	}
 
-	public boolean isOrigin(int row,int col,int color){
+    public Cell at(Position pos){
+        if(pos.row < 0 || pos.row >= matrix.length || pos.col < 0 || pos.col >= matrix[0].length)
+            return null;
+        return this.matrix[pos.row][pos.col];
+    }
+
+    public boolean isOrigin(int row,int col,int color){
 		for(Dot d:dots){
 			if(d.getColor() == color){
 				return d.getStart().col == col && d.getStart().row == row;
@@ -181,10 +190,61 @@ public class Board {
         return bestSolution;
     }
 
-    public Cell at(Position pos){
-        if(pos.row < 0 || pos.row >= matrix.length || pos.col < 0 || pos.col >= matrix[0].length)
-            return null;
-        return this.matrix[pos.row][pos.col];
+    public Board findInitialSolution(Listener l, Chronometer chronometer){
+        Board initialBoardCopy = new Board(null, dots);
+        initialBoardCopy.cloneMatrix(this);
+        Board solution = new Board(null, dots);
+        Dot initialDot = dots.get(0);
+        initialBoardCopy.paintedCells = 0;
+        initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
+        if(l!=null) l.changeBoard(initialBoardCopy);
+        return solution.matrix == null ? null : solution;
+    }
+
+    private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l,Chronometer chronometer){
+        if(matrix.length <= currentPos.row || currentPos.row < 0
+                ||matrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
+
+        int currentPosColor = matrix[currentPos.row][currentPos.col].color;
+        if(color == currentPosColor){
+            if(!currentPos.equals(dots.get(index).getStart())){
+                if(currentPos.equals(dots.get(index).getEnd())){
+                    this.paintedCells++;
+                    if(dots.size() == index+1){
+                        saveSolution(this, solution);
+
+                        return true;
+                    }else{
+                        Dot nextDot = dots.get(index+1);
+                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l,chronometer);
+                    }
+                    this.paintedCells--;
+                }
+                return false;
+            }
+            if(prevPos != null){
+                return false;
+            }
+        }else if(currentPosColor != -1) return false;
+        matrix[currentPos.row][currentPos.col].color = color;
+        this.paintedCells++;
+
+        if(l != null) l.printToScreen();
+
+        Direction[] dir = getOptimalDirArray(currentPos, dots.get(index).getEnd());
+        Direction prevDir;
+        Position nextPos;
+        for(int i = 0; i < 4; i++){
+            if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
+                prevDir = this.at(currentPos).nextPathDir;
+                this.at(currentPos).nextPathDir = dir[i];
+                if(findInitialSolution(color,currentPos,nextPos,index, solution,l,chronometer)) return true;
+                this.at(currentPos).nextPathDir = prevDir;
+            }
+        }
+        matrix[currentPos.row][currentPos.col].color = currentPosColor;
+        this.paintedCells--;
+        return false;
     }
 
     public void improveSolution(Board solution, Listener l){
@@ -252,63 +312,6 @@ public class Board {
         return c1.color == -1 && c2.color == -1;
     }
 
-    public Board findInitialSolution(Listener l, Chronometer chronometer){
-        Board initialBoardCopy = new Board(null, dots);
-        initialBoardCopy.cloneMatrix(this);
-        Board solution = new Board(null, dots);
-        Dot initialDot = dots.get(0);
-        initialBoardCopy.paintedCells = 0;
-        initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
-        if(l!=null) l.changeBoard(initialBoardCopy);
-        return solution.matrix == null ? null : solution;
-    }
-
-   	private boolean findInitialSolution(int color, Position prevPos, Position currentPos, int index, Board solution,Listener l,Chronometer chronometer){
-        if(matrix.length <= currentPos.row || currentPos.row < 0
-           ||matrix[0].length <= currentPos.col || currentPos.col < 0||!chronometer.thereIsTimeRemaining()) return false;
-
-        int currentPosColor = matrix[currentPos.row][currentPos.col].color;
-        if(color == currentPosColor){
-            if(!currentPos.equals(dots.get(index).getStart())){
-                if(currentPos.equals(dots.get(index).getEnd())){
-                    this.paintedCells++;
-                    if(dots.size() == index+1){
-                        saveSolution(this, solution);
-
-                        return true;
-                    }else{
-                        Dot nextDot = dots.get(index+1);
-                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l,chronometer);
-                    }
-                    this.paintedCells--;
-                }
-                return false;
-            }
-            if(prevPos != null){
-                return false;
-            }
-        }else if(currentPosColor != -1) return false;
-        matrix[currentPos.row][currentPos.col].color = color;
-        this.paintedCells++;
-
-        if(l != null) l.printToScreen();
-
-        Direction[] dir = getOptimalDirArray(currentPos, dots.get(index).getEnd());
-        Direction prevDir;
-        Position nextPos;
-        for(int i = 0; i < 4; i++){
-            if( !(nextPos = currentPos.getPosition(dir[i])).equals(prevPos)){
-                prevDir = this.at(currentPos).nextPathDir;
-                this.at(currentPos).nextPathDir = dir[i];
-                if(findInitialSolution(color,currentPos,nextPos,index, solution,l,chronometer)) return true;
-                this.at(currentPos).nextPathDir = prevDir;
-            }
-        }
-        matrix[currentPos.row][currentPos.col].color = currentPosColor;
-        this.paintedCells--;
-        return false;
-    }
-    
     /**
      * Siendo C el "current point", hay 8 posibles posiciones diferentes
      * en las que el destino puede encontrarse, numeradas desde el extremo
@@ -332,6 +335,31 @@ public class Board {
         if(horizontal == 0)
             return (vertical > 0) ? optimalDir[1]: optimalDir[6];
         return (vertical > 0) ? optimalDir[2] : vertical == 0 ? optimalDir[4] : optimalDir[7];
+    }
+
+    public int countFreecels(){
+        int ans=0;
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+                if(matrix[i][j].getColor()==-1)
+                    ans++;
+            }
+        }
+        return ans;
+    }
+
+    public String toString(){
+        int aux;
+        StringBuilder ans = new StringBuilder();
+        for(int row = 0; row < matrix.length; row++){
+            for(int col = 0; col < matrix[0].length; col++){
+                if((aux = matrix[row][col].color) != -1)
+                    ans.append(aux);
+                else
+                    ans.append("\n");
+            }
+        }
+        return ans.toString();
     }
 
     private void applyDifferences(Difference difference){
@@ -363,30 +391,5 @@ public class Board {
     		this.d2=d2;
     		this.color=color;
     	}
-    }
-    
-    public int countFreecels(){
-    	int ans=0;
-    	for(int i=0;i<matrix.length;i++){
-    		for(int j=0;j<matrix[0].length;j++){
-    			if(matrix[i][j].getColor()==-1)
-    				ans++;
-    		}
-    	}
-    	return ans;
-    }
-
-    public String toString(){
-        String ans="";
-        for(int row = 0; row < matrix.length; row++){
-            for(int col = 0; col < matrix[0].length; col++){
-                if(matrix[row][col].color != -1)
-                    ans += matrix[row][col].color;
-                else
-                    ans+=" ";
-            }
-            ans+="\n";
-        }
-        return ans;
     }
 }

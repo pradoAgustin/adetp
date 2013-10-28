@@ -20,7 +20,7 @@ public class testaprox{
 	 @Test
 	   	public void testCOMPARACION() throws Exception{
 		 
-		 	String fileName="ArchivosEntrada" + File.separator + "comparacion.txt";
+		 	String fileName="ArchivosEntrada" + File.separator + "9x9_7colores.txt";
 	   		Parser parser=new Parser();
 	   		
 	   		Board board=parser.parseLevel(fileName);
@@ -141,7 +141,7 @@ public class testaprox{
     @Test
     public void testSolve30x30()  throws Exception{
         Parser parser=new Parser();
-        Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "30x30_1color.txt");
+        Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "29x30_1color.txt");
         Chronometer chrono= new Chronometer();
         chrono.start();
         Board boardSolution=board.solveAprox(null, new Chronometer(100));

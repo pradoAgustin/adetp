@@ -6,7 +6,7 @@ package backend;
 	 * Tambi�n permite saber si queda tiempo, usando el metodo isThereTime remaining
 	 */
 public class Chronometer {
- private long start,end,maxTime;
+    private long start,end,maxTime;
 
     public Chronometer(){
     }

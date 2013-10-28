@@ -9,7 +9,7 @@ import backend.Parser;
 
 public class Borrador2 {
 public static void main(String[] args) throws Exception {
-	String fileName="comparacion.txt";
+	String fileName="9x9_7colores.txt";
 		Parser parser=new Parser();
 		
 		Board board=parser.parseLevel(fileName);

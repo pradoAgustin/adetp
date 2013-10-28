@@ -18,6 +18,7 @@ public class Position {
     public String toString(){
     	return "Position("+row+","+col+");";
     }
+
     public boolean equals(Object o){
         if(o == null) return false;
         if(!(o instanceof Position)) return false;
