@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Board {
-
     /* Array con las direcciones en el orden óptimo precalculadas, para usar
        en la solución aproximada a la hora de buscar una solución inicial
        Ver método privado getOptimalDirArray*/
