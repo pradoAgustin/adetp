@@ -13,16 +13,15 @@ public class Parser {
         ArrayList<Position> colorPosList = new ArrayList<Position>();
         int rowsSize, colsSize;
         String line;
+        String[] boardSize;
         int[] colorDotsAmount = new int[COLORS_AMOUNT];
         try {
             buffer = new BufferedReader(new FileReader(mapFile));
             if((line = buffer.readLine()) == null) throw new InvalidFileException("Invalid map file");
-
             line = line.trim();
-            rowsSize = line.charAt(0)-'0';
-            if(line.charAt(1) != ',')
-                throw new InvalidFileException("Invalid map file: No comma present on the first line");
-            colsSize = line.charAt(2)-'0';
+            boardSize = line.split(",");
+            rowsSize = Integer.valueOf(boardSize[0]);
+            colsSize = Integer.valueOf(boardSize[1]);
 
             Cell board[][] = new Cell[rowsSize][colsSize];
             int row;

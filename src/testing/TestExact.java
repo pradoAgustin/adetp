@@ -151,7 +151,6 @@ public class TestExact {
 
         Board boardSolution2=board.solve(null);
         chrono.stop();System.out.println("tiempo tardado"+chrono.getElapsedTimeInMilisecs());
-        System.out.println("cantidad de cals "+boardSolution2.getCalls());
 
         FlowJframe frame=new FlowJframe(boardSolution2);
         frame.showBoard();
