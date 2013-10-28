@@ -292,7 +292,7 @@ public class testaprox{
 }	@Test
 	public void testSolve7()  throws Exception{
 		Parser parser=new Parser();
-		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "testf.txt");
+		Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "treinta.txt");
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		Chronometer chrono= new Chronometer();
