@@ -45,10 +45,6 @@ public class Board {
 		return matrix;
 	}
 
-    public long getCalls(){
-        return calls;
-    }
-
 	public boolean isOrigin(int row,int col,int color){
 		for(Dot d:dots){
 			if(d.getColor() == color){
@@ -75,20 +71,6 @@ public class Board {
 		return matrix != null ? matrix.length : 0;
 	}
 	
-	public String toString(){
-		String ans="";
-		for(int h=0;h<matrix.length;h++){
-			for(int k=0;k<matrix[0].length;k++){
-				if(matrix[h][k].getColor()!=-1)
-					ans+=matrix[h][k].getColor();
-				else
-					ans+=" ";
-			}
-			ans+="\n";
-		}
-		return ans;
-	}
-
     /**
      * Busca una solución exacta mediante backtracking. Al menos que encuentre
      * una solución que cubra el tablero entero y retorne antes de tiempo,
@@ -155,7 +137,7 @@ public class Board {
 
     private static void saveSolution(Board board, Board solution){
         if( (solution.matrix==null)
-                || (solution.getPaintedCells() < board.getPaintedCells()) ){
+                || (solution.paintedCells < board.paintedCells) ){
             solution.cloneMatrix(board);
         }
         System.out.println("llegue a salvar solucion");
@@ -174,7 +156,7 @@ public class Board {
         this.paintedCells = board.paintedCells;
     }
 
-    public int getPaintedCells(){
+    public int getPaintedells(){
         return this.paintedCells;
     }
 
@@ -195,7 +177,7 @@ public class Board {
             if(solution == null) return null;
             if(solution.unPaintedCells() == 0) return solution;
             improveSolution(solution, l);
-            if(bestSolution == null ||  bestSolution.getPaintedCells() < solution.getPaintedCells()){
+            if(bestSolution == null ||  bestSolution.paintedCells < solution.paintedCells){
                 bestSolution = solution;
                 System.out.println("como queda la solucion paso a paso");
             	for(int i=0;i<bestSolution.matrix.length;i++)
@@ -217,7 +199,7 @@ public class Board {
         		System.out.print(bestSolution.matrix[i][j].color);
         	}System.out.println();
         }*/
-        System.out.println("cant pintadas"+bestSolution.getPaintedCells());
+        System.out.println("cant pintadas"+bestSolution.paintedCells);
         return bestSolution;
     }
 
@@ -231,7 +213,7 @@ public class Board {
         Change change=null;
         int previousPaintedCells;
         do{
-            previousPaintedCells = solution.getPaintedCells();
+            previousPaintedCells = solution.paintedCells;
             for(Dot dot: dots){
                 Position currentPos = dot.getStart();
                 Cell auxCell = solution.matrix[currentPos.row][currentPos.col];
@@ -284,17 +266,13 @@ public class Board {
                     change = null;
                 }
             }
-        }while(previousPaintedCells < solution.getPaintedCells());
+        }while(previousPaintedCells < solution.paintedCells);
         System.out.println(previousPaintedCells);
     }
 
     private boolean thereIsSpaceAtCellPair(Cell c1, Cell c2){
         if(c1 == null || c2 == null) return false;
         return c1.color == -1 && c2.color == -1;
-    }
-
-    public Cell[][] getBoardMatrix(){
-    	return matrix;
     }
 
     public Board findInitialSolution(Listener l, Chronometer chronometer){
@@ -340,7 +318,7 @@ public class Board {
         matrix[currentPos.row][currentPos.col].color = color;
         this.paintedCells++;
 
-        /*secci�n para imprimir con intervalos de a 100ms*/
+        /*sección para imprimir con intervalos de a 100ms*/
         if(l!=null)	l.printToScreen();
 
         Direction[] dir = getOptimalDirArray(currentPos, dots.get(index).getEnd());
@@ -384,7 +362,7 @@ public class Board {
         return (vertical > 0) ? optimalDir[2] : vertical == 0 ? optimalDir[4] : optimalDir[7];
     }
 
-	public void addDot(Dot dot) {
+	public void addDot(Dot dot) { // TODO Borrar!
 		dots.add(dot);
 	}
 
@@ -429,4 +407,19 @@ public class Board {
     	}
     	return ans;
     }
+
+    public String toString(){
+        String ans="";
+        for(int row = 0; row < matrix.length; row++){
+            for(int col = 0; col < matrix[0].length; col++){
+                if(matrix[row][col].color != -1)
+                    ans += matrix[row][col].color;
+                else
+                    ans+=" ";
+            }
+            ans+="\n";
+        }
+        return ans;
+    }
+
 }

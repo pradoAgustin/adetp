@@ -80,83 +80,6 @@ public class testaprox{
 	   		
 	 }
 	
-	
-//	
-//	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma horizontal izquierda*/
-//	@Test
-//	public void testGetPositionWithPriority(){
-//		int[][]m=new int[6][6];
-//		Board b=new Board(m,null);
-//		
-//		Position currentPos=new Position(5, 0);
-//		Position finalPos=new Position(5, 5);
-//		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
-//		assertTrue(ans[0].equals(new Position(5, 1)));
-//		assertTrue(ans.length==4);
-//		for(int i=0;i<ans.length;i++){
-//			for(int j=i;j>0;j--){
-//				assertFalse(i==j && ans[i].equals(ans[j]));
-//			}
-//		}
-//	}
-//	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma horizontal derecha*/
-//	@Test
-//	public void testGetPositionWithPriority2(){
-//		int[][]m=new int[6][6];
-//		Board b=new Board(m,null);
-//		
-//		Position currentPos=new Position(5, 5);
-//		Position finalPos=new Position(5, 0);
-//		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
-//		assertTrue(ans[0].equals(new Position(5, 4)));
-//		assertTrue(ans.length==4);
-//		for(int i=0;i<ans.length;i++){
-//			for(int j=i;j>0;j--){
-//				assertFalse(i==j && ans[i].equals(ans[j]));
-//			}
-//		}
-//	}
-//	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma vertical abajo*/
-//	@Test
-//	public void testGetPositionWithPriority3(){
-//		int[][]m=new int[6][6];
-//		Board b=new Board(m,null);
-//		
-//		Position currentPos=new Position(0, 0);
-//		Position finalPos=new Position(5,0);
-//		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
-//		System.out.println(ans[0]);
-//		System.out.println(ans[1]);
-//		System.out.println(ans[2]);
-//		System.out.println(ans[3]);
-//		assertTrue(ans[0].equals(new Position(1, 0)));
-//		assertTrue(ans.length==4);
-//		for(int i=0;i<ans.length;i++){
-//			for(int j=i;j>0;j--){
-//				assertFalse(i==j && ans[i].equals(ans[j]));
-//			}
-//		}
-//	}
-//	/* se prueba el metodo getPositionsWithPriority en el caso de que el siguiente movimiento de prioridad sea en forma diagonal abajo*/
-//	@Test
-//	public void testGetPositionWithPriority5(){
-//		int[][]m=new int[6][6];
-//		Board b=new Board(m,null);
-//		
-//		Position currentPos=new Position(0, 0);
-//		Position finalPos=new Position(3, 2);
-//		Position[] ans=b.getPositionsWithPriority(currentPos, finalPos);
-//		assertTrue(ans[0].equals(new Position(1, 0))||ans[0].equals(new Position(0, 1)) );
-//		assertTrue(ans.length==4);
-//		for(int i=0;i<ans.length;i++){
-//			for(int j=i;j>0;j--){
-//				assertFalse(i==j && ans[i].equals(ans[j]));
-//			}
-//		}
-//	}
-
-	
-	
 	 @Test
 	   	public void testSolve5() throws Exception{
 	   		Parser parser=new Parser();
@@ -181,7 +104,6 @@ public class testaprox{
 		FlowJframe frame=new FlowJframe(board);
 		frame.showBoard();
 		 board=board.solveAprox(new PrintListener(frame),new Chronometer((int)(185.088*0.6)));
-		 System.out.println("cantidad de celdas pintadas"+board.getPaintedCells());
 		 frame.changeBoard(board);
 		 frame.showBoard();
 
@@ -213,8 +135,6 @@ public class testaprox{
 	 */
 	@Test
 	public void testSolve4() throws Exception{
-		
-
 	        Cell matrix[][]=new Cell[9][9];
 	          Board board=new Board(matrix,new ArrayList<Dot>());
 	           
@@ -240,8 +160,6 @@ public class testaprox{
 
 	            frame=new FlowJframe(board);
 			frame.showBoard();
-			//frame=new FlowJframe(board);
-			//frame.showBoard();
 			Chronometer chrono= new Chronometer();
 			chrono.start();
 			Board boardSolution=board.solveAprox(null, new Chronometer(10000));
@@ -263,32 +181,12 @@ public class testaprox{
 			
 			int cant=boardSolution.unPaintedCells();
 			
-			//frame=new FlowJframe(boardSolution);frame.showBoard();/*se muestra el tablero al finalizar*/
-			
-			 //assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
 			System.out.println("cantidad que quedo libre:"+cant);
 			assertTrue(cant<6);
 			assertTrue(cant>=0);
 			}
 			System.out.println("fin");
-	   //     try{
-	     //       Thread.sleep(100000);
-	      //  }catch(InterruptedException e){
-	       //     Thread.currentThread().interrupt();
-	       // }
-		
-//	 frame=new FlowJframe(board);
-//		frame.showBoard();
-//		Board boardSolution2=board.solveAprox(new PrintListener(frame),new Chronometer(1000000000));
-//		
-//		frame=new FlowJframe(boardSolution2);
-//		frame.showBoard();
-//		assertTrue(boardSolution2!=null);
-//		assertTrue( boardSolution2.rowsSize()>0 && boardSolution2.colsSize()>0);/* se comprueba que se grabo correctamente la matriz solucion del Board*/
-//		 cant=boardSolution2.unPaintedCells(
-		
-	
-	
+
 }	@Test
 	public void testSolve7()  throws Exception{
 		Parser parser=new Parser();
@@ -300,8 +198,7 @@ public class testaprox{
 		Board boardSolution=board.solveAprox(null, new Chronometer(100));
 		chrono.stop();
 		System.out.println("tiempo total tardado  "+ chrono.getElapsedTimeInMilisecs());
-		System.out.println("cantidad de celdas pintadas en solucion inicial"+boardSolution.getPaintedCells());
-		if(boardSolution.getBoardMatrix()==null){
+		if(boardSolution.getIntBoard()==null){
 			System.out.println("esta quedando nula la matrix");
 		}
 			
