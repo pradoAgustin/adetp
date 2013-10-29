@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Board {
-
     /* Array con las direcciones en el orden óptimo precalculadas, para usar
        en la solución aproximada a la hora de buscar una solución inicial
        Ver método privado getOptimalDirArray*/
@@ -196,6 +195,7 @@ public class Board {
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
+        if(l!=null) l.changeBoard(initialBoardCopy);
         initialBoardCopy.paintedCells = 0;
         initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
         if(l!=null) l.changeBoard(initialBoardCopy);

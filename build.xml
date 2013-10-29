@@ -22,7 +22,7 @@
 	<!-- Borra todos los archivos generados luego de compilar. -->
 	<target name="clean">
 		<delete dir="bin" />
-		<delete dir="doc" />
+		
 		<delete file="flow.jar" />
 	</target>
 </project>

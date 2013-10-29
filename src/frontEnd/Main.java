@@ -2,10 +2,13 @@ package frontEnd;
 
 import java.io.FileNotFoundException;
 
+import frontEnd.PrintListener;
+
 import backend.*;
 
 public class Main {
-public static void main(String[] args) {
+
+	public static void main(String[] args) {
 
 	Board board = null, boardSolution = null;
 
@@ -21,7 +24,7 @@ public static void main(String[] args) {
 		// TODO Auto-generated catch block
 		System.out.println("Error:Archivo \""+args[0]+"\"inexistente.");return;
 	}catch(Exception e){
-		System.out.println(e.getMessage());return;
+		System.out.println("Error:archivo invalido.");return;
 	}
 	
 	
@@ -58,7 +61,7 @@ public static void main(String[] args) {
 			System.out.println("Error: hay que pasar como parametro el tiempo que se le desea dedicar al algoritmo");
 			return;
 		}
-		System.out.println("Se busca la solucion en forma aproximada con "+Integer.valueOf(args[2]));
+		System.out.println("Se busca la solucion en forma aproximada con "+Integer.valueOf(args[2])+"segundos");
 		Chronometer timer=new Chronometer(Integer.valueOf(args[2]));
 
 		if(args.length>3 && args[3].equals("progress"))
@@ -67,7 +70,7 @@ public static void main(String[] args) {
 		
 		boardSolution=board.solveAprox(l, timer);
 		if(boardSolution==null){
-			System.out.println("No se encontro soluciï¿½n al mapa en el tiempo dado");
+			System.out.println("No se encontro solución al mapa en el tiempo dado");
 			return;
 		}
 		chronometer.stop();
@@ -77,28 +80,19 @@ public static void main(String[] args) {
 	}
 	
 		frame.changeBoard(boardSolution);
-		System.out.println("Tiempo transcurrido en obtener la solucion exacta:"+chronometer.getElapsedTimeInMilisecs()+" milisegundos.");
+		System.out.println("Tiempo transcurrido en obtener la solucion :"+chronometer.getElapsedTimeInMilisecs()+" milisegundos.");
+		
 		frame.showBoard();
-		printBoardMatrixConsole(boardSolution);
-}
-
-
-private static void printBoardMatrixConsole(Board b){
-	Cell[][] matrix=b.getMatrix();
-	
-	System.out.println("Matriz solucion:");
-	for(int h=0;h<matrix.length;h++){
-		for(int k=0;k<matrix[0].length;k++){
-			if(matrix[h][k].getColor()!=-1)
-				System.out.print(matrix[h][k].getColor());
-			else
-				System.out.print(" ");
-		}
-		System.out.println();
+		System.out.println("Cantidad de lugares libres"+boardSolution.unPaintedCells());
+		System.out.println("Tablero solución:");
+		System.out.println(boardSolution.toString());
 	}
+
+
+
 	
 	
-}
+
 
 
 }
