@@ -182,9 +182,16 @@ public class Board {
             if(solution == null) return null;
             if(solution.unPaintedCells() == 0) return solution;
             improveSolution(solution, l);
-            System.out.println(chronometer.checkCurrentTime()); // TODO BORRAR !
+         //   System.out.println(chronometer.checkCurrentTime()); // TODO BORRAR !
             if(bestSolution == null ||  bestSolution.paintedCells < solution.paintedCells){
                 bestSolution = solution;
+                
+                
+                /*seccion donde se llama al listener para imprimir el paso a paso*/
+                if(l!=null){
+                	l.changeBoard(solution);
+                	l.printToScreen();
+                }
             }
             Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
         }
