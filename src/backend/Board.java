@@ -112,7 +112,8 @@ public class Board {
                         if(solution.unPaintedCells() == 0) return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,listener);
+                        if(solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,listener))
+                            return true;
                     }
                     this.paintedCells--;
                 }
@@ -181,6 +182,7 @@ public class Board {
             if(solution == null) return null;
             if(solution.unPaintedCells() == 0) return solution;
             improveSolution(solution, l);
+            System.out.println(chronometer.checkCurrentTime()); // TODO BORRAR !
             if(bestSolution == null ||  bestSolution.paintedCells < solution.paintedCells){
                 bestSolution = solution;
             }
@@ -216,7 +218,8 @@ public class Board {
                         return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l,chronometer);
+                        if(findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l,chronometer))
+                            return true;
                     }
                     this.paintedCells--;
                 }

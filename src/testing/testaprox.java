@@ -13,7 +13,30 @@ import frontEnd.FlowJframe;
 import frontEnd.PrintListener;
 
 public class testaprox{
-	
+
+
+    @Test
+    public void crearTabla() throws Exception{
+        Parser parser=new Parser();
+        Chronometer chrono=new  Chronometer();
+
+        String[] niveles = {"3x3_1color.txt", "8x8_1color.txt", "3x3_3colores.txt", "5x5_4colores.txt",
+                "5x5_4colores_B.txt", "6x6_4colores.txt", "8x8_7colores.txt", "8x8_8colores.txt",
+                "9x9_7colores.txt", "9x9_9colores.txt", "29x30_1color.txt", "3x3_2colores.txt",
+                "7x7_5colores.txt", "7x7_6colores.txt", "9x9_10colores.txt", "14x14_10colores.txt",
+                "8x8_2colors.txt", "8x8_3colors.txt"
+        };
+        System.out.println("       Mapa       " + "    tiempo(ms)    " + "    llamadas    ");
+        for(String s: niveles){
+            Board board = parser.parseLevel("ArchivosEntrada" + File.separator + s);
+            chrono.start();
+            Board boardSolution2 = board.solveAprox(null, chrono);
+            chrono.stop();
+            System.out.println(s + "        " + chrono.getElapsedTimeInMilisecs() + "         "+board.getCalls());
+            System.out.println(boardSolution2);
+        }
+    }
+
 /*test qeu permite comparar solucion aprox con exacta.
  * La solucion exacta se encuentra en resources/comparacion.png*/
 	 @Test

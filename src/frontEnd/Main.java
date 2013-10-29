@@ -70,7 +70,7 @@ public class Main {
 		
 		boardSolution=board.solveAprox(l, timer);
 		if(boardSolution==null){
-			System.out.println("No se encontro solución al mapa en el tiempo dado");
+			System.out.println("No se encontro soluciï¿½n al mapa en el tiempo dado");
 			return;
 		}
 		chronometer.stop();
@@ -84,8 +84,8 @@ public class Main {
 		
 		frame.showBoard();
 		System.out.println("Cantidad de lugares libres"+boardSolution.unPaintedCells());
-		System.out.println("Tablero solución:");
-		System.out.println(boardSolution.toString());
+		System.out.println("Tablero soluciÃ³n:");
+		System.out.println(boardSolution);
 	}
 
 
