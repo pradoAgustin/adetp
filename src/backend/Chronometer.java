@@ -33,6 +33,10 @@ public class Chronometer {
         return this.getElapsedTimeInMilisecs()/1000;
     }
 
+    public long checkCurrentTime(){
+        return System.currentTimeMillis()-this.start;
+    }
+
     /**
      * Devuelve el tiempo transcurrido desde que se lo inicio medido en milisegundos
      */

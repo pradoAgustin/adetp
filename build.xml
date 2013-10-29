@@ -2,18 +2,15 @@
 	<!-- Compila el proyecto, deja los archivos class en el directorio bin -->
 	<target name="compile">
 		<mkdir dir="bin" />
-		<javac srcdir="src" destdir="bin" >
-			 <exclude name="**/testing/*.java" />
-		</javac>
+		<javac srcdir="src" destdir="bin"/>
 	</target>
-	
-
-	
 
 	<!-- Crea el jar ejecutable con todo el proyecto compilado. -->
 	<target name="dist" depends="compile">
 		<copy todir="bin/resources">
-		<fileset dir="resources"/>
+		    <fileset dir="${basedir}">
+                <exclude name="src/testing/*"/>
+            </fileset>
 		</copy>
 		<jar destfile="Flow.jar" basedir="bin">
 			<manifest>
@@ -22,11 +19,6 @@
 		</jar>
 	</target>
 
-	
-	
-	
-	
-	
 	<!-- Borra todos los archivos generados luego de compilar. -->
 	<target name="clean">
 		<delete dir="bin" />
