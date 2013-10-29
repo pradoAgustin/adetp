@@ -42,7 +42,7 @@ public class testaprox{
 	 @Test
 	   	public void testCOMPARACION() throws Exception{
 		 
-		 	String fileName="ArchivosEntrada" + File.separator + "9x9_7colores.txt";
+		 	String fileName="ArchivosEntrada" + File.separator + "8x8_3colors.txt";
 	   		Parser parser=new Parser();
 	   		
 	   		Board board=parser.parseLevel(fileName);
@@ -50,7 +50,7 @@ public class testaprox{
 	   		frame.showBoard();
 
 	   		Chronometer chronometer=new Chronometer();chronometer.start();
-	   	//	board=board.solve(null); 
+	   		board=board.solve(null); 
 	   		
 	   		
 //	   		/*sacar sleep para el mapa dificil*/
@@ -65,11 +65,11 @@ public class testaprox{
 	   		//frame.showBoard();
 	   		//frame=new FlowJframe(board);
 	   		frame.showBoard();
-	   		//int cant=board.unPaintedCells();
-	   		int cant=0;
+	   		int cant=board.unPaintedCells();
+	   		//int cant=0;
 	   		
-	   		//long tiempo=chronometer.getElapsedTimeInSecs();
-	   		long tiempo=1509;
+	   		long tiempo=chronometer.getElapsedTimeInSecs();
+	   		//long tiempo=1509;
 	   		System.out.println("solucion exacta encontrada en:"+tiempo+"segundos");
 	   		System.out.println("cantidad minima de lugares libres:"+cant);
 	   		
