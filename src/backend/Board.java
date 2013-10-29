@@ -178,7 +178,12 @@ public class Board {
         chronometer.start();
         while(chronometer.thereIsTimeRemaining() && solution.unPaintedCells() != 0){
             solution = findInitialSolution(l,chronometer);
-            if(solution == null) return null;
+            if(solution == null){
+                if(bestSolution == null){
+                    return null;
+                }
+                return bestSolution;
+            }
             if(solution.unPaintedCells() == 0) return solution;
             improveSolution(solution, l);
          //   System.out.println(chronometer.checkCurrentTime()); // TODO BORRAR !
@@ -256,7 +261,8 @@ public class Board {
         return false;
     }
 
-    public void improveSolution(Board solution, Listener l){
+    private void improveSolution(Board solution, Listener l){
+        if(solution == null) return;
         Difference difference =null;
         int previousPaintedCells;
         do{
