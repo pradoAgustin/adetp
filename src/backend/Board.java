@@ -112,8 +112,7 @@ public class Board {
                         if(solution.unPaintedCells() == 0) return true;
                     }else{
                         Dot nextDot = dots.get(index+1);
-                        if(solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,listener))
-                            return true;
+                        solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,listener);
                     }
                     this.paintedCells--;
                 }
