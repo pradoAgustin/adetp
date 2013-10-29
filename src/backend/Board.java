@@ -2,6 +2,7 @@ package backend;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Board {
     /* Array con las direcciones en el orden óptimo precalculadas, para usar
@@ -23,15 +24,15 @@ public class Board {
     private final static double T = 0.1;
  
 	private Cell matrix[][];
-	private ArrayList<Dot> dots = new ArrayList<Dot>();
+	private Dot[] dots;
     private long calls = 0;
     private int paintedCells;
 
-    public Board(Cell[][] matrix, ArrayList<Dot> dots) {
+    public Board(Cell[][] matrix, Dot[] dots) {
         this.matrix = matrix;
         this.dots = dots;
         if(dots != null){
-            paintedCells = dots.size()*2;
+            paintedCells = dots.length*2;
         }else{
             paintedCells = 0;
         }
@@ -87,7 +88,7 @@ public class Board {
      *         contrario
      */
 	public Board solve(Listener listener){
-        Dot initialDot = dots.get(0);
+        Dot initialDot = dots[0];
         Board solution = new Board(null, dots);
         this.paintedCells = 0;
         solve(initialDot.getColor(), null, initialDot.getStart(), 0, solution,listener);
@@ -104,14 +105,15 @@ public class Board {
 
         int currentPosColor = this.matrix[currentPos.row][currentPos.col].color;
         if(color == currentPosColor){
-            if(!currentPos.equals(dots.get(index).getStart())){
-                if(currentPos.equals(dots.get(index).getEnd())){
+            if(!currentPos.equals(dots[index].getStart())){
+                if(currentPos.equals(dots[index].getEnd())){
+                    if(prevPos.equals(dots[index].getStart())) return false;
                     this.paintedCells++;
-                    if(dots.size() == index+1){
+                    if(dots.length == index+1){
                         saveSolution(this, solution);
                         if(solution.unPaintedCells() == 0) return true;
                     }else{
-                        Dot nextDot = dots.get(index+1);
+                        Dot nextDot = dots[index+1];
                         solve(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,listener);
                     }
                     this.paintedCells--;
@@ -179,34 +181,40 @@ public class Board {
         while(chronometer.thereIsTimeRemaining() && solution.unPaintedCells() != 0){
             solution = findInitialSolution(l,chronometer);
             if(solution == null){
-                if(bestSolution == null){
-                    return null;
-                }
-                return bestSolution;
+                return bestSolution == null ? null : bestSolution;
             }
             if(solution.unPaintedCells() == 0) return solution;
             improveSolution(solution, l);
-         //   System.out.println(chronometer.checkCurrentTime()); // TODO BORRAR !
             if(bestSolution == null ||  bestSolution.paintedCells < solution.paintedCells){
                 bestSolution = solution;
-
-                
                 /*seccion donde se llama al listener para imprimir el paso a paso*/
                 if(l!=null){
                 	l.changeBoard(solution);
                 	l.printToScreen();
                 }
             }
-            Collections.shuffle(dots); // randomizar orden de colores para escapar al máximo local
+            shuffleArray(dots); // randomizar orden de colores para escapar al máximo local
         }
         return bestSolution;
+    }
+
+    private static void shuffleArray(Dot[] array){
+        Random rnd = new Random();
+        int i, index;
+        Dot aux;
+        for (i = array.length - 1; i > 0; i--){
+            index = rnd.nextInt(i + 1);
+            aux = array[index];
+            array[index] = array[i];
+            array[i] = aux;
+        }
     }
 
     public Board findInitialSolution(Listener l, Chronometer chronometer){
         Board initialBoardCopy = new Board(null, dots);
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
-        Dot initialDot = dots.get(0);
+        Dot initialDot = dots[0];
         if(l!=null) l.changeBoard(initialBoardCopy);
         initialBoardCopy.paintedCells = 0;
         initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
@@ -220,15 +228,15 @@ public class Board {
 
         int currentPosColor = matrix[currentPos.row][currentPos.col].color;
         if(color == currentPosColor){
-            if(!currentPos.equals(dots.get(index).getStart())){
-                if(currentPos.equals(dots.get(index).getEnd())){
+            if(!currentPos.equals(dots[index].getStart())){
+                if(currentPos.equals(dots[index].getEnd())){
                     this.paintedCells++;
-                    if(dots.size() == index+1){
+                    if(dots.length == index+1){
                         saveSolution(this, solution);
 
                         return true;
                     }else{
-                        Dot nextDot = dots.get(index+1);
+                        Dot nextDot = dots[index+1];
                         if(findInitialSolution(nextDot.getColor(), null, nextDot.getStart(), index+1, solution,l,chronometer))
                             return true;
                     }
@@ -245,7 +253,7 @@ public class Board {
 
         if(l != null) l.printToScreen();
 
-        Direction[] dir = getOptimalDirArray(currentPos, dots.get(index).getEnd());
+        Direction[] dir = getOptimalDirArray(currentPos, dots[index].getEnd());
         Direction prevDir;
         Position nextPos;
         for(int i = 0; i < 4; i++){

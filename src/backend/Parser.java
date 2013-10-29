@@ -47,14 +47,14 @@ public class Parser {
                 if(i == 1) throw new InvalidFileException("There is a color which has a single dot instead of 2");
                 if(i > 2) throw new InvalidFileException("There are more than 2 dots for a single color");
             }
-
-            return new Board(board, createDotList(colorPosList, board));
+            ArrayList<Dot> aux;
+            return new Board(board, createDotArray(colorPosList, board));
         }finally{
             if (buffer != null) buffer.close();
         }
     }
 
-    private ArrayList<Dot> createDotList(ArrayList<Position> colorPosList, Cell[][] board) throws InvalidFileException{
+    private Dot[] createDotArray(ArrayList<Position> colorPosList, Cell[][] board) throws InvalidFileException{
         ArrayList<Dot> ret = new ArrayList<Dot>();
         int i, j;
         for(i = 0; i < colorPosList.size(); i++){
@@ -68,7 +68,7 @@ public class Parser {
                 }
             }
         }
-        return ret;
+        return ret.toArray(new Dot[ret.size()]);
     }
 
     private class InvalidFileException extends Exception{
