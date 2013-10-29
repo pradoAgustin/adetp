@@ -305,7 +305,7 @@ public class Board {
                 }
             }
         }while(previousPaintedCells < solution.paintedCells);
-        System.out.println(previousPaintedCells);
+       // System.out.println(previousPaintedCells);
     }
 
     private boolean thereIsSpaceAtCellPair(Cell c1, Cell c2){
@@ -351,14 +351,15 @@ public class Board {
 
     public String toString(){
         int aux;
-        StringBuilder ans = new StringBuilder();
+        String ans = "";
         for(int row = 0; row < matrix.length; row++){
             for(int col = 0; col < matrix[0].length; col++){
                 if((aux = matrix[row][col].color) != -1)
-                    ans.append(aux);
+                    ans+=aux;
                 else
-                    ans.append("\n");
-            }
+                	ans+=" ";
+                    
+            }ans+="\n";
         }
         return ans.toString();
     }
