@@ -79,7 +79,7 @@ public class TestExact {
 		Board boardSolution2=board.solve(null);
 		chrono.stop();System.out.println(chrono.getElapsedTimeInMilisecs());
 		
-		/*FlowJframe frame=new FlowJframe(boardSolution2);
+		FlowJframe frame=new FlowJframe(boardSolution2);
 		frame.showBoard();
 		int cant=boardSolution2.unPaintedCells();
 		assertTrue(cant==0);/*se controla que efectivamente esten todos los lugares ocupados*/
