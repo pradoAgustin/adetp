@@ -50,7 +50,7 @@ public class Main {
 		boardSolution=board.solve(l);
 		chronometer.stop();
 		if(boardSolution==null){
-			System.out.println("El mapa ingresado no tiene soluciï¿½n.");
+			System.out.println("El mapa ingresado no tiene solución.");
 			System.out.println("Tiempo demorado:"+chronometer.getElapsedTimeInMilisecs()+"milisegundos");
 			return;
 		}
@@ -70,7 +70,7 @@ public class Main {
 		
 		boardSolution=board.solveAprox(l, timer);
 		if(boardSolution==null){
-			System.out.println("No se encontro soluciï¿½n al mapa en el tiempo dado");
+			System.out.println("No se encontro solución al mapa en el tiempo dado");
 			return;
 		}
 		chronometer.stop();

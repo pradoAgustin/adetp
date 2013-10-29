@@ -189,7 +189,7 @@ public class Board {
          //   System.out.println(chronometer.checkCurrentTime()); // TODO BORRAR !
             if(bestSolution == null ||  bestSolution.paintedCells < solution.paintedCells){
                 bestSolution = solution;
-                
+
                 
                 /*seccion donde se llama al listener para imprimir el paso a paso*/
                 if(l!=null){
@@ -315,6 +315,7 @@ public class Board {
                 }
                 if(difference != null){
                     solution.applyDifferences(difference);
+                    if(l!=null)l.changeBoard(solution);
                     difference = null;
                 }
             }

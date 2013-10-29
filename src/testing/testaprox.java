@@ -153,7 +153,7 @@ public class testaprox{
 		frame.showBoard();
 		Chronometer chrono= new Chronometer();
 		chrono.start();
-		Board boardSolution=board.solveAprox(null, new Chronometer(100));
+		Board boardSolution=board.solveAprox(new PrintListener(frame), new Chronometer(100));
 		chrono.stop();
 		System.out.println("tiempo total tardado  "+ chrono.getElapsedTimeInMilisecs());
 		if(boardSolution.getMatrix()==null){
@@ -165,8 +165,10 @@ public class testaprox{
         Parser parser=new Parser();
         Board board=parser.parseLevel("ArchivosEntrada" + File.separator + "29x30_1color.txt");
         Chronometer chrono= new Chronometer();
+        FlowJframe frame=new FlowJframe(board);
+		frame.showBoard();
         chrono.start();
-        Board boardSolution=board.solveAprox(null, new Chronometer(100));
+        Board boardSolution=board.solveAprox(new PrintListener(frame), new Chronometer(10000));
         chrono.stop();
         System.out.println("tiempo total tardado  "+ chrono.getElapsedTimeInMilisecs());
         if(boardSolution.getMatrix()==null){
