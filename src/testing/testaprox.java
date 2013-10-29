@@ -153,7 +153,7 @@ public class testaprox{
 		frame.showBoard();
 		Chronometer chrono= new Chronometer();
 		chrono.start();
-		Board boardSolution=board.solveAprox(null, new Chronometer(100));
+		Board boardSolution=board.solveAprox(new PrintListener(frame), new Chronometer(100));
 		chrono.stop();
 		System.out.println("tiempo total tardado  "+ chrono.getElapsedTimeInMilisecs());
 		if(boardSolution.getMatrix()==null){

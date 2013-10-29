@@ -310,7 +310,7 @@ public class Board {
                 }
                 if(difference != null){
                     solution.applyDifferences(difference);
-                    l.changeBoard(solution);
+                    if(l!=null)l.changeBoard(solution);
                     difference = null;
                 }
             }
