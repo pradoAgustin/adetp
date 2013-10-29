@@ -194,6 +194,7 @@ public class Board {
         initialBoardCopy.cloneMatrix(this);
         Board solution = new Board(null, dots);
         Dot initialDot = dots.get(0);
+        if(l!=null) l.changeBoard(initialBoardCopy);
         initialBoardCopy.paintedCells = 0;
         initialBoardCopy.findInitialSolution(initialDot.getColor(), null, initialDot.getStart(), 0, solution, l,chronometer);
         if(l!=null) l.changeBoard(initialBoardCopy);

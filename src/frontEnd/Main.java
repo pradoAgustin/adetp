@@ -7,7 +7,8 @@ import frontEnd.PrintListener;
 import backend.*;
 
 public class Main {
-public static void main(String[] args) {
+
+	public static void main(String[] args) {
 
 	Board board = null, boardSolution = null;
 
