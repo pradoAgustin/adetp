@@ -304,7 +304,7 @@ public class Board {
                 }
             }
         }while(previousPaintedCells < solution.paintedCells);
-        System.out.println(previousPaintedCells);
+       // System.out.println(previousPaintedCells);
     }
 
     private boolean thereIsSpaceAtCellPair(Cell c1, Cell c2){
